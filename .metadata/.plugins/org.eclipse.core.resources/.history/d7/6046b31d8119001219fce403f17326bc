@@ -1,0 +1,11 @@
+package ca.ualberta.cs.completemytask;
+
+public class Task {
+	
+	boolean shared;
+	boolean complete;
+	String name;
+	String description;
+	
+	
+}
