@@ -1,0 +1,25 @@
+package ca.ualberta.cs.completemytask;
+
+public class Comment extends UserData implements UserContent<String> {
+
+	String comment;
+	
+	Comment() {
+		this.comment = "Blank Comment";
+	}
+	
+	Comment(String comment) {
+		this.comment = comment;
+	}
+	
+	public String getContent() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void setContent(String content) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

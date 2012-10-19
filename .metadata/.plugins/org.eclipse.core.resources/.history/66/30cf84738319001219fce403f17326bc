@@ -1,0 +1,15 @@
+package ca.ualberta.cs.completemytask;
+
+public class Comment extends UserData implements UserContent {
+
+	public Object getContent() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void setContent(Object content) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

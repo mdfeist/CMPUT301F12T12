@@ -1,0 +1,14 @@
+package ca.ualberta.cs.completemytask;
+
+import java.util.GregorianCalendar;
+
+public class UserData {
+	
+	String user;
+	GregorianCalendar date;
+	
+	UserData() {
+		this.user = "Unknown";
+		date = new GregorianCalendar();
+	}
+}
