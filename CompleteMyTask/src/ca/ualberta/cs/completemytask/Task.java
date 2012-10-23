@@ -2,7 +2,11 @@ package ca.ualberta.cs.completemytask;
 
 import java.util.GregorianCalendar;
 
-public class Task {
+import android.content.Context;
+import android.widget.TableRow;
+import android.widget.TextView;
+
+public class Task extends TableRow {
 	
 	boolean shared;
 	boolean complete;
@@ -12,11 +16,12 @@ public class Task {
 	
 	GregorianCalendar date;
 	
-	Task() {
-		this("New Task", "No Description");
+	Task(Context context) {
+		this(context, "New Task", "No Description");
 	}
 	
-	Task(String name, String description) {
+	Task(Context context, String name, String description) {
+		super(context);
 		this.shared = false;
 		this.complete = false;
 		
@@ -24,6 +29,14 @@ public class Task {
 		this.description = description;
 		
 		this.date = new GregorianCalendar();
+		
+		// create a new TextView for Task Name
+        TextView nameField = new TextView(context);
+        // set the text
+        nameField.setText(name);
+        
+        // add the TextView and the Button to the new TableRow
+        this.addView(nameField);
 	}
 	
 	public boolean isShared() {
