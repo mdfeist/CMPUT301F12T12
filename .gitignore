@@ -1,6 +1,11 @@
 bin/
+libs/
+
+CompleteMyTask/bin/
+CompleteMyTask/libs/
 
 .DS_Store
+CompleteMyTask/.DS_Store
 
 # Can also ignore all directories and files in a directory.
 .metadata
@@ -13,7 +18,7 @@ bin/
 *.ear
 
 CompleteMyTask/bin/CompleteMyTask.apk
-
 CompleteMyTask/bin/classes.dex
-
 CompleteMyTask/bin/resources.ap_
+
+.DS_Store
