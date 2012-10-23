@@ -11,10 +11,14 @@ public final class R {
     public static final class attr {
     }
     public static final class drawable {
-        public static final int ic_action_search=0x7f020000;
-        public static final int ic_launcher=0x7f020001;
+        public static final int gradient_bg=0x7f020000;
+        public static final int gradient_bg_hover=0x7f020001;
+        public static final int ic_action_search=0x7f020002;
+        public static final int ic_launcher=0x7f020003;
+        public static final int list_selector=0x7f020004;
     }
     public static final class id {
+<<<<<<< HEAD
         public static final int AddTaskButton=0x7f070004;
         public static final int CancelAddTaskButton=0x7f070005;
         public static final int EditTaskDescription=0x7f070003;
@@ -33,6 +37,19 @@ public final class R {
         public static final int activity_add_task=0x7f030000;
         public static final int activity_main_menu=0x7f030001;
         public static final int activity_main_menu_tables=0x7f030002;
+=======
+        public static final int AddTaskButton=0x7f070001;
+        public static final int TasksList=0x7f070000;
+        public static final int artist=0x7f070004;
+        public static final int date=0x7f070005;
+        public static final int menu_settings=0x7f070006;
+        public static final int thumbnail=0x7f070003;
+        public static final int title=0x7f070002;
+    }
+    public static final class layout {
+        public static final int activity_main_menu=0x7f030000;
+        public static final int list_row=0x7f030001;
+>>>>>>> c8dddcedbc12e5daed409d95fcc5e67ba50ca679
     }
     public static final class menu {
         public static final int activity_main_menu=0x7f060000;

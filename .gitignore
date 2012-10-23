@@ -11,3 +11,9 @@ bin/
 *.jar
 *.war
 *.ear
+
+CompleteMyTask/bin/CompleteMyTask.apk
+
+CompleteMyTask/bin/classes.dex
+
+CompleteMyTask/bin/resources.ap_
