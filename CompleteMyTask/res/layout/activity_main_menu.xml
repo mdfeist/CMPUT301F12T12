@@ -3,4 +3,52 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/MyTasksHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentTop="true"
+                android:text="@string/MyTasksHeader">
+            </TextView>
+            
+            <TableLayout
+                android:id="@+id/MyTasksTable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/MyTasksHeader" >
+            </TableLayout>
+            
+            <TextView
+                android:id="@+id/PublicTasksHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/MyTasksTable"
+                android:text="@string/PublicTasksHeader">
+            </TextView>
+            
+            <TableLayout
+                android:id="@+id/PublicTasksTable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/PublicTasksHeader" >
+            </TableLayout>
+
+        </RelativeLayout>
+    </ScrollView>
+
 </RelativeLayout>
