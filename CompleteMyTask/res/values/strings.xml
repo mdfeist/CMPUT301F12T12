@@ -4,8 +4,16 @@
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_main_menu">MainMenuActivity</string>
+    
     <string name="MyTasksHeader">My Tasks</string>
     <string name="PublicTasksHeader">Public Tasks</string>
+    
     <string name="AddTaskButtonLabel">Add Task</string>
+    <string name="CancelButtonLabel">Cancel</string>
+    <string name="TaskNameHeaderLabel">Task Name:</string>
+    <string name="TaskDescriptionHeaderLabel">Task Description:</string>
+    
+    <string name="EditTaskNameHint">Task name</string>
+    <string name="EditTaskDescriptionHint">Short task description</string>
 
 </resources>
