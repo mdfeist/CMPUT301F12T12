@@ -1,5 +1,0 @@
-INDEX VERSION 1.126+/Users/mikefeist/UofA/CMPUT301/CMPUT301F12T12/.metadata/.plugins/org.eclipse.jdt.core
-4021153926.index
-2513789021.index
-2187986681.index
-1228792075.index

@@ -1,6 +1,0 @@
-package ca.ualberta.cs.completemytask;
-
-public class Task {
-	boolean shared;
-	
-}
