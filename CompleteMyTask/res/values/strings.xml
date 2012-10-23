@@ -6,5 +6,6 @@
     <string name="title_activity_main_menu">MainMenuActivity</string>
     <string name="MyTasksHeader">My Tasks</string>
     <string name="PublicTasksHeader">Public Tasks</string>
+    <string name="AddTaskButtonLabel">Add Task</string>
 
 </resources>

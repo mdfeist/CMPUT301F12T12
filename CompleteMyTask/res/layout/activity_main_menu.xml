@@ -7,8 +7,9 @@
         android:id="@+id/scrollView1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentTop="true" >
+        android:layout_above="@+id/AddTaskButton"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" >
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -18,37 +19,44 @@
                 android:id="@+id/MyTasksHeader"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:layout_alignParentTop="true"
-                android:text="@string/MyTasksHeader">
+                android:layout_centerHorizontal="true"
+                android:text="@string/MyTasksHeader" >
             </TextView>
-            
+
             <TableLayout
                 android:id="@+id/MyTasksTable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@+id/MyTasksHeader" >
+                android:layout_below="@+id/MyTasksHeader"
+                android:layout_centerHorizontal="true" >
             </TableLayout>
-            
+
             <TextView
                 android:id="@+id/PublicTasksHeader"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:layout_below="@+id/MyTasksTable"
-                android:text="@string/PublicTasksHeader">
+                android:layout_centerHorizontal="true"
+                android:text="@string/PublicTasksHeader" >
             </TextView>
-            
+
             <TableLayout
                 android:id="@+id/PublicTasksTable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@+id/PublicTasksHeader" >
+                android:layout_below="@+id/PublicTasksHeader"
+                android:layout_centerHorizontal="true" >
             </TableLayout>
-
         </RelativeLayout>
     </ScrollView>
+
+    <Button
+        android:id="@+id/AddTaskButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="@string/AddTaskButtonLabel" />
 
 </RelativeLayout>
