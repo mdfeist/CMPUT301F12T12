@@ -1,0 +1,17 @@
+package ca.ualberta.cs.completemytask;
+
+public class TaskManager {
+	
+	private static TaskManager instance = null;
+
+	protected TaskManager() {
+		// Exists only to defeat instantiation.
+	}
+
+	public static TaskManager getInstance() {
+		if (instance == null) {
+			instance = new TaskManager();
+		}
+		return instance;
+	}
+}

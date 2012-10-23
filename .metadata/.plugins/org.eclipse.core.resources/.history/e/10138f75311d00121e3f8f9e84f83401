@@ -1,0 +1,82 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+    
+	    <TableLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content" >
+	
+	        <TableRow
+	            android:id="@+id/MyTasksHeader"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:background="#CDCDCD" >
+	
+	            <TextView
+	                android:id="@+id/MyTasksTitle"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="My Tasks"
+	                android:textAppearance="?android:attr/textAppearanceSmall" />
+	        </TableRow>
+	    </TableLayout>
+    
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TableLayout
+                android:id="@+id/MyTasksTable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+            </TableLayout>
+            
+            <TableRow
+		        android:id="@+id/PublicTasksHeader"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:background="#CDCDCD" >
+		
+		        <TextView
+		            android:id="@+id/PublicTasksTitle"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:text="Public Tasks"
+		            android:textAppearance="?android:attr/textAppearanceSmall" />
+		    </TableRow>
+		    
+            <ScrollView
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content" >
+		
+		        <LinearLayout
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:orientation="vertical" >
+		            
+		            <TableLayout
+		                android:id="@+id/MyTasksTable"
+		                android:layout_width="match_parent"
+		                android:layout_height="wrap_content" >
+		            </TableLayout>
+		            
+		        </LinearLayout>
+    		</ScrollView>
+            
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

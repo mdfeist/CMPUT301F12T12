@@ -1,0 +1,20 @@
+package ca.ualberta.cs.completemytask;
+
+public class Task {
+	
+	boolean shared;
+	boolean complete;
+	String name;
+	String description;
+	
+	Task() {
+		this("New Task", "No Description");
+	}
+	
+	Task(String name, String description) {
+		this.shared = false;
+		this.complete = false;
+		this.name = name;
+		this.description = description;
+	}
+}
