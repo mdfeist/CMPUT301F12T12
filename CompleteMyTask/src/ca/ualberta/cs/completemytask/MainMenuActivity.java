@@ -3,6 +3,8 @@ package ca.ualberta.cs.completemytask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableLayout.LayoutParams;
 import android.widget.TableRow;
@@ -14,7 +16,14 @@ public class MainMenuActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
-        createFakeTable();
+        
+        // add a click-listener on the add button
+        Button addTaskButton = (Button) findViewById(R.id.AddTaskButton);
+        addTaskButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+            	createFakeTable();
+        	}
+        }); 
     }
 
     @Override
