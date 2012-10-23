@@ -2,6 +2,7 @@ package ca.ualberta.cs.completemytask;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,14 +34,23 @@ public class TaskAdapter extends BaseAdapter {
 	        View vi = convertView;
 	        if(convertView==null)
 	            vi = inflater.inflate(R.layout.list_row, null);
-	 
+	        
+	        TextView shared = (TextView)vi.findViewById(R.id.shared); // Shared
 	        TextView title = (TextView)vi.findViewById(R.id.title); // title
-	        TextView user = (TextView)vi.findViewById(R.id.artist); // artist name
+	        TextView user = (TextView)vi.findViewById(R.id.user); // user name
 	        TextView date = (TextView)vi.findViewById(R.id.date); // duration
 	 
 	        Task task = TaskManager.getInstance().getTaskAt(position);
 	 
 	        // Setting all values in listview
+	        if (task.isShared()) {
+	        	shared.setText("Public");
+	        	shared.setTextColor(Color.parseColor("#10BCC9"));
+	        } else {
+	        	shared.setText("Private");
+	        	shared.setTextColor(0xFFFF0000);
+	        }
+	        
 	        title.setText(task.getName());
 	        user.setText(task.getUser());
 	        date.setText(task.getDateAsString());

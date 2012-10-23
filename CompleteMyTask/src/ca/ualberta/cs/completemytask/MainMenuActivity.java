@@ -5,11 +5,10 @@ import android.app.Activity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
 
 /**
  * 
@@ -44,7 +43,7 @@ public class MainMenuActivity extends Activity {
     }
     
     public void createFakeTable() {
-    	for (int i = 0; i < 50; i ++) {
+    	for (int i = 0; i < 25; i ++) {
 	    	
 	        // create a new Task
 	        Task task = new Task("My Task " + i, "");
@@ -53,19 +52,30 @@ public class MainMenuActivity extends Activity {
 	        
     	}
     	
+    	for (int i = 0; i < 25; i ++) {
+	    	
+	        // create a new Task
+	        Task task = new Task("Public Task " + i, "");
+	        task.setShared(true);
+	        
+	        TaskManager.getInstance().addTask(task);
+	        
+    	}
+    	
     	// get a reference for the TableLayout
 		ListView list = (ListView) findViewById(R.id.TasksList);
-    	
+		
     	// Getting adapter by passing xml data ArrayList
         TaskAdapter adapter = new TaskAdapter(this);
         list.setAdapter(adapter);
-    	
+        
         // Click event for single list row
         list.setOnItemClickListener(new OnItemClickListener() {
  
             public void onItemClick(AdapterView<?> parent, View view,
                     int position, long id) {
-            		Log.v(TAG, "Click At: " + position);
+            		String name = TaskManager.getInstance().getTaskAt(position).getName();
+            		Log.v(TAG, "Clicked: " + name);
             }
 
         });
