@@ -45,16 +45,14 @@ public class MainMenuActivity extends Activity {
     
     public void createFakeTable() {
     	for (int i = 0; i < 50; i ++) {
-	    	// get a reference for the TableLayout
-    		ListView list = (ListView) findViewById(R.id.taskList);
 	    	
-	        // create a new TableRow
-	        final Task task = new Task("My Task " + i, "");
+	        // create a new Task
+	        Task task = new Task("My Task " + i, "");
 	        
-	        // Getting adapter by passing xml data ArrayList
-	        TaskAdapter adapter = new TaskAdapter(this);
-	        list.setAdapter(adapter);
-	 /*
+	        TaskManager.getInstance().addTask(task);
+	        
+	        
+	        /*
 	        // Click event for single list row
 	        list.setOnItemClickListener(new OnItemClickListener() {
 	 
@@ -66,6 +64,13 @@ public class MainMenuActivity extends Activity {
 	        });
 	        */
     	}
+    	
+    	// get a reference for the TableLayout
+		ListView list = (ListView) findViewById(R.id.TasksList);
+    	
+    	// Getting adapter by passing xml data ArrayList
+        TaskAdapter adapter = new TaskAdapter(this);
+        list.setAdapter(adapter);
     	
     }
 

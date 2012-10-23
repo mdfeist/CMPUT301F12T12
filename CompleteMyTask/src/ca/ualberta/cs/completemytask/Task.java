@@ -1,9 +1,7 @@
 package ca.ualberta.cs.completemytask;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
-public class Task {
+public class Task extends UserData {
 	
 	boolean shared;
 	boolean complete;
@@ -11,20 +9,18 @@ public class Task {
 	String name;
 	String description;
 	
-	GregorianCalendar date;
-	
 	Task() {
 		this("New Task", "No Description");
 	}
 	
 	Task(String name, String description) {
+		super();
 		this.shared = false;
 		this.complete = false;
 		
 		this.name = name;
 		this.description = description;
 		
-		this.date = new GregorianCalendar();
 
 	}
 	
@@ -60,16 +56,5 @@ public class Task {
 		this.description = description;
 	}
 
-	public GregorianCalendar getDate() {
-		return date;
-	}
 	
-	public String getDateAsString() {
-		String strDate = String.format("%d-%d-%d", 
-				this.date.get(Calendar.YEAR), 
-				this.date.get(Calendar.MONTH) + 1,
-				this.date.get(Calendar.DAY_OF_MONTH));
-		
-		return strDate;
-	}
 }
