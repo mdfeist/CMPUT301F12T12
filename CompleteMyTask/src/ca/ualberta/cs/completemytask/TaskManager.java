@@ -20,10 +20,6 @@ public class TaskManager {
 		return instance;
 	}
 	
-	public void createNewTask(String name, String description) {
-		this.tasks.add(new Task(name, description));
-	}
-	
 	public void addTask(Task task) {
 		this.tasks.add(task);
 	}
