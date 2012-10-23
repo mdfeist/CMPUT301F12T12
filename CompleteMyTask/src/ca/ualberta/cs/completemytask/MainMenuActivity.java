@@ -8,8 +8,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TableLayout;
-import android.widget.TableLayout.LayoutParams;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 
 /**
  * 
@@ -51,18 +51,6 @@ public class MainMenuActivity extends Activity {
 	        
 	        TaskManager.getInstance().addTask(task);
 	        
-	        
-	        /*
-	        // Click event for single list row
-	        list.setOnItemClickListener(new OnItemClickListener() {
-	 
-	            @Override
-	            public void onItemClick(AdapterView&lt;?&gt; parent, View view,
-	                    int position, long id) {
-	 
-	            }
-	        });
-	        */
     	}
     	
     	// get a reference for the TableLayout
@@ -72,6 +60,16 @@ public class MainMenuActivity extends Activity {
         TaskAdapter adapter = new TaskAdapter(this);
         list.setAdapter(adapter);
     	
+        // Click event for single list row
+        list.setOnItemClickListener(new OnItemClickListener() {
+ 
+            public void onItemClick(AdapterView<?> parent, View view,
+                    int position, long id) {
+            		Log.v(TAG, "Click At: " + position);
+            }
+
+        });
+        
     }
 
 }
