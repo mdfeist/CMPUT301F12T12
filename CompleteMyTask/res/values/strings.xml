@@ -10,8 +10,10 @@
     
     <string name="AddTaskButtonLabel">Add Task</string>
     <string name="CancelButtonLabel">Cancel</string>
+    
     <string name="TaskNameHeaderLabel">Task Name:</string>
     <string name="TaskDescriptionHeaderLabel">Task Description:</string>
+    <string name="TaskRequirementsHeaderLabel">Task Requirements:</string>
     
     <string name="EditTaskNameHint">Task name</string>
     <string name="EditTaskDescriptionHint">Short task description</string>
