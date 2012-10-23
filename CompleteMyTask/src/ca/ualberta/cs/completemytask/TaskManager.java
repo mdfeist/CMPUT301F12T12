@@ -26,6 +26,9 @@ public class TaskManager {
 	
 	public void addTask(Task task) {
 		this.tasks.add(task);
+		
+		TaskComparator comparator = new TaskComparator();
+		Collections.sort(this.tasks, comparator);
 	}
 	
 	public Task getTaskAt(int position) {

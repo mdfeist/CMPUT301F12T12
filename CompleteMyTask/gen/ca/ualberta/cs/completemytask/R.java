@@ -11,22 +11,25 @@ public final class R {
     public static final class attr {
     }
     public static final class drawable {
-        public static final int gradient_bg=0x7f020000;
-        public static final int gradient_bg_hover=0x7f020001;
-        public static final int ic_action_search=0x7f020002;
-        public static final int ic_launcher=0x7f020003;
-        public static final int image_bg=0x7f020004;
-        public static final int list_selector=0x7f020005;
+        public static final int arrow=0x7f020000;
+        public static final int gradient_bg=0x7f020001;
+        public static final int gradient_bg_hover=0x7f020002;
+        public static final int ic_action_search=0x7f020003;
+        public static final int ic_launcher=0x7f020004;
+        public static final int image_bg=0x7f020005;
+        public static final int list_selector=0x7f020006;
+        public static final int tab_bar_background=0x7f020007;
     }
     public static final class id {
         public static final int AddTaskButton=0x7f070001;
+        public static final int Bar=0x7f070002;
         public static final int TasksList=0x7f070000;
-        public static final int date=0x7f070006;
-        public static final int menu_settings=0x7f070007;
-        public static final int shared=0x7f070003;
-        public static final int thumbnail=0x7f070002;
-        public static final int title=0x7f070004;
-        public static final int user=0x7f070005;
+        public static final int date=0x7f070007;
+        public static final int menu_settings=0x7f070008;
+        public static final int shared=0x7f070004;
+        public static final int thumbnail=0x7f070003;
+        public static final int title=0x7f070005;
+        public static final int user=0x7f070006;
     }
     public static final class layout {
         public static final int activity_main_menu=0x7f030000;
