@@ -2,6 +2,14 @@ package ca.ualberta.cs.completemytask;
 
 import java.util.Comparator;
 
+/**
+ * Compares to tasks. This is used to sort
+ * the tasks for the main menu list view.
+ * 
+ * @author Michael Feist
+ *
+ */
+
 public class TaskComparator implements Comparator<Task>{
  
     public int compare(Task task1, Task task2) {

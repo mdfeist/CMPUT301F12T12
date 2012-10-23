@@ -1,5 +1,11 @@
 package ca.ualberta.cs.completemytask;
 
+/**
+ * Stores a information about a task.
+ * 
+ * @author Michael Feist
+ *
+ */
 
 public class Task extends UserData {
 	

@@ -11,6 +11,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 /**
+ * Main Menu View
  * 
  * @author Michael Feist
  *

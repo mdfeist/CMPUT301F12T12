@@ -2,6 +2,13 @@ package ca.ualberta.cs.completemytask;
 
 import java.util.*;
 
+/**
+ * A singleton to manage all the tasks.
+ * 
+ * @author Michael Feist
+ *
+ */
+
 public class TaskManager {
 	
 	private static TaskManager instance = null;
@@ -9,7 +16,6 @@ public class TaskManager {
 	private List<Task> tasks;
 
 	protected TaskManager() {
-		// Exists only to defeat instantiation.
 		this.tasks = new ArrayList<Task>();
 	}
 

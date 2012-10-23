@@ -1,5 +1,12 @@
 package ca.ualberta.cs.completemytask;
 
+/**
+ * A text comment.
+ * 
+ * @author Michael Feist
+ *
+ */
+
 public class Comment extends UserData implements UserContent<String> {
 
 	String comment;

@@ -3,6 +3,14 @@ package ca.ualberta.cs.completemytask;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+/**
+ * Stores information about a user. 
+ * Used in tasks and content.
+ * 
+ * @author Michael Feist
+ *
+ */
+
 public class UserData {
 	
 	String user;
