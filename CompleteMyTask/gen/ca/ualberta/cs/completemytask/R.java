@@ -13,9 +13,11 @@ public final class R {
     public static final class drawable {
         public static final int ic_action_search=0x7f020000;
         public static final int ic_launcher=0x7f020001;
+        public static final int list_selector=0x7f020002;
     }
     public static final class id {
         public static final int AddTaskButton=0x7f070001;
+<<<<<<< HEAD
         public static final int MyTasksHeader=0x7f070003;
         public static final int MyTasksTable=0x7f070004;
         public static final int PublicTasksHeader=0x7f070005;
@@ -27,6 +29,22 @@ public final class R {
     public static final class layout {
         public static final int activity_main_menu=0x7f030000;
         public static final int activity_main_menu_tables=0x7f030001;
+=======
+        public static final int MyTasksHeader=0x7f070002;
+        public static final int MyTasksTable=0x7f070003;
+        public static final int PublicTasksHeader=0x7f070004;
+        public static final int PublicTasksTable=0x7f070005;
+        public static final int artist=0x7f070008;
+        public static final int date=0x7f070009;
+        public static final int menu_settings=0x7f07000a;
+        public static final int scrollView1=0x7f070000;
+        public static final int thumbnail=0x7f070007;
+        public static final int title=0x7f070006;
+    }
+    public static final class layout {
+        public static final int activity_main_menu=0x7f030000;
+        public static final int list_row=0x7f030001;
+>>>>>>> Update To List
     }
     public static final class menu {
         public static final int activity_main_menu=0x7f060000;

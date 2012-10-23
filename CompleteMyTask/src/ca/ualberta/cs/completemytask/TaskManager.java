@@ -20,7 +20,15 @@ public class TaskManager {
 		return instance;
 	}
 	
+	public int size() {
+		return this.tasks.size();
+	}
+	
 	public void addTask(Task task) {
 		this.tasks.add(task);
+	}
+	
+	public Task getTaskAt(int position) {
+		return this.tasks.get(position);
 	}
 }

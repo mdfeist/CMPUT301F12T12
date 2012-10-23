@@ -2,38 +2,39 @@ package ca.ualberta.cs.completemytask;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TableLayout.LayoutParams;
-import android.widget.TableRow;
-import android.widget.TextView;
 
 /**
  * 
- * @author mdfeist
- * 
- * Test Comments/Commit
+ * @author Michael Feist
  *
  */
 
 public class MainMenuActivity extends Activity {
 
+	private static final String TAG = "MainMenuActivity";
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
         
         // add a click-listener on the add button
-        /*
         Button addTaskButton = (Button) findViewById(R.id.AddTaskButton);
         addTaskButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-            	createFakeTable();
+            	
         	}
         });
-        */
+        
+        createFakeTable();
     }
 
     @Override
@@ -43,29 +44,29 @@ public class MainMenuActivity extends Activity {
     }
     
     public void createFakeTable() {
-    	for (int i = 0; i < 25; i ++) {
+    	for (int i = 0; i < 50; i ++) {
 	    	// get a reference for the TableLayout
-	        TableLayout table = (TableLayout) findViewById(R.id.MyTasksTable);
+    		ListView list = (ListView) findViewById(R.id.taskList);
 	    	
 	        // create a new TableRow
-	        Task task = new Task(this, "My Task " + i, "");
-	
-	        // add the TableRow to the TableLayout
-	        table.addView(task,new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, 
-	        		LayoutParams.WRAP_CONTENT));
+	        final Task task = new Task("My Task " + i, "");
+	        
+	        // Getting adapter by passing xml data ArrayList
+	        TaskAdapter adapter = new TaskAdapter(this);
+	        list.setAdapter(adapter);
+	 /*
+	        // Click event for single list row
+	        list.setOnItemClickListener(new OnItemClickListener() {
+	 
+	            @Override
+	            public void onItemClick(AdapterView&lt;?&gt; parent, View view,
+	                    int position, long id) {
+	 
+	            }
+	        });
+	        */
     	}
     	
-    	for (int i = 0; i < 25; i ++) {
-	    	// get a reference for the TableLayout
-	        TableLayout table = (TableLayout) findViewById(R.id.PublicTasksTable);
-	    	
-	        // create a new TableRow
-	        Task task = new Task(this, "Public Task " + i, "");
-	
-	        // add the TableRow to the TableLayout
-	        table.addView(task,new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, 
-	        		LayoutParams.WRAP_CONTENT));
-    	}
     }
 
 }
