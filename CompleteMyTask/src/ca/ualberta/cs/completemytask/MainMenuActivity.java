@@ -38,6 +38,8 @@ public class MainMenuActivity extends Activity {
     	        
     	        TaskManager.getInstance().addTask(task);
     	        
+    	        TaskManager.getInstance().syncDatabase();
+    	        
     	        adapter.notifyDataSetChanged();
         	}
         });
