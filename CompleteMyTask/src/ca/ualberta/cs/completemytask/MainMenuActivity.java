@@ -35,10 +35,9 @@ public class MainMenuActivity extends Activity {
             public void onClick(View view) {
             	 // create a new Task
     	        Task task = new Task("My Task", "");
+    	        task.setShared(true);
     	        
     	        TaskManager.getInstance().addTask(task);
-    	        
-    	        TaskManager.getInstance().syncDatabase();
     	        
     	        adapter.notifyDataSetChanged();
         	}
@@ -47,6 +46,7 @@ public class MainMenuActivity extends Activity {
         createFakeTable();
         
         adapter.notifyDataSetChanged();
+        
     }
 
     @Override
@@ -77,7 +77,7 @@ public class MainMenuActivity extends Activity {
     }
     
     public void createFakeTable() {
-    	for (int i = 0; i < 5; i ++) {
+    	for (int i = 0; i < 2; i ++) {
 	    	
 	        // create a new Task
 	        Task task = new Task("My Task " + i, "");
@@ -85,7 +85,7 @@ public class MainMenuActivity extends Activity {
 	        TaskManager.getInstance().addTask(task);
 	        
     	}
-    	
+    	/*
     	for (int i = 0; i < 5; i ++) {
 	    	
 	        // create a new Task
@@ -95,6 +95,7 @@ public class MainMenuActivity extends Activity {
 	        TaskManager.getInstance().addTask(task);
 	        
     	}
+    	*/
     }
 
 }
