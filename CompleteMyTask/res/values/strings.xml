@@ -10,13 +10,16 @@
     
     <string name="AddTaskButtonLabel">Add Task</string>
     <string name="CancelButtonLabel">Cancel</string>
-    
     <string name="SyncTaskButtonLabel">Sync</string>
-    <string name="SyncTaskLabel">Syncing with Database</string>
+    
+    <string name="TextRequirementCheckboxLabel">Requires Text</string>
+    <string name="ImageRequirementCheckboxLabel">Requires Image</string>
+    <string name="AudioRequirementCheckboxLabel">Requires Audio</string>
     
     <string name="TaskNameHeaderLabel">Task Name:</string>
     <string name="TaskDescriptionHeaderLabel">Task Description:</string>
     <string name="TaskRequirementsHeaderLabel">Task Requirements:</string>
+    <string name="SyncTaskLabel">Syncing with Database</string>
     
     <string name="EditTaskNameHint">Task name</string>
     <string name="EditTaskDescriptionHint">Short task description</string>
