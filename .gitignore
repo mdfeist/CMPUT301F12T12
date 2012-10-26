@@ -1,8 +1,10 @@
 bin/
 libs/
+gen/
 
 CompleteMyTask/bin/
 CompleteMyTask/libs/
+CompleteMyTask/gen/
 
 .DS_Store
 CompleteMyTask/.DS_Store
@@ -22,3 +24,5 @@ CompleteMyTask/bin/classes.dex
 CompleteMyTask/bin/resources.ap_
 
 .DS_Store
+
+CompleteMyTask/gen/ca/ualberta/cs/completemytask/R.java

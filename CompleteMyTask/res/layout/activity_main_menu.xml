@@ -1,31 +1,48 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:id="@+id/main_menu_layout" >
 
-    <ListView
+    <ViewStub
+        android:id="@+id/stub_import"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="bottom"
+        android:inflatedId="@+id/panel_import"
+        android:layout="@layout/progress_overlay" />
+
+     <ListView
         android:id="@+id/TasksList"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_above="@+id/AddTaskButton"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="4dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginRight="4dp" />
-    
+        android:layout_marginRight="4dp"
+        android:layout_marginTop="4dp" />
+
     <View
         android:id="@+id/Bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/TasksList"
         android:background="@drawable/tab_bar_background" />
-   
-<Button
+
+    <Button
         android:id="@+id/AddTaskButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:text="@string/AddTaskButtonLabel" />
+
+    <Button
+        android:id="@+id/SyncTaskButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="@string/SyncTaskButtonLabel" />
 
 </RelativeLayout>
