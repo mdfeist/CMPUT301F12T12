@@ -25,6 +25,14 @@ public class MainMenuActivity extends Activity {
 	private static final String TAG = "MainMenuActivity";
 	private TaskAdapter adapter;
 	
+	// View id's
+	private int ADD_TASK_BUTTON = R.id.AddTaskButton;
+	private int SYNC_TASK_BUTTON = R.id.SyncTaskButton;
+	private int LOAD_VIEW_STUB = R.id.stub_import;
+	private int LOAD_VIEW = R.id.panel_import;
+	private int MAIN_MENU_LAYOUT = R.id.main_menu_layout;
+	private int TASK_LIST = R.id.TasksList;
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +41,7 @@ public class MainMenuActivity extends Activity {
         setupList();
         
         // add a click-listener on the add button
-        Button addTaskButton = (Button) findViewById(R.id.AddTaskButton);
+        Button addTaskButton = (Button) findViewById(ADD_TASK_BUTTON);
         addTaskButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
             	 // create a new Task
@@ -46,7 +54,7 @@ public class MainMenuActivity extends Activity {
         });
         
         // add a click-listener on the sync button
-        Button syncButton = (Button) findViewById(R.id.SyncTaskButton);
+        Button syncButton = (Button) findViewById(SYNC_TASK_BUTTON);
         syncButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
             	sync();
@@ -59,14 +67,20 @@ public class MainMenuActivity extends Activity {
     }
     
     private void sync() {
-    	final ViewStub loadView = (ViewStub) findViewById(R.id.stub_import);
     	
     	class SyncDatabasteAsyncTask extends AsyncTask<String, Void, Long>{
     		
     		@Override
     		protected void onPreExecute() {
     			enableView(false);
-    	    	//loadView.setVisibility(View.VISIBLE);
+    			ViewStub loadViewStub = (ViewStub) findViewById(LOAD_VIEW_STUB);
+    			
+    			if (loadViewStub != null) {
+    				loadViewStub.inflate();
+    			} else {
+    				View loadView = (View) findViewById(LOAD_VIEW);
+    	        	loadView.setVisibility(View.VISIBLE);
+    			}
     		}
     		
 	        @Override
@@ -84,7 +98,7 @@ public class MainMenuActivity extends Activity {
 	        
 	        @Override
 	        protected void onPostExecute(Long result) {
-	            super.onPostExecute(result);
+	            super.onPostExecute(null);
 
 	            if(result == 1){
 	            	Log.v(TAG, "HTTP post done");
@@ -94,8 +108,10 @@ public class MainMenuActivity extends Activity {
 	            
 	            adapter.notifyDataSetChanged();
 	            
-	        	enableView(true);
-	        	//loadView.setVisibility(View.INVISIBLE);
+	            enableView(true);
+	            
+	        	View loadView = (View) findViewById(LOAD_VIEW);
+	        	loadView.setVisibility(View.INVISIBLE);
 	        }        
 		}
 		
@@ -105,15 +121,18 @@ public class MainMenuActivity extends Activity {
     }
     
     private void enableView(boolean enable) {
-    	RelativeLayout layout = (RelativeLayout)findViewById(R.id.main_menu_layout);
+    	RelativeLayout layout = (RelativeLayout)findViewById(MAIN_MENU_LAYOUT);
         for (int i = 0; i < layout.getChildCount(); i++) {
             View child = layout.getChildAt(i);
-            child.setEnabled(enable);
             
-            if (!enable) {
-            	child.setAlpha(0.5f);
-            } else {
-            	child.setAlpha(1.0f);
+            if (child.getId() != LOAD_VIEW) {
+	            child.setEnabled(enable);
+	            
+	            if (!enable) {
+	            	child.setAlpha(0.5f);
+	            } else {
+	            	child.setAlpha(1.0f);
+	            }
             }
         }
     }
@@ -126,7 +145,7 @@ public class MainMenuActivity extends Activity {
     
     public void setupList() {
     	// get a reference for the TableLayout
-		ListView list = (ListView) findViewById(R.id.TasksList);
+		ListView list = (ListView) findViewById(TASK_LIST);
 
 		// Custom Adapter
 		adapter = new TaskAdapter(this);

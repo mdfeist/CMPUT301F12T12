@@ -9,8 +9,10 @@
     <string name="PublicTasksHeader">Public Tasks</string>
     
     <string name="AddTaskButtonLabel">Add Task</string>
-    <string name="SyncTaskButtonLabel">Sync</string>
     <string name="CancelButtonLabel">Cancel</string>
+    
+    <string name="SyncTaskButtonLabel">Sync</string>
+    <string name="SyncTaskLabel">Syncing with Database</string>
     
     <string name="TaskNameHeaderLabel">Task Name:</string>
     <string name="TaskDescriptionHeaderLabel">Task Description:</string>
