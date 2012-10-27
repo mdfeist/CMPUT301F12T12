@@ -81,4 +81,44 @@ public class TaskManager {
     	}
     	*/
     }
+	/*
+	public void save(File file) {
+		try {
+			// use buffering
+			OutputStream fileStream = new FileOutputStream(file);
+			OutputStream buffer = new BufferedOutputStream(fileStream);
+			ObjectOutput output = new ObjectOutputStream(buffer);
+			try {
+				output.writeObject(this.taskList);
+			} finally {
+				output.close();
+			}
+		} catch (IOException e) {
+			// Unable to create file
+	        Log.w("ExternalStorage", "Error writing " + file, e);
+		}
+	}
+	
+	public void load(File file) {
+		try {
+			// use buffering
+			InputStream fileStream = new FileInputStream(file);
+			InputStream buffer = new BufferedInputStream(fileStream);
+			ObjectInput input = new ObjectInputStream(buffer);
+			try {
+				// deserialize the List
+				@SuppressWarnings("unchecked")
+				List<Task> readObject = (List<Task>) input.readObject();
+				this.taskList = readObject;
+			} finally {
+				input.close();
+			}
+		} catch (ClassNotFoundException e) {
+			Log.w("ExternalStorage", "Cannot perform input. Class not found. "
+					+ file, e);
+		} catch (IOException e) {
+			Log.w("ExternalStorage", "Cannot perform input: " + file, e);
+		}
+	}
+	*/
 }
