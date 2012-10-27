@@ -10,7 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 /**
- * Allows a list view to show the tasks for the TaskManager.
+ * Allows a list view to show the tasks in the TaskManager.
  * 
  * @author Michael Feist
  * 
@@ -37,7 +37,9 @@ public class TaskAdapter extends BaseAdapter {
 	public long getItemId(int position) {
 		return position;
 	}
-
+	
+	
+	// Displays a custom list item view
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View vi = convertView;
 		if (convertView == null)
@@ -51,7 +53,7 @@ public class TaskAdapter extends BaseAdapter {
 		Task task = TaskManager.getInstance().getTaskAt(position);
 
 		// Setting all values in listview
-		if (task.isShared()) {
+		if (task.isPublic()) {
 			shared.setText("Public");
 			shared.setTextColor(Color.parseColor("#10BCC9"));
 		} else {

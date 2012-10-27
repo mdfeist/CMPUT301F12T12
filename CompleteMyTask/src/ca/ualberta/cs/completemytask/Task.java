@@ -42,11 +42,11 @@ public class Task extends UserData {
 
 	}
 
-	public boolean isShared() {
+	public boolean isPublic() {
 		return shared;
 	}
 
-	public void setShared(boolean shared) {
+	public void setPublic(boolean shared) {
 		this.shared = shared;
 	}
 

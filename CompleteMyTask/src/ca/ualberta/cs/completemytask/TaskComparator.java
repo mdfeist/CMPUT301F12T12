@@ -14,8 +14,8 @@ public class TaskComparator implements Comparator<Task>{
  
     public int compare(Task task1, Task task2) {
  
-    	boolean shared1 = task1.isShared();
-    	boolean shared2 = task2.isShared();
+    	boolean shared1 = task1.isPublic();
+    	boolean shared2 = task2.isPublic();
         
         // Compare if Shared
         if (shared1 && !shared2){

@@ -46,7 +46,7 @@ public class MainMenuActivity extends Activity {
             public void onClick(View view) {
             	 // create a new Task
     	        Task task = new Task("My Task", "");
-    	        task.setShared(true);
+    	        task.setPublic(true);
     	        
     	        TaskManager.getInstance().addTask(task);
     	        adapter.notifyDataSetChanged();

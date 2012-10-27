@@ -125,7 +125,7 @@ public class DatabaseManager {
 					String description = data.getString("description");
 					
 					task = new Task(name, description);
-					task.setShared(true);
+					task.setPublic(true);
 					task.setId(id);
 					
 					Log.v(TAG, task.toString());
