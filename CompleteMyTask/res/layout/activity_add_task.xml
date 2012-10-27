@@ -1,0 +1,101 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TextView
+        android:id="@+id/TaskNameHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/TaskNameHeaderLabel" />
+
+    <EditText
+        android:id="@+id/EditTaskName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/TaskNameHeader"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:hint="@string/EditTaskNameHint"
+        android:inputType="text"
+        android:maxLines="1" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/TaskDescriptionHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/EditTaskName"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/TaskDescriptionHeaderLabel" />
+
+    <EditText
+        android:id="@+id/EditTaskDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/TaskDescriptionHeader"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:hint="@string/EditTaskDescriptionHint"
+        android:inputType="textMultiLine"
+        android:minLines="2"
+        android:maxLines="4"
+        android:gravity="top" >
+        <requestFocus />
+    </EditText>
+    
+    <TextView
+        android:id="@+id/TaskRequirementsHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/EditTaskDescription"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/TaskRequirementsHeaderLabel" />
+
+    <CheckBox
+        android:id="@+id/TextRequirementCheckbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/TaskRequirementsHeader"
+        android:text="@string/TextRequirementCheckboxLabel" />
+
+    <CheckBox
+        android:id="@+id/PictureRequirementCheckbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/TextRequirementCheckbox"
+        android:text="@string/ImageRequirementCheckboxLabel" />
+    
+    <CheckBox
+        android:id="@+id/AudioRequirementCheckbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/PictureRequirementCheckbox"
+        android:text="@string/AudioRequirementCheckboxLabel" />
+    
+    <Button
+        android:id="@+id/AddTaskButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="@string/AddTaskButtonLabel" />
+
+    <Button
+        android:id="@+id/CancelAddTaskButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="@string/CancelButtonLabel" />
+
+</RelativeLayout>
