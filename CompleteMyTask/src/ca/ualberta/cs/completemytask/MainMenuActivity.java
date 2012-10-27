@@ -141,16 +141,7 @@ public class MainMenuActivity extends Activity {
     	RelativeLayout layout = (RelativeLayout)findViewById(MAIN_MENU_LAYOUT);
         for (int i = 0; i < layout.getChildCount(); i++) {
             View child = layout.getChildAt(i);
-            
-            if (child.getId() != LOAD_VIEW) {
-	            child.setEnabled(enable);
-	            
-	            if (!enable) {
-	            	child.setAlpha(0.5f);
-	            } else {
-	            	child.setAlpha(1.0f);
-	            }
-            }
+            child.setEnabled(enable);
         }
     }
     

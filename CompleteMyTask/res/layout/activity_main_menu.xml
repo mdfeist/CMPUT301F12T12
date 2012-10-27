@@ -4,14 +4,6 @@
     android:layout_height="match_parent"
     android:id="@+id/main_menu_layout" >
 
-    <ViewStub
-        android:id="@+id/stub_import"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_gravity="bottom"
-        android:inflatedId="@+id/panel_import"
-        android:layout="@layout/progress_overlay" />
-
      <ListView
         android:id="@+id/TasksList"
         android:layout_width="wrap_content"
@@ -58,5 +50,13 @@
         android:onClick="sync"
         android:background="@drawable/button_selector"
         android:textColor="#ffffffff" />
+    
+	<ViewStub
+        android:id="@+id/stub_import"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="bottom"
+        android:inflatedId="@+id/panel_import"
+        android:layout="@layout/progress_overlay" />
 
 </RelativeLayout>
