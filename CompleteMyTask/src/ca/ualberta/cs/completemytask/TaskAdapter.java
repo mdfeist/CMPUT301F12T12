@@ -62,7 +62,7 @@ public class TaskAdapter extends BaseAdapter {
 		}
 
 		title.setText(task.getName());
-		user.setText(task.getUser());
+		user.setText("Created by: " + task.getUser());
 		date.setText(task.getDateAsString());
 		return vi;
 	}

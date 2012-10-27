@@ -82,13 +82,27 @@
         android:layout_below="@+id/PictureRequirementCheckbox"
         android:text="@string/AudioRequirementCheckboxLabel" />
     
+    <View
+        android:id="@+id/Bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/AddTaskButton"
+        android:background="@drawable/tab_bar_background" />
+    
     <Button
         android:id="@+id/AddTaskButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:text="@string/AddTaskButtonLabel" />
+        android:layout_marginLeft="5dp" 
+    	android:layout_marginRight="5dp"
+    	android:paddingLeft="5dp" 
+    	android:paddingRight="5dp"
+        android:text="@string/AddTaskButtonLabel"
+        android:onClick="addTask"
+        android:background="@drawable/button_selector"
+        android:textColor="#ffffffff" />
 
     <Button
         android:id="@+id/CancelAddTaskButton"
@@ -96,6 +110,13 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:text="@string/CancelButtonLabel" />
+        android:layout_marginLeft="5dp" 
+    	android:layout_marginRight="5dp"
+    	android:paddingLeft="5dp" 
+    	android:paddingRight="5dp"
+        android:text="@string/CancelButtonLabel"
+        android:onClick="cancel"
+        android:background="@drawable/button_selector"
+        android:textColor="#ffffffff" />
 
 </RelativeLayout>

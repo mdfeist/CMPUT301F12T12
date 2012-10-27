@@ -127,6 +127,7 @@ public class DatabaseManager {
 					task = new Task(name, description);
 					task.setPublic(true);
 					task.setId(id);
+					task.syncFinished();
 					
 					Log.v(TAG, task.toString());
 				}

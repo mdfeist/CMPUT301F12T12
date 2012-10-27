@@ -3,11 +3,11 @@ package ca.ualberta.cs.completemytask;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewStub;
-import android.widget.Button;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
@@ -26,8 +26,8 @@ public class MainMenuActivity extends Activity {
 	private TaskAdapter adapter;
 	
 	// View id's
-	private int ADD_TASK_BUTTON = R.id.AddTaskButton;
-	private int SYNC_TASK_BUTTON = R.id.SyncTaskButton;
+	//private int ADD_TASK_BUTTON = R.id.AddTaskButton;
+	//private int SYNC_TASK_BUTTON = R.id.SyncTaskButton;
 	private int LOAD_VIEW_STUB = R.id.stub_import;
 	private int LOAD_VIEW = R.id.panel_import;
 	private int MAIN_MENU_LAYOUT = R.id.main_menu_layout;
@@ -40,33 +40,37 @@ public class MainMenuActivity extends Activity {
         
         setupList();
         
-        // add a click-listener on the add button
-        Button addTaskButton = (Button) findViewById(ADD_TASK_BUTTON);
-        addTaskButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-            	 // create a new Task
-    	        Task task = new Task("My Task", "");
-    	        task.setPublic(true);
-    	        
-    	        TaskManager.getInstance().addTask(task);
-    	        adapter.notifyDataSetChanged();
-        	}
-        });
-        
-        // add a click-listener on the sync button
-        Button syncButton = (Button) findViewById(SYNC_TASK_BUTTON);
-        syncButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-            	sync();
-        	}
-        });
-        
-        createFakeTable();
+        TaskManager.getInstance().loadLocalData();
         adapter.notifyDataSetChanged();
         
     }
     
-    private void sync() {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_main_menu, menu);
+        return true;
+    }
+    
+    @Override
+    public void onBackPressed() {
+    	super.onBackPressed();
+    	//this.finish();
+        return;
+    }
+    
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // The activity is about to be destroyed.
+        Log.v(TAG, "destroyed");
+    }
+    
+    public void createNewTask(View view) {
+    	Intent intent = new Intent(this, AddTaskActivity.class);
+    	startActivity(intent);
+    }
+    
+    public void sync(View view) {
     	
     	class SyncDatabasteAsyncTask extends AsyncTask<String, Void, Long>{
     		
@@ -136,12 +140,6 @@ public class MainMenuActivity extends Activity {
             }
         }
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_main_menu, menu);
-        return true;
-    }
     
     public void setupList() {
     	// get a reference for the TableLayout
@@ -162,28 +160,6 @@ public class MainMenuActivity extends Activity {
 			}
 
 		});
-    }
-    
-    public void createFakeTable() {
-    	for (int i = 0; i < 2; i ++) {
-	    	
-	        // create a new Task
-	        Task task = new Task("My Task " + i, "");
-	        
-	        TaskManager.getInstance().addTask(task);
-	        
-    	}
-    	/*
-    	for (int i = 0; i < 5; i ++) {
-	    	
-	        // create a new Task
-	        Task task = new Task("Public Task " + i, "");
-	        task.setShared(true);
-	        
-	        TaskManager.getInstance().addTask(task);
-	        
-    	}
-    	*/
     }
 
 }

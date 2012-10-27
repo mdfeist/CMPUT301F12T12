@@ -17,9 +17,12 @@ public class TaskManager {
 	
 	private static final String TAG = "TaskManager";
 	private List<Task> tasks;
+	
+	private boolean loadedData;
 
 	protected TaskManager() {
 		this.tasks = new ArrayList<Task>();
+		this.loadedData = false;
 	}
 
 	public static TaskManager getInstance() {
@@ -47,4 +50,35 @@ public class TaskManager {
 	public List<Task> getTaskArray() {
 		return tasks;
 	}
+	
+	public void loadLocalData() {
+		if (!loadedData) {
+			Log.v(TAG, "Loading local data");
+			
+			createFakeTable();
+			this.loadedData = true;
+		}
+	}
+	
+	private void createFakeTable() {
+    	for (int i = 0; i < 2; i ++) {
+	    	
+	        // create a new Task
+	        Task task = new Task("My Task " + i, "");
+	        
+	        TaskManager.getInstance().addTask(task);
+	        
+    	}
+    	/*
+    	for (int i = 0; i < 5; i ++) {
+	    	
+	        // create a new Task
+	        Task task = new Task("Public Task " + i, "");
+	        task.setShared(true);
+	        
+	        TaskManager.getInstance().addTask(task);
+	        
+    	}
+    	*/
+    }
 }

@@ -24,6 +24,10 @@ public class Task extends UserData {
 	private String description;
 
 	private String id;
+	
+	private boolean needsComment;
+	private boolean needsPhoto;
+	private boolean needsAudio;
 
 	Task() {
 		this("New Task", "No Description");
@@ -39,6 +43,10 @@ public class Task extends UserData {
 
 		this.name = name;
 		this.description = description;
+		
+		this.needsComment = false;
+		this.needsPhoto = false;
+		this.needsAudio = false;
 
 	}
 
@@ -84,6 +92,12 @@ public class Task extends UserData {
 	public String getId() {
 		return this.id;
 	}
+	
+	public void setRequirements(boolean comment, boolean photo, boolean audio) {
+		this.needsComment = comment;
+		this.needsPhoto = photo;
+		this.needsAudio = audio;
+	}
 
 	public boolean needsSync() {
 		return this.sync && this.shared;
@@ -94,10 +108,42 @@ public class Task extends UserData {
 	}
 
 	public String toString() {
+		
+		String yes = "YES";
+		String no = "NO";
+		
+		String publicTask = no;
+		
+		String comments = no;
+		String photos = no;
+		String audios = no;
+		
+		if (needsComment) {
+			comments = yes;
+		}
+		
+		if (needsPhoto) {
+			photos = yes;
+		}
+		
+		if (needsAudio) {
+			audios = yes;
+		}
+		
+		if (shared) {
+			publicTask = yes;
+		}
 
 		String task = String.format(
-				"Task: \n\t Name: %s\n\t Description: %s\n\t Id: %s \n",
-				this.name, this.description, this.id);
+				"Task: \n\t " +
+				"Name: %s\n\t " +
+				"Description: %s\n\t " +
+				"Id: %s \n\t " +
+				"Public: %s \n\n\t " +
+				"Requirements: \n\t\t " +
+				"Needs Comments: %s \n\t\t Needs Photos: %s \n\t\t Needs Audio: %s \n\t",
+				this.name, this.description, this.id, publicTask,
+				comments, photos, audios);
 
 		return task;
 	}
