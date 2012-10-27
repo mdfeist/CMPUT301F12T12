@@ -2,6 +2,7 @@ package ca.ualberta.cs.completemytask;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -56,8 +57,11 @@ public class AddTaskActivity extends Activity {
     	
     	Log.v(TAG, task.toString());
     	
+    	
     	TaskManager.getInstance().addTask(task);
     	
+    	Intent intent = new Intent();
+    	setResult(RESULT_OK, intent);
     	this.finish();
     }
 }

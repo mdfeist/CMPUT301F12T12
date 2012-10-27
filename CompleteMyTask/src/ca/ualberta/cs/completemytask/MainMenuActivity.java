@@ -33,6 +33,8 @@ public class MainMenuActivity extends Activity {
 	private int MAIN_MENU_LAYOUT = R.id.main_menu_layout;
 	private int TASK_LIST = R.id.TasksList;
 	
+	private static final int ADD_TASK = 1;
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +69,18 @@ public class MainMenuActivity extends Activity {
     
     public void createNewTask(View view) {
     	Intent intent = new Intent(this, AddTaskActivity.class);
-    	startActivity(intent);
+    	startActivityForResult(intent, ADD_TASK);
+    }
+    
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        if(requestCode == ADD_TASK) {
+            if(resultCode == RESULT_OK && intent != null) {
+            	Log.v(TAG, "Task added");
+            	adapter.notifyDataSetChanged();
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, intent);
     }
     
     public void sync(View view) {
