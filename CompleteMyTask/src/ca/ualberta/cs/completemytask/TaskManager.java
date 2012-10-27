@@ -82,6 +82,9 @@ public class TaskManager {
     	*/
     }
 	/*
+  
+   file = new File(getFilesDir(), "batteryData");
+   
 	public void save(File file) {
 		try {
 			// use buffering
