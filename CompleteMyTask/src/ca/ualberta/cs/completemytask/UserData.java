@@ -13,25 +13,32 @@ import java.util.GregorianCalendar;
 
 public class UserData {
 	
-	String user;
+	User user = null;
 	GregorianCalendar date;
 	
 	UserData() {
-		this.user = "Unknown";
 		date = new GregorianCalendar();
 	}
 	
-	UserData(String user) {
+	UserData(User user) {
 		this.user = user;
 		date = new GregorianCalendar();
 	}
 	
-	public void setUser(String user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 	
-	public String getUser() {
+	public User getUser() {
 		return this.user;
+	}
+	
+	public boolean hasUser() {
+		if (user != null) {
+			return true;
+		}
+		
+		return false;
 	}
 	
 	public GregorianCalendar getDate() {
