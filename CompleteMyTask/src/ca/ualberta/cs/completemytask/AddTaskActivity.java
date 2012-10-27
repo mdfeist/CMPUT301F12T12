@@ -51,6 +51,11 @@ public class AddTaskActivity extends Activity {
     	String taskDescription = taskDescriptionEditText.getText().toString();
     	
     	Task task = new Task(taskName, taskDescription);
+    	
+    	if (Settings.getInstance().hasUser()) {
+    		task.setUser(Settings.getInstance().getUser());
+    	}
+    	
     	task.setRequirements(textRequirementCheckbox.isChecked(), 
     			photoRequirementCheckbox.isChecked(), 
     			audioRequirementCheckbox.isChecked());

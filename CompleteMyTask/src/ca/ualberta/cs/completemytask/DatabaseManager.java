@@ -124,7 +124,10 @@ public class DatabaseManager {
 					String name = data.getString("name");
 					String description = data.getString("description");
 					
+					User user = new User("Unknown");
+					
 					task = new Task(name, description);
+					task.setUser(user);
 					task.setPublic(true);
 					task.setId(id);
 					task.syncFinished();

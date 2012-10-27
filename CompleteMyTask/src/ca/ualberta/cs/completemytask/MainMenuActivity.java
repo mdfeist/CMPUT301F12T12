@@ -1,12 +1,15 @@
 package ca.ualberta.cs.completemytask;
 
+
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -34,12 +37,14 @@ public class MainMenuActivity extends Activity {
 	private int TASK_LIST = R.id.TasksList;
 	
 	private static final int ADD_TASK = 1;
+	private static final int USER = 2;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
         
+        setUpSettings();
         setupList();
         
         TaskManager.getInstance().loadLocalData();
@@ -67,6 +72,21 @@ public class MainMenuActivity extends Activity {
         Log.v(TAG, "destroyed");
     }
     
+    public void setUpSettings() {
+    	Settings.getInstance().load(this);
+    	boolean needsUser = !Settings.getInstance().hasUser();
+    	
+    	if (needsUser) {
+    		Intent intent = new Intent(this, UserInfoActivity.class);
+        	startActivityForResult(intent, USER);
+    	}
+    }
+    
+    public void editUser(View view) {
+    	Intent intent = new Intent(this, UserInfoActivity.class);
+    	startActivityForResult(intent, USER);
+    }
+    
     public void createNewTask(View view) {
     	Intent intent = new Intent(this, AddTaskActivity.class);
     	startActivityForResult(intent, ADD_TASK);
@@ -80,6 +100,14 @@ public class MainMenuActivity extends Activity {
             	adapter.notifyDataSetChanged();
             }
         }
+        
+        if(requestCode == USER) {
+            if(resultCode == RESULT_OK && intent != null) {
+            	Log.v(TAG, "User added: \n" + Settings.getInstance().getUserName());
+            	Settings.getInstance().save(this);
+            }
+        }
+        
         super.onActivityResult(requestCode, resultCode, intent);
     }
     
@@ -139,8 +167,18 @@ public class MainMenuActivity extends Activity {
     
     private void enableView(boolean enable) {
     	RelativeLayout layout = (RelativeLayout)findViewById(MAIN_MENU_LAYOUT);
-        for (int i = 0; i < layout.getChildCount(); i++) {
-            View child = layout.getChildAt(i);
+        enableView(enable, layout);
+    }
+    
+    private void enableView(boolean enable, ViewGroup viewGroup) {
+    	for (int i = 0; i < viewGroup.getChildCount(); i++) {
+    		View child = viewGroup.getChildAt(i);
+    		
+            if (ViewGroup.class.isAssignableFrom(child.getClass())) {
+            	Log.v(TAG, "Found View Group");
+            	enableView(enable, (ViewGroup)child);
+            }
+            
             child.setEnabled(enable);
         }
     }

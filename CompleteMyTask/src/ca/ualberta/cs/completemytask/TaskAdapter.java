@@ -61,8 +61,14 @@ public class TaskAdapter extends BaseAdapter {
 			shared.setTextColor(0xFFFF0000);
 		}
 
+		String userName = "Unknown";
+		
+		if (task.hasUser()) {
+			userName = task.getUser().getUserName();
+		}
+		
 		title.setText(task.getName());
-		user.setText("Created by: " + task.getUser());
+		user.setText("Created by: " + userName);
 		date.setText(task.getDateAsString());
 		return vi;
 	}
