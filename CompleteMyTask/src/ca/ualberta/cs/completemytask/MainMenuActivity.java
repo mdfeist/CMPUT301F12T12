@@ -174,7 +174,6 @@ public class MainMenuActivity extends Activity {
     		View child = viewGroup.getChildAt(i);
     		
             if (ViewGroup.class.isAssignableFrom(child.getClass())) {
-            	Log.v(TAG, "Found View Group");
             	enableView(enable, (ViewGroup)child);
             }
             

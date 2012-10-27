@@ -121,13 +121,61 @@ public class DatabaseManager {
 				String type = data.getString("type");
 				
 				if (type.equals("Task")) {
-					String name = data.getString("name");
-					String description = data.getString("description");
 					
-					User user = new User("Unknown");
+					String userName = "Unknown";
+					String name = "Unknown";
+					String description = "Unknown";
+					
+					boolean needsComment = false;
+					boolean needsPhoto = false;
+					boolean needsAudio = false;
+					
+					try {
+						name = data.getString("name");
+					} catch (JSONException e) {
+						Log.v(TAG, "Failed to get task name.");
+						name = "Unknown";
+					}
+					
+					try {
+						description = data.getString("description");
+					} catch (JSONException e) {
+						Log.v(TAG, "Failed to get task description.");
+						description = "Unknown";
+					}		
+					
+					try {
+						userName = data.getString("user");
+					} catch (JSONException e) {
+						Log.v(TAG, "Failed to get user.");
+						userName = "Unknown";
+					} 
+					
+					try {
+						needsComment = data.getBoolean("needsComment");
+					} catch (JSONException e) {
+						Log.v(TAG, "Failed to get needsComment.");
+						needsComment = false;
+					} 
+					
+					try {
+						needsPhoto = data.getBoolean("needsPhoto");
+					} catch (JSONException e) {
+						Log.v(TAG, "Failed to get needsPhoto.");
+						needsPhoto = false;
+					} 
+					
+					try {
+						needsAudio = data.getBoolean("needsAudio");
+					} catch (JSONException e) {
+						Log.v(TAG, "Failed to get needsAudio.");
+						needsAudio = false;
+					} 
+					User user = new User(userName);
 					
 					task = new Task(name, description);
 					task.setUser(user);
+					task.setRequirements(needsComment, needsPhoto, needsAudio);
 					task.setPublic(true);
 					task.setId(id);
 					task.syncFinished();
@@ -156,7 +204,7 @@ public class DatabaseManager {
 					.format("%s?action=%s&summary=%s&description=%s",
 							DATABASE_URL, action, "Task", task.getDateAsString());
 			
-			String save = String.format("%s&id=\"%s\"", task.toJSON(), task.getId());
+			String save = String.format("content=%s&id=%s", task.toJSON(), task.getId());
 
 			Log.v(TAG, action);
 			Log.v(TAG, "Content: " + save);

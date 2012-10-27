@@ -118,6 +118,8 @@ public class Task extends UserData {
 		String photos = no;
 		String audios = no;
 		
+		String userName = "Unknown";
+		
 		if (needsComment) {
 			comments = yes;
 		}
@@ -133,26 +135,54 @@ public class Task extends UserData {
 		if (shared) {
 			publicTask = yes;
 		}
+		
+		if (hasUser()) {
+			userName = getUser().getUserName();
+		}
 
 		String task = String.format(
 				"Task: \n\t " +
 				"Name: %s\n\t " +
 				"Description: %s\n\t " +
+				"Created By: %s\n\t " +
 				"Id: %s \n\t " +
 				"Public: %s \n\n\t " +
 				"Requirements: \n\t\t " +
 				"Needs Comments: %s \n\t\t Needs Photos: %s \n\t\t Needs Audio: %s \n\t",
-				this.name, this.description, this.id, publicTask,
+				this.name, this.description,
+				userName,
+				this.id, publicTask,
 				comments, photos, audios);
 
 		return task;
 	}
 	
 	public String toJSON() {
-		String save = String
-				.format("content={\"type\":\"Task\",\"name\":\"%s\",\"description\":\"%s\"}",
-						this.name, this.description);
 		
-		return save;
+		JSONObject json = new JSONObject();
+		
+		String userName = "Unknown";
+		
+		if (hasUser()) {
+			userName = getUser().getUserName();
+		}
+		
+		// Put type
+        try {
+			json.put( "type", "Task");
+			json.put( "name", this.name);
+			json.put( "description", this.description);
+			json.put( "user", userName);
+			json.put( "needsComment", this.needsComment);
+			json.put( "needsPhoto", this.needsPhoto);
+			json.put( "needsAudio", this.needsAudio);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+        Log.v(TAG, "JSON: " + json.toString());
+        
+		return json.toString();
 	}
 }
