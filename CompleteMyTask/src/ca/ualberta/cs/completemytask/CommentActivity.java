@@ -87,8 +87,10 @@ public class CommentActivity extends Activity {
 			comment.setUser(user);
 			task.addComment(comment);
 			
-			File localDataFile = new File(getFilesDir(), Settings.DATA_NAME);
-			TaskManager.getInstance().saveLocalData(localDataFile);
+			if (task.isLocal()) {
+				File localDataFile = new File(getFilesDir(), Settings.DATA_NAME);
+				TaskManager.getInstance().saveLocalData(localDataFile);
+			}
 			
 			String commentsString = commentsTextView.getText().toString();
 			commentsString +=  user.getUserName() + "\n\n\t" + comment.getContent() + "\n\n\n";
