@@ -1,47 +1,43 @@
 <resources>
-	
+
     <!-- App -->
     <string name="app_name">Complete My Task</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
-    
+
     <!-- Buttons -->
     <string name="AddTaskButtonLabel">Add Task</string>
     <string name="NextButtonLabel">Next</string>
     <string name="CancelButtonLabel">Cancel</string>
+    <string name="CloseButtonLabel">Close</string>
     <string name="SyncTaskButtonLabel">Sync</string>
     <string name="EditUserButtonLabel">Edit User</string>
-    
+
     <!-- Main Menu -->
     <string name="title_activity_main_menu">Main Menu</string>
-    
     <string name="MyTasksHeader">My Tasks</string>
     <string name="PublicTasksHeader">Public Tasks</string>
-    
     <string name="SyncTaskLabel">Syncing with Database</string>
-    
+
     <!-- Add Task -->
     <string name="title_activity_add_task">Add Task</string>
-    
     <string name="TaskNameHeaderLabel">Task Name:</string>
     <string name="TaskDescriptionHeaderLabel">Task Description:</string>
     <string name="TaskRequirementsHeaderLabel">Task Requirements:</string>
-    
     <string name="TextRequirementCheckboxLabel">Requires Text</string>
     <string name="ImageRequirementCheckboxLabel">Requires Image</string>
     <string name="AudioRequirementCheckboxLabel">Requires Audio</string>
-    
     <string name="EditTaskNameHint">Task name</string>
     <string name="EditTaskDescriptionHint">Short task description</string>
     
+    <!-- View Task -->
+	<string name="title_activity_view_task">View Task</string>
+
     <!-- User Info -->
     <string name="title_activity_user_info">User Info</string>
-    
     <string name="UserNameHeaderLabel">User Name:</string>
     <string name="EditUserNameHint">What name do you want displayed?</string>
-    
-    <string name="UserInfoDetials">
-        Details: \n\nTo use this app you will need to have a user name.
+    <string name="UserInfoDetials">        Details: \n\nTo use this app you will need to have a user name.
         This will allow other users to know who you are when
         you post.</string>
 
