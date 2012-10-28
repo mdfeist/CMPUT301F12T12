@@ -31,7 +31,7 @@
             android:label="@string/title_activity_user_info" >
         </activity>
         <activity
-            android:name=".ViewTask"
+            android:name=".ViewTaskActivity"
             android:label="@string/title_activity_view_task" >
         </activity>
     </application>

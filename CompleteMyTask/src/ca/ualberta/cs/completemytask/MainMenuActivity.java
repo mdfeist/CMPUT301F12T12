@@ -337,7 +337,7 @@ public class MainMenuActivity extends Activity {
 					intent.putExtra("Task Position", position);
 			    	startActivityForResult(intent, ADD_TASK);
 				} else {
-					intent = new Intent(view.getContext(), ViewTask.class);
+					intent = new Intent(view.getContext(), ViewTaskActivity.class);
 					intent.putExtra("Task Position", position); 
 			    	startActivityForResult(intent, VIEW_TASK);
 				}

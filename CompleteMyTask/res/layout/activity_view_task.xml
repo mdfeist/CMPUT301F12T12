@@ -11,26 +11,53 @@
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/TaskNameHeaderLabel" />
+    
+    <TextView
+        android:id="@+id/TaskName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/TaskNameHeader"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="8dp" />
 
     <TextView
         android:id="@+id/TaskDescriptionHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/TaskNameHeader"
+        android:layout_below="@+id/TaskName"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="16dp"
         android:text="@string/TaskDescriptionHeaderLabel" />
+    
+     <TextView
+        android:id="@+id/TaskDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/TaskDescriptionHeader"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="8dp" />
 
     <TextView
         android:id="@+id/TaskRequirementsHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/TaskDescriptionHeader"
+        android:layout_below="@+id/TaskDescription"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="16dp"
         android:text="@string/TaskRequirementsHeaderLabel" />
+    
+    <TextView
+        android:id="@+id/TaskRequirements"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/TaskRequirementsHeader"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="8dp" />
 
     <LinearLayout
         android:id="@+id/Bar"
