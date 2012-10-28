@@ -86,11 +86,21 @@ public class MainMenuActivity extends Activity {
     	}
     }
     
+    /**
+     * Called when user wants to edit their information.
+     * 
+     * @param A view
+     */
     public void editUser(View view) {
     	Intent intent = new Intent(this, UserInfoActivity.class);
     	startActivityForResult(intent, USER);
     }
     
+    /**
+     * Called when the user wants to create a new task.
+     * 
+     * @param A view
+     */
     public void createNewTask(View view) {
     	Intent intent = new Intent(this, AddTaskActivity.class);
     	startActivityForResult(intent, ADD_TASK);
@@ -115,6 +125,17 @@ public class MainMenuActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, intent);
     }
     
+    /**
+     * Makes a call to the Database and sync's the data base with
+     * the TaskManager. While the program is syncing the screen
+     * is locked and a spinning load screen will appear. The
+     * reason for the screen locking is we don't want the user
+     * changing content while we are trying to sync. Sync's are
+     * done on another thread because if done
+     * on the UI thread the application will crash.
+     * 
+     * @param A view
+     */
     public void sync(View view) {
     	
     	class SyncDatabasteAsyncTask extends AsyncTask<String, Void, Long>{
