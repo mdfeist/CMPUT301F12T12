@@ -5,7 +5,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Gallery;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ViewTaskActivity extends Activity {
 
@@ -66,13 +70,17 @@ public class ViewTaskActivity extends Activity {
      * @param A view
      */
     public void viewComments(View view){
-    	Intent intent = new Intent(this, CommentActivity.class);
-    	startActivityForResult(intent, VIEW_COMMENTS);
+    	//Intent intent = new Intent(this, CommentActivity.class);
+    	//startActivityForResult(intent, VIEW_COMMENTS);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_view_task, menu);
+
+        Gallery g = (Gallery) findViewById(R.id.PhotoGallery);
+        g.setAdapter(new ImageAdapter(this));
+
         return true;
     }
     
