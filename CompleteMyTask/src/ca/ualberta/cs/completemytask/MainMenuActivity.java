@@ -169,11 +169,24 @@ public class MainMenuActivity extends Activity {
     	
     }
     
+    /**
+     * Disables the main view so buttons can't be
+     * clicked.
+     * 
+     * @param enable or disable
+     */
     private void enableView(boolean enable) {
     	RelativeLayout layout = (RelativeLayout)findViewById(MAIN_MENU_LAYOUT);
         enableView(enable, layout);
     }
     
+    /**
+     * A helper class of enableView(boolean) to find all
+     * the views contained in ViewGroups.
+     * 
+     * @param enable or disable
+     * @param A ViewGroup
+     */
     private void enableView(boolean enable, ViewGroup viewGroup) {
     	for (int i = 0; i < viewGroup.getChildCount(); i++) {
     		View child = viewGroup.getChildAt(i);
@@ -186,6 +199,11 @@ public class MainMenuActivity extends Activity {
         }
     }
     
+    /**
+     * Create a new list adapter and 
+     * click listener for the main
+     * menu list.
+     */
     public void setupList() {
     	// get a reference for the TableLayout
 		ListView list = (ListView) findViewById(TASK_LIST);
