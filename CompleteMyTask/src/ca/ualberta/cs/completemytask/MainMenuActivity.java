@@ -113,6 +113,7 @@ public class MainMenuActivity extends Activity {
      */
     public void createNewTask(View view) {
     	Intent intent = new Intent(this, AddTaskActivity.class);
+    	TaskManager.getInstance().setCurrentTaskPosition(-1);
     	startActivityForResult(intent, ADD_TASK);
     }
     
@@ -334,11 +335,11 @@ public class MainMenuActivity extends Activity {
 				if (task.isLocal() &&
 						!task.isPublic()) {
 					intent = new Intent(view.getContext(), AddTaskActivity.class);
-					intent.putExtra("Task Position", position);
+					TaskManager.getInstance().setCurrentTaskPosition(position); 
 			    	startActivityForResult(intent, ADD_TASK);
 				} else {
 					intent = new Intent(view.getContext(), ViewTaskActivity.class);
-					intent.putExtra("Task Position", position); 
+					TaskManager.getInstance().setCurrentTaskPosition(position); 
 			    	startActivityForResult(intent, VIEW_TASK);
 				}
 			}

@@ -30,10 +30,13 @@ public class TaskManager {
 	private List<Task> tasks;
 	
 	private boolean loadedData;
+	
+	private int currentPosition;
 
 	protected TaskManager() {
 		this.tasks = new ArrayList<Task>();
 		this.loadedData = false;
+		this.currentPosition = -1;
 	}
 
 	/**
@@ -88,6 +91,24 @@ public class TaskManager {
 	 */
 	public Task getTaskAt(int position) {
 		return this.tasks.get(position);
+	}
+	
+	/**
+	 * Sets the current task that the user is viewing.
+	 * 
+	 * @param position of task
+	 */
+	public void setCurrentTaskPosition(int position) {
+		this.currentPosition = position;
+	}
+	
+	/**
+	 * Gets the current task that the user is viewing.
+	 * 
+	 * @return position of task
+	 */
+	public int getCurrentTaskPosition() {
+		return this.currentPosition;
 	}
 	
 	/**

@@ -31,7 +31,7 @@ public class AddTaskActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
         
-        position = (int) getIntent().getIntExtra("Task Position", -1);
+        position = TaskManager.getInstance().getCurrentTaskPosition();
         
         if (position < 0) {
         	Log.v(TAG, "New Task");

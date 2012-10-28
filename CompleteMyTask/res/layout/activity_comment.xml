@@ -20,7 +20,9 @@
             android:hint="@string/CommentHint"
             android:textCursorDrawable="@null"
             android:textColor="#ffffffff"
-            android:imeOptions="actionSend"  >
+            android:imeOptions="actionSend"
+            android:inputType="text"
+            android:maxLines="1"  >
 
             <requestFocus />
         </EditText>

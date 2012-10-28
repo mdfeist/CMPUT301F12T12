@@ -26,7 +26,7 @@ public class ViewTaskActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_task);
         
-        position = (int) getIntent().getIntExtra("Task Position", -1);
+        position = TaskManager.getInstance().getCurrentTaskPosition();
         
         if (position >= 0) {
         	Task task = TaskManager.getInstance().getTaskAt(position);
