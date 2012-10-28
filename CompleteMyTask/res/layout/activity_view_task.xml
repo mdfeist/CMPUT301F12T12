@@ -113,6 +113,7 @@
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
+        android:onClick="viewComments"
         android:text="@string/ViewCommentsButtonLabel" />
 
     <LinearLayout
