@@ -22,11 +22,8 @@
             android:textColor="#ffffffff"
             android:imeOptions="actionSend"
             android:inputType="text"
-            android:maxLines="1"  >
-
-            <requestFocus />
-        </EditText>
-
+            android:maxLines="1"  />
+        
         <Button
             android:id="@+id/SendButton"
             android:layout_width="0dp"
