@@ -1,17 +1,18 @@
 package ca.ualberta.cs.completemytask;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 /**
- * Stores information about a user. 
+ * Stores information about a user's content. 
  * Used in tasks and content.
  * 
  * @author Michael Feist
  *
  */
-
-public class UserData {
+@SuppressWarnings("serial")
+public class UserData implements Serializable {
 	
 	User user = null;
 	GregorianCalendar date;

@@ -1,6 +1,9 @@
 package ca.ualberta.cs.completemytask;
 
-public class User {
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class User implements Serializable {
 	private String userName = null;
 	
 	User() {

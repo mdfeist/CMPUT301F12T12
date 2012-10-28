@@ -16,6 +16,12 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
+/**
+ * A singleton to handle all the database oppertations.
+ * 
+ * @author Michael Feist
+ *
+ */
 public class DatabaseManager {
 
 	private static final String TAG = "DatabaseManager";
@@ -29,6 +35,11 @@ public class DatabaseManager {
 		this.hasSynced = false;
 	}
 
+	/**
+	 * Returns the singleton's instance.
+	 * 
+	 * @return instances
+	 */
 	public static DatabaseManager getInstance() {
 		if (instance == null) {
 			instance = new DatabaseManager();
@@ -36,6 +47,11 @@ public class DatabaseManager {
 		return instance;
 	}
 	
+	/**
+	 * Lists the id's of the items in the database.
+	 * 
+	 * @return String in JSON form
+	 */
 	public String listDatabase() {
 		HttpClient httpClient = new DefaultHttpClient();
 
@@ -59,6 +75,10 @@ public class DatabaseManager {
 		return null;
 	}
 	
+	/**
+	 * Get all the tasks that are in the database and 
+	 * adds them to the TaskManager.
+	 */
 	private void getAllTasksFromDatabase() {
 		
 		JSONArray jsonlist;
@@ -88,11 +108,17 @@ public class DatabaseManager {
 			}
 
 		} catch (JSONException e) {
-			Log.v(TAG, e.toString());
+			Log.w(TAG, e.toString());
 		}
 
 	}
 	
+	/**
+	 * Loads the task with the given id from the database.
+	 * 
+	 * @param id
+	 * @return task
+	 */
 	private Task getTaskFromDatabase(String id) {
 		
 		Task task = null;
@@ -133,42 +159,42 @@ public class DatabaseManager {
 					try {
 						name = data.getString("name");
 					} catch (JSONException e) {
-						Log.v(TAG, "Failed to get task name.");
+						Log.w(TAG, "Failed to get task name.");
 						name = "Unknown";
 					}
 					
 					try {
 						description = data.getString("description");
 					} catch (JSONException e) {
-						Log.v(TAG, "Failed to get task description.");
+						Log.w(TAG, "Failed to get task description.");
 						description = "Unknown";
 					}		
 					
 					try {
 						userName = data.getString("user");
 					} catch (JSONException e) {
-						Log.v(TAG, "Failed to get user.");
+						Log.w(TAG, "Failed to get user.");
 						userName = "Unknown";
 					} 
 					
 					try {
 						needsComment = data.getBoolean("needsComment");
 					} catch (JSONException e) {
-						Log.v(TAG, "Failed to get needsComment.");
+						Log.w(TAG, "Failed to get needsComment.");
 						needsComment = false;
 					} 
 					
 					try {
 						needsPhoto = data.getBoolean("needsPhoto");
 					} catch (JSONException e) {
-						Log.v(TAG, "Failed to get needsPhoto.");
+						Log.w(TAG, "Failed to get needsPhoto.");
 						needsPhoto = false;
 					} 
 					
 					try {
 						needsAudio = data.getBoolean("needsAudio");
 					} catch (JSONException e) {
-						Log.v(TAG, "Failed to get needsAudio.");
+						Log.w(TAG, "Failed to get needsAudio.");
 						needsAudio = false;
 					} 
 					User user = new User(userName);
@@ -178,13 +204,14 @@ public class DatabaseManager {
 					task.setRequirements(needsComment, needsPhoto, needsAudio);
 					task.setPublic(true);
 					task.setId(id);
+					task.setLocal(false);
 					task.syncFinished();
 					
 					Log.v(TAG, task.toString());
 				}
 				
 			} catch (JSONException e) {
-				Log.v(TAG, "Failed to get list.");
+				Log.w(TAG, "Failed to get list.");
 			}        
 
 		} catch (ClientProtocolException e) {
@@ -196,6 +223,15 @@ public class DatabaseManager {
 		return task;
 	}
 	
+	/**
+	 * Inserts or updates depending on the given action a task
+	 * into the database. The action can either be post or
+	 * update.
+	 * 
+	 * @param action
+	 * @param task
+	 * @return http response
+	 */
 	private String insertIntoDatabase(String action, Task task) {
 		HttpClient httpClient = new DefaultHttpClient();
 
@@ -227,9 +263,9 @@ public class DatabaseManager {
 			return response;
 
 		} catch (ClientProtocolException e) {
-			Log.v(TAG, "ClientProtocolException: " + e.toString());
+			Log.w(TAG, "ClientProtocolException: " + e.toString());
 		} catch (IOException e) {
-			Log.v(TAG, "IOException: " + e.toString());
+			Log.w(TAG, "IOException: " + e.toString());
 		} finally {
 			httpClient.getConnectionManager().shutdown();
 		}
@@ -237,6 +273,11 @@ public class DatabaseManager {
 		return null;
 	}
 
+	/**
+	 * Syncs the given task with the database.
+	 * 
+	 * @param task
+	 */
 	public void syncTaskToDatabase(Task task) {
 
 		if (task.needsSync()) {
@@ -261,13 +302,16 @@ public class DatabaseManager {
 				task.setId(json.getString("id"));
 				Log.v(TAG, "ID: " + task.getId());
 			} catch (JSONException e) {
-				Log.v(TAG, "Failed to get id.");
+				Log.w(TAG, "Failed to get id.");
 			}
 			
 			task.syncFinished();
 		}
 	}
 	
+	/**
+	 * Sync all tasks with the database.
+	 */
 	public void syncDatabase() {
 		// At start get all tasks from database
     	if (!hasSynced) {

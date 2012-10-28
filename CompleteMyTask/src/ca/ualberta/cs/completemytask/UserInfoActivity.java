@@ -8,6 +8,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+/**
+ * A view for entering user information.
+ * 
+ * @author Michael Feist
+ *
+ */
 public class UserInfoActivity extends Activity {
 
     @Override

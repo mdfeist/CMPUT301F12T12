@@ -1,6 +1,8 @@
 package ca.ualberta.cs.completemytask;
 
 
+import java.io.File;
+
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
@@ -21,11 +23,11 @@ import android.widget.RelativeLayout;
  * @author Michael Feist
  *
  */
-
 public class MainMenuActivity extends Activity {
 
 	private static final String TAG = "MainMenuActivity";
 	private TaskAdapter adapter;
+	private File localDataFile;
 	
 	// View id's
 	//private int ADD_TASK_BUTTON = R.id.AddTaskButton;
@@ -46,7 +48,8 @@ public class MainMenuActivity extends Activity {
         setUpSettings();
         setupList();
         
-        TaskManager.getInstance().loadLocalData();
+        localDataFile = new File(getFilesDir(), "CompleteMyTaskData");
+        TaskManager.getInstance().loadLocalData(localDataFile);
         adapter.notifyDataSetChanged();
         
     }
@@ -68,7 +71,8 @@ public class MainMenuActivity extends Activity {
     protected void onDestroy() {
         super.onDestroy();
         // The activity is about to be destroyed.
-        Log.v(TAG, "destroyed");
+        Log.v(TAG, "Finishing");
+        TaskManager.getInstance().saveLocalData(localDataFile);
     }
     
     public void setUpSettings() {

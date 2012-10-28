@@ -4,6 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.util.Log;
+import java.io.Serializable;
 
 /**
  * Stores a information about a task.
@@ -12,13 +13,15 @@ import android.util.Log;
  * 
  */
 
-public class Task extends UserData {
+@SuppressWarnings("serial")
+public class Task extends UserData implements Serializable {
 
 	private static final String TAG = "Task";
 
 	private boolean shared;
 	private boolean complete;
 	private boolean sync;
+	private boolean local;
 
 	private String name;
 	private String description;
@@ -38,6 +41,7 @@ public class Task extends UserData {
 		this.shared = false;
 		this.complete = false;
 		this.sync = true;
+		this.local = true;
 
 		this.id = null;
 
@@ -48,6 +52,14 @@ public class Task extends UserData {
 		this.needsPhoto = false;
 		this.needsAudio = false;
 
+	}
+	
+	public void setLocal(boolean local) {
+		this.local = local;
+	}
+	
+	public boolean isLocal() {
+		return this.local;
 	}
 
 	public boolean isPublic() {
@@ -167,7 +179,6 @@ public class Task extends UserData {
 			userName = getUser().getUserName();
 		}
 		
-		// Put type
         try {
 			json.put( "type", "Task");
 			json.put( "name", this.name);
@@ -177,7 +188,6 @@ public class Task extends UserData {
 			json.put( "needsPhoto", this.needsPhoto);
 			json.put( "needsAudio", this.needsAudio);
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
