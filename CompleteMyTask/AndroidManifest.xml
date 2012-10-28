@@ -37,7 +37,6 @@
         <activity
             android:name=".CommentActivity"
             android:label="@string/title_activity_comment" >
-            <intent-filter>
         </activity>
     </application>
 
