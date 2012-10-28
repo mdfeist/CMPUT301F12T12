@@ -5,6 +5,8 @@ import org.json.JSONObject;
 
 import android.util.Log;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Stores a information about a task.
@@ -31,6 +33,8 @@ public class Task extends UserData implements Serializable {
 	private boolean needsComment;
 	private boolean needsPhoto;
 	private boolean needsAudio;
+	
+	private List<Comment> comments;
 
 	Task() {
 		this("New Task", "No Description");
@@ -51,86 +55,202 @@ public class Task extends UserData implements Serializable {
 		this.needsComment = false;
 		this.needsPhoto = false;
 		this.needsAudio = false;
+		
+		comments = new ArrayList<Comment>();
 
 	}
 	
+	/**
+	 * Get the number of comments contained in this task.
+	 * 
+	 * @return Number of comments
+	 */
+	public int getNumberOfComments() {
+		return this.comments.size();
+	}
+	
+	/**
+	 * Add a comment to this task.
+	 * @param A comment
+	 */
+	public void addComment(Comment comment) {
+		this.comments.add(comment);
+	}
+	
+	/**
+	 * Get the comment at the given position.
+	 * 
+	 * @param The position in the comments array.
+	 * @return The comment at that position.
+	 */
+	public Comment getCommentAt(int position) {
+		return this.comments.get(position);
+	}
+	
+	/**
+	 * Set whether or not this task should be saved locally.
+	 * @param is local
+	 */
 	public void setLocal(boolean local) {
 		this.local = local;
 	}
 	
+	/**
+	 * Should the task be saved to the local storage. 
+	 * 
+	 * @return true if it should be saved locally
+	 */
 	public boolean isLocal() {
 		return this.local;
 	}
-
-	public boolean isPublic() {
-		return shared;
-	}
-
+	
+	/**
+	 * Set whether or not this task should shared with
+	 * the public.
+	 * 
+	 * @param true if it should shared with public
+	 */
 	public void setPublic(boolean shared) {
 		this.shared = shared;
 	}
-
-	public boolean isComplete() {
-		return complete;
+	
+	/**
+	 * Should this be shared with the public.
+	 * 
+	 * @return true if it should shared with public
+	 */
+	public boolean isPublic() {
+		return shared;
 	}
-
+	
+	/**
+	 * Set if this task is completed or not.
+	 * 
+	 * @param true if complete
+	 */
 	public void setComplete(boolean complete) {
 		this.complete = complete;
 		this.sync = true;
 	}
-
-	public String getName() {
-		return name;
+	
+	/**
+	 * Check if this task was completed.
+	 * 
+	 * @return true if completed
+	 */
+	public boolean isComplete() {
+		return complete;
 	}
 
+	/**
+	 * Set the name of the task.
+	 * 
+	 * @param name of task
+	 */
 	public void setName(String name) {
 		this.name = name;
 		this.sync = true;
 	}
-
-	public String getDescription() {
-		return description;
+	
+	/**
+	 * Gets the given name of the task.
+	 * 
+	 * @return name
+	 */
+	public String getName() {
+		return name;
 	}
 
+	/**
+	 * Set the description of the task.
+	 * 
+	 * @param description
+	 */
 	public void setDescription(String description) {
 		this.description = description;
 		this.sync = true;
 	}
+	/**
+	 * Gets the given description of the task.
+	 * 
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
 
+	/**
+	 * Set the id of the task.
+	 * @param id
+	 */
 	public void setId(String id) {
 		this.id = id;
 	}
 	
+	/**
+	 * Gets the id of the task.
+	 * @return id
+	 */
 	public String getId() {
 		return this.id;
 	}
 	
+	/**
+	 * Set what this task requires.
+	 * 
+	 * @param comment
+	 * @param photo
+	 * @param audio
+	 */
 	public void setRequirements(boolean comment, boolean photo, boolean audio) {
 		this.needsComment = comment;
 		this.needsPhoto = photo;
 		this.needsAudio = audio;
 	}
 	
+	/**
+	 * Checks if the task needs a comment.
+	 * @return true if task needs a comment
+	 */
 	public boolean needsComment() {
 		return this.needsComment;
 	}
 
+	/**
+	 * Checks if the task needs a photo.
+	 * @return true if task needs a photo
+	 */
 	public boolean needsPhoto() {
 		return this.needsPhoto;
 	}
 	
+	/**
+	 * Checks if the task needs a audio stream.
+	 * @return true if task needs a audio stream
+	 */
 	public boolean needsAudio() {
 		return this.needsAudio;
 	}
 	
+	/**
+	 * Check if the task needs to be synchronized with the database.
+	 * @return true if task needs to be synchronized with the database
+	 */
 	public boolean needsSync() {
 		return this.sync && this.shared;
 	}
 	
+	/**
+	 * Call when finish synchronizing the task with the database.
+	 */
 	public void syncFinished() {
 		this.sync = false;
 	}
 
+	/**
+	 * Returns the task as a string.
+	 * @return A string
+	 */
 	public String toString() {
 		
 		String yes = "YES";
@@ -181,6 +301,11 @@ public class Task extends UserData implements Serializable {
 		return task;
 	}
 	
+	/**
+	 * Gets the task as a string in JSON form.
+	 * 
+	 * @return String in JSON form
+	 */
 	public String toJSON() {
 		
 		JSONObject json = new JSONObject();
