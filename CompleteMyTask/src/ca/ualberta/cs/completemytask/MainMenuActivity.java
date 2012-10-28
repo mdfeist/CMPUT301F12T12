@@ -39,6 +39,7 @@ public class MainMenuActivity extends Activity {
 	
 	private static final int ADD_TASK = 1;
 	private static final int USER = 2;
+	private static final int VIEW_TASK = 3;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -201,6 +202,9 @@ public class MainMenuActivity extends Activity {
 				String name = TaskManager.getInstance().getTaskAt(position)
 						.getName();
 				Log.v(TAG, "Clicked: " + name);
+				
+				Intent intent = new Intent(view.getContext(), ViewTask.class);
+		    	startActivityForResult(intent, VIEW_TASK);
 			}
 
 		});
