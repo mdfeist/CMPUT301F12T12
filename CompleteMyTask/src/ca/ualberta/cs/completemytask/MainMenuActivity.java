@@ -41,15 +41,18 @@ public class MainMenuActivity extends Activity {
 	private static final int USER = 2;
 	private static final int VIEW_TASK = 3;
 	
+	/**
+	 * Set's up the application. First method called.
+	 */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
         
-        setUpSettings();
+        setupSettings();
         setupList();
         
-        localDataFile = new File(getFilesDir(), "CompleteMyTaskData");
+        localDataFile = new File(getFilesDir(), Settings.DATA_NAME);
         TaskManager.getInstance().loadLocalData(localDataFile);
         adapter.notifyDataSetChanged();
         
@@ -76,7 +79,14 @@ public class MainMenuActivity extends Activity {
         TaskManager.getInstance().saveLocalData(localDataFile);
     }
     
-    public void setUpSettings() {
+    /**
+     * Loads the settings file from local memory.
+     * Then checks if there is already a user created.
+     * If there is no user defined then the user is
+     * taken to the UserInfoActivity where they can
+     * enter their information.
+     */
+    public void setupSettings() {
     	Settings.getInstance().load(this);
     	boolean needsUser = !Settings.getInstance().hasUser();
     	
@@ -94,7 +104,7 @@ public class MainMenuActivity extends Activity {
     public void editUser(View view) {
     	Intent intent = new Intent(this, UserInfoActivity.class);
     	startActivityForResult(intent, USER);
-    }
+    } 
     
     /**
      * Called when the user wants to create a new task.
@@ -106,23 +116,114 @@ public class MainMenuActivity extends Activity {
     	startActivityForResult(intent, ADD_TASK);
     }
     
+    /**
+     * Called when an intent is finished and data is returned.
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+    	// If task added save and update the list view
         if(requestCode == ADD_TASK) {
             if(resultCode == RESULT_OK && intent != null) {
             	Log.v(TAG, "Task added");
+            	
+            	// If task is public then sync with database
+            	if (intent.getBooleanExtra("Public", false)) {
+            		int position = intent.getIntExtra("Task Position", -1);
+            		if (position >= 0) {
+            			syncTask(position);
+            		}
+            	} else {
+            		TaskManager.getInstance().saveLocalData(localDataFile);
+            	}
+            	
+            	TaskManager.getInstance().sort();
             	adapter.notifyDataSetChanged();
             }
         }
         
+        // Save user updated
         if(requestCode == USER) {
             if(resultCode == RESULT_OK && intent != null) {
-            	Log.v(TAG, "User added: \n" + Settings.getInstance().getUserName());
-            	Settings.getInstance().save(this);
+            	if (intent.getBooleanExtra("User", false)) {
+            		Log.v(TAG, "User added: \n" + Settings.getInstance().getUserName());
+            		Settings.getInstance().save(this);
+            	}
+            	
+            	if (intent.getBooleanExtra("Data", false)) {
+            		adapter.notifyDataSetChanged();
+            	}
             }
         }
         
         super.onActivityResult(requestCode, resultCode, intent);
+    }
+    
+    /**
+     * Hides and displays the loading screen when the
+     * application is syncing with the database.
+     * 
+     * @param whether the screen should be displayed
+     */
+    private void displaySyncScreen(boolean display) {
+    	if (display) {
+    		enableView(false);
+			ViewStub loadViewStub = (ViewStub) findViewById(LOAD_VIEW_STUB);
+			
+			if (loadViewStub != null) {
+				loadViewStub.inflate();
+			} else {
+				View loadView = (View) findViewById(LOAD_VIEW);
+	        	loadView.setVisibility(View.VISIBLE);
+			}
+    	} else {
+    		TaskManager.getInstance().sort();
+    		adapter.notifyDataSetChanged();
+            
+            enableView(true);
+            
+        	View loadView = (View) findViewById(LOAD_VIEW);
+        	loadView.setVisibility(View.INVISIBLE);
+    	}
+    }
+    
+    public void syncTask(final int position) {
+    	class SyncTaskAsyncTask extends AsyncTask<String, Void, Long>{
+    		
+    		@Override
+    		protected void onPreExecute() {
+    			displaySyncScreen(true);
+    		}
+    		
+	        @Override
+	        protected Long doInBackground(String... params) {
+	        	
+	        	DatabaseManager.getInstance().syncTaskToDatabase(position);
+	        	
+				return (long) 1;
+			}
+	        
+	        @Override
+	        protected void onProgressUpdate(Void... voids) {
+	        	
+	        }
+	        
+	        @Override
+	        protected void onPostExecute(Long result) {
+	            super.onPostExecute(null);
+
+	            if(result == 1){
+	            	Log.v(TAG, "HTTP post done");
+	            }else{
+	            	Log.v(TAG, "Invalid HTTP post");
+	            }
+	            
+	            TaskManager.getInstance().saveLocalData(localDataFile);
+	            displaySyncScreen(false);
+	        }        
+		}
+		
+    	SyncTaskAsyncTask syncTask = new SyncTaskAsyncTask();
+    	syncTask.execute(); 
     }
     
     /**
@@ -142,15 +243,7 @@ public class MainMenuActivity extends Activity {
     		
     		@Override
     		protected void onPreExecute() {
-    			enableView(false);
-    			ViewStub loadViewStub = (ViewStub) findViewById(LOAD_VIEW_STUB);
-    			
-    			if (loadViewStub != null) {
-    				loadViewStub.inflate();
-    			} else {
-    				View loadView = (View) findViewById(LOAD_VIEW);
-    	        	loadView.setVisibility(View.VISIBLE);
-    			}
+    			displaySyncScreen(true);
     		}
     		
 	        @Override
@@ -176,12 +269,7 @@ public class MainMenuActivity extends Activity {
 	            	Log.v(TAG, "Invalid HTTP post");
 	            }
 	            
-	            adapter.notifyDataSetChanged();
-	            
-	            enableView(true);
-	            
-	        	View loadView = (View) findViewById(LOAD_VIEW);
-	        	loadView.setVisibility(View.INVISIBLE);
+	            displaySyncScreen(false);
 	        }        
 		}
 		
@@ -238,12 +326,21 @@ public class MainMenuActivity extends Activity {
 
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				String name = TaskManager.getInstance().getTaskAt(position)
-						.getName();
-				Log.v(TAG, "Clicked: " + name);
+				Task task = TaskManager.getInstance().getTaskAt(position);
+				Log.v(TAG, "Clicked: " + task.getName());
 				
-				Intent intent = new Intent(view.getContext(), ViewTask.class);
-		    	startActivityForResult(intent, VIEW_TASK);
+				Intent intent;
+				
+				if (task.isLocal() &&
+						!task.isPublic()) {
+					intent = new Intent(view.getContext(), AddTaskActivity.class);
+					intent.putExtra("Task Position", position);
+			    	startActivityForResult(intent, ADD_TASK);
+				} else {
+					intent = new Intent(view.getContext(), ViewTask.class);
+					intent.putExtra("Task Position", position); 
+			    	startActivityForResult(intent, VIEW_TASK);
+				}
 			}
 
 		});

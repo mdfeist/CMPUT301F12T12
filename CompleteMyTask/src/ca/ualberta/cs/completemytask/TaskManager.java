@@ -61,10 +61,21 @@ public class TaskManager {
 	 * Add a task to the task manager.
 	 * 
 	 * @param task
+	 * @return index of task
 	 */
-	public void addTask(Task task) {
-		this.tasks.add(task);
+	public int addTask(Task task) {
 		
+		if(!this.tasks.contains(task)) {
+			this.tasks.add(task);
+		}
+		
+		return this.tasks.indexOf(task);
+	}
+	
+	/**
+	 * Sort tasks using TaskComparator
+	 */
+	public void sort() {
 		TaskComparator comparator = new TaskComparator();
 		Collections.sort(this.tasks, comparator);
 	}
@@ -150,6 +161,18 @@ public class TaskManager {
 		} catch (IOException e) {
 			// Unable to create file
 	        Log.w("ExternalStorage", "Error writing " + file, e);
+		}
+	}
+	
+	public void deleteLocalData(File file) {
+		// Delete file
+		file.delete();
+		
+		// Delete from array
+		for (int i = 0; i < tasks.size(); i++) {
+			if (tasks.get(i).isLocal()) {
+				tasks.remove(i);
+			}
 		}
 	}
 	

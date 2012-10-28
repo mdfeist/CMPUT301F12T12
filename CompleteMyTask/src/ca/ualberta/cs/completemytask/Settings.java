@@ -15,6 +15,7 @@ import android.content.SharedPreferences;
 public class Settings {
 	
 	public static final String PREFS_NAME = "CompleteMyTaskPrefsFile";
+	public static final String DATA_NAME = "CompleteMyTaskData";
 	
 	private static Settings instance = new Settings();
 	

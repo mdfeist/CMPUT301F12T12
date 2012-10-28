@@ -7,10 +7,12 @@
 
     <!-- Buttons -->
     <string name="AddTaskButtonLabel">Add Task</string>
+    <string name="ShareTaskButtonLabel">Share</string>
     <string name="NextButtonLabel">Next</string>
     <string name="CancelButtonLabel">Cancel</string>
     <string name="CloseButtonLabel">Close</string>
     <string name="SyncTaskButtonLabel">Sync</string>
+    <string name="ClearDataButtonLabel">Clear Data</string>
     <string name="EditUserButtonLabel">Edit User</string>
 
     <!-- Main Menu -->

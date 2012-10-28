@@ -1,6 +1,8 @@
 package ca.ualberta.cs.completemytask;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -29,10 +31,13 @@ public class DatabaseManager {
 	
 	private static DatabaseManager instance = null;
 	
+	private Map<String, Task> foundTasks;
+	
 	private boolean hasSynced;
 
 	protected DatabaseManager() {
 		this.hasSynced = false;
+		this.foundTasks = new HashMap<String, Task>();
 	}
 
 	/**
@@ -99,11 +104,13 @@ public class DatabaseManager {
 				id = idObject.getString("id");
 
 				Log.v(TAG, "ID: " + id);
-
-				Task task = getTaskFromDatabase(id);
-
-				if (task != null) {
-					TaskManager.getInstance().addTask(task);
+				
+				if (!this.foundTasks.containsKey(id)) {
+					Task task = getTaskFromDatabase(id);
+	
+					if (task != null) {
+						TaskManager.getInstance().addTask(task);
+					}
 				}
 			}
 
@@ -116,12 +123,16 @@ public class DatabaseManager {
 	/**
 	 * Loads the task with the given id from the database.
 	 * 
-	 * @param id
-	 * @return task
+	 * @param The task id
+	 * @return The task with the given id
 	 */
 	private Task getTaskFromDatabase(String id) {
 		
 		Task task = null;
+		
+		if (this.foundTasks.containsKey(id)) {
+			return this.foundTasks.get(id);
+		}
 		
 		HttpClient httpClient = new DefaultHttpClient();
 		
@@ -228,11 +239,12 @@ public class DatabaseManager {
 	 * into the database. The action can either be post or
 	 * update.
 	 * 
-	 * @param action
-	 * @param task
+	 * @param Action
+	 * @param A task
 	 * @return http response
 	 */
 	private String insertIntoDatabase(String action, Task task) {
+		
 		HttpClient httpClient = new DefaultHttpClient();
 
 		try {
@@ -272,14 +284,23 @@ public class DatabaseManager {
 		
 		return null;
 	}
-
+	/**
+	 * Syncs a task based on it's location in the TaskManager.
+	 * 
+	 * @param Position of task in TaskManager
+	 */
+	public void syncTaskToDatabase(int position) {
+		Task task = TaskManager.getInstance().getTaskAt(position);
+		syncTaskToDatabase(task);
+	}
+	
 	/**
 	 * Syncs the given task with the database.
 	 * 
-	 * @param task
+	 * @param A task
 	 */
 	public void syncTaskToDatabase(Task task) {
-
+		
 		if (task.needsSync()) {
 			
 			String action = null;
@@ -299,8 +320,11 @@ public class DatabaseManager {
 			JSONObject json;
 			try {
 				json = new JSONObject(response);
+				
 				task.setId(json.getString("id"));
 				Log.v(TAG, "ID: " + task.getId());
+				
+				this.foundTasks.put(task.getId(), task);
 			} catch (JSONException e) {
 				Log.w(TAG, "Failed to get id.");
 			}
@@ -315,6 +339,11 @@ public class DatabaseManager {
 	public void syncDatabase() {
 		// At start get all tasks from database
     	if (!hasSynced) {
+    		for (Task t : TaskManager.getInstance().getTaskArray()) {
+    			if (t.getId() != null) {
+    				this.foundTasks.put(t.getId(), t);
+    			}
+    		}
     		getAllTasksFromDatabase();
     		hasSynced = true;
 		}

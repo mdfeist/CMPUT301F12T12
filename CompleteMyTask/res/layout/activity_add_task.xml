@@ -103,10 +103,17 @@
         android:background="@drawable/button_selector"
         android:textColor="#ffffffff" />
 
-    <Space
+    <Button
+        android:id="@+id/ShareTaskButton"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight=".33" />
+       	android:layout_height="wrap_content"
+		android:layout_weight=".33"
+    	android:paddingLeft="5dp" 
+    	android:paddingRight="5dp"
+        android:text="@string/ShareTaskButtonLabel"
+        android:onClick="shareTask"
+        android:background="@drawable/button_selector"
+        android:textColor="#ffffffff" />
 
     <Button
         android:id="@+id/CancelAddTaskButton"

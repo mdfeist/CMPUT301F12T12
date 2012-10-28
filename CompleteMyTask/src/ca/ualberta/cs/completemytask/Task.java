@@ -110,7 +110,19 @@ public class Task extends UserData implements Serializable {
 		this.needsPhoto = photo;
 		this.needsAudio = audio;
 	}
+	
+	public boolean needsComment() {
+		return this.needsComment;
+	}
 
+	public boolean needsPhoto() {
+		return this.needsPhoto;
+	}
+	
+	public boolean needsAudio() {
+		return this.needsAudio;
+	}
+	
 	public boolean needsSync() {
 		return this.sync && this.shared;
 	}
