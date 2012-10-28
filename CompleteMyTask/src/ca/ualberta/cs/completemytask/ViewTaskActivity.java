@@ -2,15 +2,25 @@ package ca.ualberta.cs.completemytask;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 
 public class ViewTaskActivity extends Activity {
 
-	// Postion of Task in TaskManager
+	// Position of Task in TaskManager
 	private int position;
 	
+	// View IDs
+	private static final int VIEW_COMMENTS = 3;
+	
+	/**
+	 * Sets up the task view by populating text fields with relevant data and
+	 * adding images and audio to the respective galleries
+	 * 
+	 *   @TODO Add gallery population
+	 */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +59,16 @@ public class ViewTaskActivity extends Activity {
         	taskRequirements.setText(requires);
         }
     }
+    
+    /**
+     * Called to view the comments for a particular task
+     * 
+     * @param A view
+     */
+    public void viewComments(View view){
+    	Intent intent = new Intent(this, ViewCommentsActivity.class);
+    	startActivityForResult(intent, VIEW_COMMENTS);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -56,6 +76,11 @@ public class ViewTaskActivity extends Activity {
         return true;
     }
     
+    /**
+     * Closes the task
+     * 
+     * @param view
+     */
     public void closeTask(View view) {
     	this.finish();
     }
