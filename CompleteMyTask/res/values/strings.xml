@@ -34,6 +34,8 @@
     
     <!-- View Task -->
 	<string name="title_activity_view_task">View Task</string>
+	<string name="PhotoGalleryHeaderLabel">Photos:</string>
+	<string name="AudioGalleryHeaderLabel">Audio:</string>
 
     <!-- User Info -->
     <string name="title_activity_user_info">User Info</string>
