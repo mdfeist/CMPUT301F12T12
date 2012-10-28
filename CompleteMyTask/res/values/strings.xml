@@ -14,6 +14,7 @@
     <string name="SyncTaskButtonLabel">Sync</string>
     <string name="ClearDataButtonLabel">Clear Data</string>
     <string name="EditUserButtonLabel">Edit User</string>
+    <string name="ViewCommentsButtonLabel">View Comments</string>
 
     <!-- Main Menu -->
     <string name="title_activity_main_menu">Main Menu</string>
@@ -36,6 +37,7 @@
 	<string name="title_activity_view_task">View Task</string>
 	<string name="PhotoGalleryHeaderLabel">Photos:</string>
 	<string name="AudioGalleryHeaderLabel">Audio:</string>
+	<string name="TextHeaderLabel">Text:</string>
 
     <!-- User Info -->
     <string name="title_activity_user_info">User Info</string>

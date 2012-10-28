@@ -75,7 +75,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/PhotoGalleryHeader"
-        android:layout_marginTop="28dp" />
+        android:layout_marginTop="8dp" />
 
     <TextView
         android:id="@+id/AudioGalleryHeader"
@@ -93,7 +93,27 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/AudioGalleryHeader"
-        android:layout_marginTop="28dp" />
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:id="@+id/TextHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/AudioGallery"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/TextHeaderLabel" />
+
+    <Button
+        android:id="@+id/VewCommentsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/TextHeader"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/ViewCommentsButtonLabel" />
 
     <LinearLayout
         android:id="@+id/Bar"
