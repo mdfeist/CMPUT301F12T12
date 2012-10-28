@@ -76,12 +76,16 @@ public class ViewTaskActivity extends Activity {
         return true;
     }
     
+<<<<<<< HEAD
     /**
      * Closes the task
      * 
      * @param view
      */
     public void closeTask(View view) {
+=======
+    public void close(View view) {
+>>>>>>> Added Comment View
     	this.finish();
     }
 }
