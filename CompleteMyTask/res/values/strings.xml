@@ -11,6 +11,7 @@
     <string name="NextButtonLabel">Next</string>
     <string name="CancelButtonLabel">Cancel</string>
     <string name="CloseButtonLabel">Close</string>
+    <string name="SendButtonLabel">Send</string>
     <string name="SyncTaskButtonLabel">Sync</string>
     <string name="ClearDataButtonLabel">Clear Data</string>
     <string name="EditUserButtonLabel">Edit User</string>
@@ -46,5 +47,9 @@
     <string name="UserInfoDetials">        Details: \n\nTo use this app you will need to have a user name.
         This will allow other users to know who you are when
         you post.</string>
+        
+    <!-- Comment View -->
+    <string name="title_activity_comment">Comments</string>
+    <string name="CommentHint">Comment</string>
 
 </resources>
