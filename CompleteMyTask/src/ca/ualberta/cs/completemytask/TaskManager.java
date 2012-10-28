@@ -137,7 +137,7 @@ public class TaskManager {
 	/**
 	 * Save tasks to local storage.
 	 * 
-	 * @param file
+	 * @param A local file
 	 */
 	public void saveLocalData(File file) {
 		List<Task> saveTasks = new ArrayList<Task>();
@@ -164,6 +164,11 @@ public class TaskManager {
 		}
 	}
 	
+	/**
+	 * Delete all tasks from local storage.
+	 * 
+	 * @param A local file
+	 */
 	public void deleteLocalData(File file) {
 		// Delete file
 		file.delete();
