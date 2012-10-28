@@ -4,7 +4,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.util.Log;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +15,7 @@ import java.util.List;
  */
 
 @SuppressWarnings("serial")
-public class Task extends UserData implements Serializable {
+public class Task extends UserData {
 
 	private static final String TAG = "Task";
 
