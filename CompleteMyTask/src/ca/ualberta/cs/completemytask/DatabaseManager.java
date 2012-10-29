@@ -29,6 +29,9 @@ public class DatabaseManager {
 	private static final String TAG = "DatabaseManager";
 	private static final String DATABASE_URL = "http://crowdsourcer.softwareprocess.es/F12/CMPUT301F12T12/";
 	
+	//For testing
+	public static boolean testSyncComplete = false;
+	
 	private static DatabaseManager instance = null;
 	
 	private Map<String, Task> foundTasks;
@@ -50,6 +53,10 @@ public class DatabaseManager {
 			instance = new DatabaseManager();
 		}
 		return instance;
+	}
+	
+	public String getDatabaseURL() {
+		return DATABASE_URL;
 	}
 	
 	/**
@@ -284,6 +291,7 @@ public class DatabaseManager {
 		
 		return null;
 	}
+	
 	/**
 	 * Syncs a task based on it's location in the TaskManager.
 	 * 
@@ -337,6 +345,8 @@ public class DatabaseManager {
 	 * Sync all tasks with the database.
 	 */
 	public void syncDatabase() {
+		testSyncComplete = false;
+		
 		// At start get all tasks from database
     	if (!hasSynced) {
     		for (Task t : TaskManager.getInstance().getTaskArray()) {
@@ -353,5 +363,7 @@ public class DatabaseManager {
     		Log.v(TAG, "Syncing Task: " + t.getName());
 			this.syncTaskToDatabase(t);
 		}	
+    	
+    	testSyncComplete = true;
 	}
 }

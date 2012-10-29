@@ -35,11 +35,11 @@ public class Task extends UserData {
 	
 	private List<Comment> comments;
 
-	Task() {
+	public Task() {
 		this("New Task", "No Description");
 	}
 
-	Task(String name, String description) {
+	public Task(String name, String description) {
 		super();
 		this.shared = false;
 		this.complete = false;

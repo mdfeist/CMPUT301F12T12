@@ -6,10 +6,10 @@ import java.io.Serializable;
 public class User implements Serializable {
 	private String userName = null;
 	
-	User() {
+	public User() {
 	}
 	
-	User(String name) {
+	public User(String name) {
 		this.userName = name;
 	}
 	
