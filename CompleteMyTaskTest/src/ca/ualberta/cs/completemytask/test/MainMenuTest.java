@@ -17,11 +17,20 @@ import android.widget.Button;
 import ca.ualberta.cs.completemytask.Comment;
 import ca.ualberta.cs.completemytask.DatabaseManager;
 import ca.ualberta.cs.completemytask.MainMenuActivity;
+import ca.ualberta.cs.completemytask.MyAudio;
+import ca.ualberta.cs.completemytask.MyPhoto;
 import ca.ualberta.cs.completemytask.R;
 import ca.ualberta.cs.completemytask.Task;
 import ca.ualberta.cs.completemytask.TaskManager;
 import ca.ualberta.cs.completemytask.User;
 
+
+/**
+ * Test's database synchronization at the main menu.
+ * 
+ * @author Michael Feist
+ *
+ */
 public class MainMenuTest extends ActivityInstrumentationTestCase2<MainMenuActivity> {
 	
 	private MainMenuActivity main;
@@ -43,11 +52,11 @@ public class MainMenuTest extends ActivityInstrumentationTestCase2<MainMenuActiv
 	private String commentText = "A comment";
 	
 	// Photos
-	private int numberOfPhotos = 0;
+	private int numberOfPhotos = 1;
 	//private Photo image;
 	
 	// Audio
-	private int numberOfAudio = 0;
+	private int numberOfAudio = 1;
 	//private Audio sound;
 	
 	// User Name
@@ -64,6 +73,9 @@ public class MainMenuTest extends ActivityInstrumentationTestCase2<MainMenuActiv
 		 
 	}
 	
+	/**
+	 * Uplaods fake data to the database
+	 */
 	private void insertFakeTaskIntoDatabase() {
 		
 		HttpClient httpClient = new DefaultHttpClient();
@@ -82,11 +94,13 @@ public class MainMenuTest extends ActivityInstrumentationTestCase2<MainMenuActiv
 		}
 		
 		for(int i = 0; i < numberOfPhotos; i++) {
-			
+			MyPhoto photo = new MyPhoto();
+			task.addPhoto(photo);
 		}
 		
 		for(int i = 0; i < numberOfAudio; i++) {
-			
+			MyAudio audio = new MyAudio();
+			task.addAudio(audio);
 		}
 		
 		try {
@@ -121,6 +135,9 @@ public class MainMenuTest extends ActivityInstrumentationTestCase2<MainMenuActiv
 		}
 	}
 	
+	/**
+	 * Removes the fake data
+	 */
 	private void removeFakeTaskFromDatabase(Task task) {
 		HttpClient httpClient = new DefaultHttpClient();
 		
@@ -155,6 +172,9 @@ public class MainMenuTest extends ActivityInstrumentationTestCase2<MainMenuActiv
 		}
 	}
 	
+	/**
+	 * Wait until syncronization with the database is done
+	 */
 	private void waitForTaskSync(int atMost) throws InterruptedException {
 		CountDownLatch latch = new CountDownLatch(1);
 		int count = 0;
@@ -197,6 +217,20 @@ public class MainMenuTest extends ActivityInstrumentationTestCase2<MainMenuActiv
 					assertTrue("Comment has wrong name", commentContentText.equals(commentText + (i+1)));
 				}
 				
+				assertTrue("Wrong number of photos", task.getNumberOfPhotos() == numberOfPhotos);
+				
+				for (int i = 0; i < task.getNumberOfPhotos(); i++) {
+					Object image = task.getPhotoAt(i).getContent();
+					
+				}
+				
+				assertTrue("Wrong number of audio files", task.getNumberOfAudios() == numberOfAudio);
+				
+				for (int i = 0; i < task.getNumberOfAudios(); i++) {
+					Object audio = task.getAudioAt(i).getContent();
+					
+				}
+				
 				foundTask = true;
 			}
 		}
@@ -204,6 +238,9 @@ public class MainMenuTest extends ActivityInstrumentationTestCase2<MainMenuActiv
 		assertTrue("Task Not Found", foundTask);
 	}
 	
+	/**
+	 * Tests the database syncronization.
+	 */
 	public void testSync() {
 		insertFakeTaskIntoDatabase();
 		

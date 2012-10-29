@@ -7,11 +7,11 @@ package ca.ualberta.cs.completemytask;
  *
  */
 @SuppressWarnings("serial")
-public class Photo extends UserData implements UserContent<Object> {
+public class MyPhoto extends UserData implements UserContent<Object> {
 
 	Object image;
 	
-	public Photo() {
+	public MyPhoto() {
 		
 	}
 

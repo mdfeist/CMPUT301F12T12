@@ -34,8 +34,8 @@ public class Task extends UserData {
 	private boolean needsAudio;
 	
 	private List<Comment> comments;
-	private List<Photo> photos;
-	private List<Audio> audios;
+	private List<MyPhoto> photos;
+	private List<MyAudio> audios;
 
 	public Task() {
 		this("New Task", "No Description");
@@ -58,8 +58,8 @@ public class Task extends UserData {
 		this.needsAudio = false;
 		
 		this.comments = new ArrayList<Comment>();
-		this.photos = new ArrayList<Photo>();
-		this.audios = new ArrayList<Audio>();
+		this.photos = new ArrayList<MyPhoto>();
+		this.audios = new ArrayList<MyAudio>();
 
 	}
 	
@@ -100,7 +100,7 @@ public class Task extends UserData {
 	 * Add a photo to this task.
 	 * @param A photo
 	 */
-	public void addPhoto(Photo photo) {
+	public void addPhoto(MyPhoto photo) {
 		this.photos.add(photo);
 	}
 	
@@ -109,7 +109,7 @@ public class Task extends UserData {
 	 * @param The position in the photos array.
 	 * @return The photo at that position.
 	 */
-	public Photo getPhotoAt(int position) {
+	public MyPhoto getPhotoAt(int position) {
 		return this.photos.get(position);
 	}
 	
@@ -125,7 +125,7 @@ public class Task extends UserData {
 	 * Add an audio file to this task.
 	 * @param An audio file
 	 */
-	public void addAudio(Audio audio) {
+	public void addAudio(MyAudio audio) {
 		this.audios.add(audio);
 	}
 	
@@ -134,7 +134,7 @@ public class Task extends UserData {
 	 * @param The position in the audios array.
 	 * @return The audio at that position.
 	 */
-	public Audio getAudioAt(int position) {
+	public MyAudio getAudioAt(int position) {
 		return this.audios.get(position);
 	}
 	

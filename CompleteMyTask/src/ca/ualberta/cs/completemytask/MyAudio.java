@@ -7,11 +7,11 @@ package ca.ualberta.cs.completemytask;
  *
  */
 @SuppressWarnings("serial")
-public class Audio extends UserData implements UserContent<Object> {
+public class MyAudio extends UserData implements UserContent<Object> {
 
 	Object audio;
 	
-	public Audio() {
+	public MyAudio() {
 		
 	}
 
