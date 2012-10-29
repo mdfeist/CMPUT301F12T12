@@ -39,6 +39,9 @@
 	<string name="PhotoGalleryHeaderLabel">Photos:</string>
 	<string name="AudioGalleryHeaderLabel">Audio:</string>
 	<string name="TextHeaderLabel">Text:</string>
+	<string name="CommentButtonDescription">Comment Button</string>
+	<string name="PhotoButtonDescription">Photo Button</string>
+	<string name="AudioButtonDescription">Audio Button</string>
 
     <!-- User Info -->
     <string name="title_activity_user_info">User Info</string>
