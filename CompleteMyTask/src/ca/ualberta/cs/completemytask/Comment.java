@@ -21,7 +21,6 @@ public class Comment extends UserData implements UserContent<String> {
 	
 	/**
 	 * Returns the comment as a String.
-	 * 
 	 * @return comment
 	 */
 	public String getContent() {
@@ -30,7 +29,6 @@ public class Comment extends UserData implements UserContent<String> {
 
 	/**
 	 * Set the comment.
-	 * 
 	 * @param comment
 	 */
 	public void setContent(String comment) {

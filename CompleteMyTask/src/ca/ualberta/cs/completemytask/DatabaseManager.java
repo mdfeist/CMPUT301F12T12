@@ -55,6 +55,10 @@ public class DatabaseManager {
 		return instance;
 	}
 	
+	/**
+	 * Gets the web url of the database.
+	 * @return URL as string
+	 */
 	public String getDatabaseURL() {
 		return DATABASE_URL;
 	}
