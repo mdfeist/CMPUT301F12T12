@@ -174,6 +174,8 @@ public class DatabaseManager {
 					boolean needsPhoto = false;
 					boolean needsAudio = false;
 					
+					boolean complete = false;
+					
 					try {
 						name = data.getString("name");
 					} catch (JSONException e) {
@@ -215,12 +217,21 @@ public class DatabaseManager {
 						Log.w(TAG, "Failed to get needsAudio.");
 						needsAudio = false;
 					} 
+					
+					try {
+						complete = data.getBoolean("isComplete");
+					} catch (JSONException e) {
+						Log.w(TAG, "Failed to get completion.");
+						complete = false;
+					} 
+					
 					User user = new User(userName);
 					
 					task = new Task(name, description);
 					task.setUser(user);
 					task.setRequirements(needsComment, needsPhoto, needsAudio);
 					task.setPublic(true);
+					task.setComplete(complete);
 					task.setId(id);
 					task.setLocal(false);
 					task.syncFinished();

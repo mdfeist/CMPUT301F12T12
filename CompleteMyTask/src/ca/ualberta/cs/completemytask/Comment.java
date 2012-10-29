@@ -11,11 +11,11 @@ public class Comment extends UserData implements UserContent<String> {
 
 	String comment;
 	
-	Comment() {
+	public Comment() {
 		this.comment = "Blank Comment";
 	}
 	
-	Comment(String comment) {
+	public Comment(String comment) {
 		this.comment = comment;
 	}
 	

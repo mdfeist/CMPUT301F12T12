@@ -14,6 +14,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;
+import ca.ualberta.cs.completemytask.Comment;
 import ca.ualberta.cs.completemytask.DatabaseManager;
 import ca.ualberta.cs.completemytask.MainMenuActivity;
 import ca.ualberta.cs.completemytask.R;
@@ -36,6 +37,18 @@ public class MainMenuTest extends ActivityInstrumentationTestCase2<MainMenuActiv
 	private boolean testNeedsComment = true;
 	private boolean testNeedsPhoto = true;
 	private boolean testNeedsAudio = false;
+	
+	// Comments
+	private int numberOfComments = 1;
+	private String commentText = "A comment";
+	
+	// Photos
+	private int numberOfPhotos = 0;
+	//private Photo image;
+	
+	// Audio
+	private int numberOfAudio = 0;
+	//private Audio sound;
 	
 	// User Name
 	private String userName = "Test User";
@@ -61,6 +74,20 @@ public class MainMenuTest extends ActivityInstrumentationTestCase2<MainMenuActiv
 		task.setLocal(testIsLocal);
 		task.setComplete(testIsComplete);
 		task.setUser(new User(userName));
+		
+		for(int i = 0; i < numberOfComments; i++) {
+			Comment comment = new Comment();
+			comment.setContent(commentText + (i + 1));
+			task.addComment(comment);
+		}
+		
+		for(int i = 0; i < numberOfPhotos; i++) {
+			
+		}
+		
+		for(int i = 0; i < numberOfAudio; i++) {
+			
+		}
 		
 		try {
 			String post = String
@@ -153,14 +180,22 @@ public class MainMenuTest extends ActivityInstrumentationTestCase2<MainMenuActiv
 				assertTrue("Wrong Description", task.getDescription().endsWith("Test Description"));
 				assertNotNull("No ID", task.getId());
 				
-				//assertTrue("Failed isComplete", task.isComplete() == testIsComplete);
+				assertTrue("Failed isComplete", task.isComplete() == testIsComplete);
 				
 				assertTrue("Failed needs Comment", task.needsComment() == testNeedsComment);
 				assertTrue("Failed needs Photo", task.needsPhoto() == testNeedsPhoto);
 				assertTrue("Failed needs Comment", task.needsAudio() == testNeedsAudio);
 				
 				assertTrue("User Missing", task.hasUser());
-				//assertTrue("Wrong Username", task.getUser().getUserName().equals(userName));
+				assertTrue("Wrong Username", task.getUser().getUserName().equals(userName));
+				
+				assertTrue("Wrong number of comments", task.getNumberOfComments() == numberOfComments);
+				
+				for (int i = 0; i < task.getNumberOfComments(); i++) {
+					String commentContentText = task.getCommentAt(i).getContent();
+					
+					assertTrue("Comment has wrong name", commentContentText.equals(commentText + (i+1)));
+				}
 				
 				foundTask = true;
 			}

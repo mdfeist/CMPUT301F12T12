@@ -323,6 +323,7 @@ public class Task extends UserData {
 			json.put( "needsComment", this.needsComment);
 			json.put( "needsPhoto", this.needsPhoto);
 			json.put( "needsAudio", this.needsAudio);
+			json.put( "isComplete", this.complete);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
