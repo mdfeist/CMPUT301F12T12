@@ -1,0 +1,27 @@
+bin/
+libs/
+gen/
+
+CompleteMyTask/bin/
+CompleteMyTask/libs/
+CompleteMyTask/gen/
+
+.DS_Store
+
+# Can also ignore all directories and files in a directory.
+.metadata
+
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+CompleteMyTask/bin/CompleteMyTask.apk
+CompleteMyTask/bin/classes.dex
+CompleteMyTask/bin/resources.ap_
+
+.DS_Store
+
+CompleteMyTask/gen/ca/ualberta/cs/completemytask/R.java
