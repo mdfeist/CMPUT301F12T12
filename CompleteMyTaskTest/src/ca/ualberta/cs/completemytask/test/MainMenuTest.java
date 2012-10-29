@@ -25,6 +25,21 @@ public class MainMenuTest extends ActivityInstrumentationTestCase2<MainMenuActiv
 	
 	private MainMenuActivity main;
 	private Button syncButton;
+	
+	// Task Info
+	private String taskName = "Test Task";
+	private String taskDescription = "Test Description";
+	
+	private boolean testIsLocal = false;
+	private boolean testIsComplete = false;
+	
+	private boolean testNeedsComment = true;
+	private boolean testNeedsPhoto = true;
+	private boolean testNeedsAudio = false;
+	
+	// User Name
+	private String userName = "Test User";
+	
 	public MainMenuTest() {
 		super (MainMenuActivity.class);  
 	}
@@ -40,10 +55,12 @@ public class MainMenuTest extends ActivityInstrumentationTestCase2<MainMenuActiv
 		
 		HttpClient httpClient = new DefaultHttpClient();
 		
-		Task task = new Task("Test Task", "Test Description");
-		task.setRequirements(true, true, false);
+		Task task = new Task(taskName, taskDescription);
+		task.setRequirements(testNeedsComment, testNeedsPhoto, testNeedsAudio);
 		task.setPublic(true);
-		task.setUser(new User("Test User"));
+		task.setLocal(testIsLocal);
+		task.setComplete(testIsComplete);
+		task.setUser(new User(userName));
 		
 		try {
 			String post = String
@@ -135,6 +152,15 @@ public class MainMenuTest extends ActivityInstrumentationTestCase2<MainMenuActiv
 				
 				assertTrue("Wrong Description", task.getDescription().endsWith("Test Description"));
 				assertNotNull("No ID", task.getId());
+				
+				//assertTrue("Failed isComplete", task.isComplete() == testIsComplete);
+				
+				assertTrue("Failed needs Comment", task.needsComment() == testNeedsComment);
+				assertTrue("Failed needs Photo", task.needsPhoto() == testNeedsPhoto);
+				assertTrue("Failed needs Comment", task.needsAudio() == testNeedsAudio);
+				
+				assertTrue("User Missing", task.hasUser());
+				//assertTrue("Wrong Username", task.getUser().getUserName().equals(userName));
 				
 				foundTask = true;
 			}
