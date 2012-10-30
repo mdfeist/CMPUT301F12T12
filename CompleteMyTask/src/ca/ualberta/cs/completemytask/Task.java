@@ -34,12 +34,14 @@ public class Task extends UserData {
 	private boolean needsAudio;
 	
 	private List<Comment> comments;
+	private List<MyPhoto> photos;
+	private List<MyAudio> audios;
 
-	Task() {
+	public Task() {
 		this("New Task", "No Description");
 	}
 
-	Task(String name, String description) {
+	public Task(String name, String description) {
 		super();
 		this.shared = false;
 		this.complete = false;
@@ -55,13 +57,14 @@ public class Task extends UserData {
 		this.needsPhoto = false;
 		this.needsAudio = false;
 		
-		comments = new ArrayList<Comment>();
+		this.comments = new ArrayList<Comment>();
+		this.photos = new ArrayList<MyPhoto>();
+		this.audios = new ArrayList<MyAudio>();
 
 	}
 	
 	/**
 	 * Get the number of comments contained in this task.
-	 * 
 	 * @return Number of comments
 	 */
 	public int getNumberOfComments() {
@@ -78,12 +81,61 @@ public class Task extends UserData {
 	
 	/**
 	 * Get the comment at the given position.
-	 * 
 	 * @param The position in the comments array.
 	 * @return The comment at that position.
 	 */
 	public Comment getCommentAt(int position) {
 		return this.comments.get(position);
+	}
+	
+	/**
+	 * Get the number of photos contained in this task.
+	 * @return Number of photos
+	 */
+	public int getNumberOfPhotos() {
+		return this.photos.size();
+	}
+	
+	/**
+	 * Add a photo to this task.
+	 * @param A photo
+	 */
+	public void addPhoto(MyPhoto photo) {
+		this.photos.add(photo);
+	}
+	
+	/**
+	 * Get the photo at the given position.
+	 * @param The position in the photos array.
+	 * @return The photo at that position.
+	 */
+	public MyPhoto getPhotoAt(int position) {
+		return this.photos.get(position);
+	}
+	
+	/**
+	 * Get the number of audio files contained in this task.
+	 * @return Number of audio files
+	 */
+	public int getNumberOfAudios() {
+		return this.audios.size();
+	}
+	
+	/**
+	 * Add an audio file to this task.
+	 * @param An audio file
+	 */
+	public void addAudio(MyAudio audio) {
+		this.audios.add(audio);
+	}
+	
+	/**
+	 * Get the audio file at the given position.
+	 * @param The position in the audios array.
+	 * @return The audio at that position.
+	 */
+	public MyAudio getAudioAt(int position) {
+		return this.audios.get(position);
 	}
 	
 	/**
@@ -96,7 +148,6 @@ public class Task extends UserData {
 	
 	/**
 	 * Should the task be saved to the local storage. 
-	 * 
 	 * @return true if it should be saved locally
 	 */
 	public boolean isLocal() {
@@ -106,7 +157,6 @@ public class Task extends UserData {
 	/**
 	 * Set whether or not this task should shared with
 	 * the public.
-	 * 
 	 * @param true if it should shared with public
 	 */
 	public void setPublic(boolean shared) {
@@ -115,7 +165,6 @@ public class Task extends UserData {
 	
 	/**
 	 * Should this be shared with the public.
-	 * 
 	 * @return true if it should shared with public
 	 */
 	public boolean isPublic() {
@@ -124,7 +173,6 @@ public class Task extends UserData {
 	
 	/**
 	 * Set if this task is completed or not.
-	 * 
 	 * @param true if complete
 	 */
 	public void setComplete(boolean complete) {
@@ -134,7 +182,6 @@ public class Task extends UserData {
 	
 	/**
 	 * Check if this task was completed.
-	 * 
 	 * @return true if completed
 	 */
 	public boolean isComplete() {
@@ -143,7 +190,6 @@ public class Task extends UserData {
 
 	/**
 	 * Set the name of the task.
-	 * 
 	 * @param name of task
 	 */
 	public void setName(String name) {
@@ -153,7 +199,6 @@ public class Task extends UserData {
 	
 	/**
 	 * Gets the given name of the task.
-	 * 
 	 * @return name
 	 */
 	public String getName() {
@@ -162,7 +207,6 @@ public class Task extends UserData {
 
 	/**
 	 * Set the description of the task.
-	 * 
 	 * @param description
 	 */
 	public void setDescription(String description) {
@@ -171,7 +215,6 @@ public class Task extends UserData {
 	}
 	/**
 	 * Gets the given description of the task.
-	 * 
 	 * @return the description
 	 */
 	public String getDescription() {
@@ -196,7 +239,6 @@ public class Task extends UserData {
 	
 	/**
 	 * Set what this task requires.
-	 * 
 	 * @param comment
 	 * @param photo
 	 * @param audio
@@ -302,7 +344,6 @@ public class Task extends UserData {
 	
 	/**
 	 * Gets the task as a string in JSON form.
-	 * 
 	 * @return String in JSON form
 	 */
 	public String toJSON() {
@@ -323,6 +364,7 @@ public class Task extends UserData {
 			json.put( "needsComment", this.needsComment);
 			json.put( "needsPhoto", this.needsPhoto);
 			json.put( "needsAudio", this.needsAudio);
+			json.put( "isComplete", this.complete);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}

@@ -42,6 +42,9 @@
     
     <!-- View Image -->
     <string name="TaskImageDescription">Task Image</string>
+	<string name="CommentButtonDescription">Comment Button</string>
+	<string name="PhotoButtonDescription">Photo Button</string>
+	<string name="AudioButtonDescription">Audio Button</string>
 
     <!-- User Info -->
     <string name="title_activity_user_info">User Info</string>

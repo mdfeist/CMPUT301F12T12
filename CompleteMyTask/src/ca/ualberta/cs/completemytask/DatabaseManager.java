@@ -29,6 +29,9 @@ public class DatabaseManager {
 	private static final String TAG = "DatabaseManager";
 	private static final String DATABASE_URL = "http://crowdsourcer.softwareprocess.es/F12/CMPUT301F12T12/";
 	
+	//For testing
+	public static boolean testSyncComplete = false;
+	
 	private static DatabaseManager instance = null;
 	
 	private Map<String, Task> foundTasks;
@@ -50,6 +53,14 @@ public class DatabaseManager {
 			instance = new DatabaseManager();
 		}
 		return instance;
+	}
+	
+	/**
+	 * Gets the web url of the database.
+	 * @return URL as string
+	 */
+	public String getDatabaseURL() {
+		return DATABASE_URL;
 	}
 	
 	/**
@@ -167,6 +178,8 @@ public class DatabaseManager {
 					boolean needsPhoto = false;
 					boolean needsAudio = false;
 					
+					boolean complete = false;
+					
 					try {
 						name = data.getString("name");
 					} catch (JSONException e) {
@@ -208,12 +221,21 @@ public class DatabaseManager {
 						Log.w(TAG, "Failed to get needsAudio.");
 						needsAudio = false;
 					} 
+					
+					try {
+						complete = data.getBoolean("isComplete");
+					} catch (JSONException e) {
+						Log.w(TAG, "Failed to get completion.");
+						complete = false;
+					} 
+					
 					User user = new User(userName);
 					
 					task = new Task(name, description);
 					task.setUser(user);
 					task.setRequirements(needsComment, needsPhoto, needsAudio);
 					task.setPublic(true);
+					task.setComplete(complete);
 					task.setId(id);
 					task.setLocal(false);
 					task.syncFinished();
@@ -284,6 +306,7 @@ public class DatabaseManager {
 		
 		return null;
 	}
+	
 	/**
 	 * Syncs a task based on it's location in the TaskManager.
 	 * 
@@ -337,6 +360,8 @@ public class DatabaseManager {
 	 * Sync all tasks with the database.
 	 */
 	public void syncDatabase() {
+		testSyncComplete = false;
+		
 		// At start get all tasks from database
     	if (!hasSynced) {
     		for (Task t : TaskManager.getInstance().getTaskArray()) {
@@ -353,5 +378,7 @@ public class DatabaseManager {
     		Log.v(TAG, "Syncing Task: " + t.getName());
 			this.syncTaskToDatabase(t);
 		}	
+    	
+    	testSyncComplete = true;
 	}
 }

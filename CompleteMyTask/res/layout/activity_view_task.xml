@@ -3,11 +3,58 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+    <LinearLayout
+        android:id="@+id/ContentBar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/tab_bar_background"
+        android:weightSum="1.0" >
+
+		<ImageButton
+            android:id="@+id/CommentButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_weight=".33"
+            android:background="@drawable/button_selector"
+            android:src="@drawable/social_chat"
+            android:contentDescription="@string/CommentButtonDescription"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:onClick="viewComments"/>
+
+        <ImageButton
+            android:id="@+id/PhotoButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_weight=".33"
+            android:background="@drawable/button_selector"
+            android:src="@drawable/content_picture"
+            android:contentDescription="@string/PhotoButtonDescription"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"/>
+
+        <ImageButton
+            android:id="@+id/AudioButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_weight=".33"
+            android:background="@drawable/button_selector"
+            android:src="@drawable/device_access_mic"
+            android:contentDescription="@string/AudioButtonDescription"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"/>
+    </LinearLayout>
+    
     <TextView
         android:id="@+id/TaskNameHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
+        android:layout_below="@+id/ContentBar"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/TaskNameHeaderLabel" />
@@ -58,6 +105,7 @@
         android:layout_below="@+id/TaskRequirementsHeader"
         android:layout_marginLeft="32dp"
         android:layout_marginTop="8dp" />
+    
 
     <TextView
         android:id="@+id/PhotoGalleryHeader"
@@ -97,27 +145,6 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/AudioGalleryHeader"
         android:layout_marginTop="8dp" />
-
-    <TextView
-        android:id="@+id/TextHeader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/AudioGallery"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/TextHeaderLabel" />
-
-    <Button
-        android:id="@+id/VewCommentsButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/TextHeader"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
-        android:onClick="viewComments"
-        android:text="@string/ViewCommentsButtonLabel" />
 
     <LinearLayout
         android:id="@+id/Bar"

@@ -11,17 +11,16 @@ public class Comment extends UserData implements UserContent<String> {
 
 	String comment;
 	
-	Comment() {
+	public Comment() {
 		this.comment = "Blank Comment";
 	}
 	
-	Comment(String comment) {
+	public Comment(String comment) {
 		this.comment = comment;
 	}
 	
 	/**
 	 * Returns the comment as a String.
-	 * 
 	 * @return comment
 	 */
 	public String getContent() {
@@ -30,7 +29,6 @@ public class Comment extends UserData implements UserContent<String> {
 
 	/**
 	 * Set the comment.
-	 * 
 	 * @param comment
 	 */
 	public void setContent(String comment) {

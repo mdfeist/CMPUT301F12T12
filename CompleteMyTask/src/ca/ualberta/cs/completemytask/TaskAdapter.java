@@ -11,7 +11,13 @@ import android.widget.TextView;
 
 /**
  * Allows a list view to show the tasks in the TaskManager.
- * 
+ * <br/>
+ * <br/>
+ * Original design from Android Hive
+ * <br/>
+ * <a href="http://www.androidhive.info/2012/02/android-custom-listview-with-image-and-text/">
+ * http://www.androidhive.info/2012/02/android-custom-listview-with-image-and-text/
+ * </a>
  * @author Michael Feist
  * 
  */
