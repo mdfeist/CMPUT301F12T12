@@ -6,6 +6,8 @@ import org.json.JSONObject;
 import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * Stores a information about a task.
@@ -21,13 +23,10 @@ public class Task extends UserData {
 
 	private boolean shared;
 	private boolean complete;
-	private boolean sync;
 	private boolean local;
 
 	private String name;
 	private String description;
-
-	private String id;
 	
 	private boolean needsComment;
 	private boolean needsPhoto;
@@ -36,6 +35,8 @@ public class Task extends UserData {
 	private List<Comment> comments;
 	private List<MyPhoto> photos;
 	private List<MyAudio> audios;
+	
+	private Set<String> ids;
 
 	public Task() {
 		this("New Task", "No Description");
@@ -45,10 +46,7 @@ public class Task extends UserData {
 		super();
 		this.shared = false;
 		this.complete = false;
-		this.sync = true;
 		this.local = true;
-
-		this.id = null;
 
 		this.name = name;
 		this.description = description;
@@ -60,6 +58,8 @@ public class Task extends UserData {
 		this.comments = new ArrayList<Comment>();
 		this.photos = new ArrayList<MyPhoto>();
 		this.audios = new ArrayList<MyAudio>();
+		
+		this.ids = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);  
 
 	}
 	
@@ -76,6 +76,13 @@ public class Task extends UserData {
 	 * @param A comment
 	 */
 	public void addComment(Comment comment) {
+		String id = comment.getId();
+		
+		if (this.ids.contains(id)) {
+			return;
+		}
+		
+		this.ids.add(id);
 		this.comments.add(comment);
 	}
 	
@@ -101,6 +108,14 @@ public class Task extends UserData {
 	 * @param A photo
 	 */
 	public void addPhoto(MyPhoto photo) {
+		String id = photo.getId();
+		
+		if (this.ids.contains(id)) {
+			return;
+		}
+		
+		this.ids.add(id);
+		
 		this.photos.add(photo);
 	}
 	
@@ -126,6 +141,13 @@ public class Task extends UserData {
 	 * @param An audio file
 	 */
 	public void addAudio(MyAudio audio) {
+		String id = audio.getId();
+		
+		if (this.ids.contains(id)) {
+			return;
+		}
+		
+		this.ids.add(id);
 		this.audios.add(audio);
 	}
 	
@@ -220,22 +242,6 @@ public class Task extends UserData {
 	public String getDescription() {
 		return description;
 	}
-
-	/**
-	 * Set the id of the task.
-	 * @param id
-	 */
-	public void setId(String id) {
-		this.id = id;
-	}
-	
-	/**
-	 * Gets the id of the task.
-	 * @return id
-	 */
-	public String getId() {
-		return this.id;
-	}
 	
 	/**
 	 * Set what this task requires.
@@ -281,13 +287,6 @@ public class Task extends UserData {
 		return this.sync && this.shared;
 	}
 	
-	/**
-	 * Call when finish synchronizing the task with the database.
-	 */
-	public void syncFinished() {
-		this.sync = false;
-	}
-
 	/**
 	 * Returns the task as a string.
 	 * @return A string
