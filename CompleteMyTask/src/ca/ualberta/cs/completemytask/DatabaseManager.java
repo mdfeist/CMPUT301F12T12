@@ -156,6 +156,12 @@ public class DatabaseManager {
 		}
 	}
 	
+	/**
+	 * From the given JSONObject retrieve the needed
+	 * info for the task
+	 * @param A JSONObject of the comment
+	 * @return A comment
+	 */
 	private Comment decodeComment(JSONObject data) {
 		String userName = "Unknown";
 		String commentString = "";
@@ -195,6 +201,7 @@ public class DatabaseManager {
 	 * From the given JSONObject retrive the needed
 	 * info for the task.
 	 * @param JSON data
+	 * @return A task
 	 */
 	private Task decodeTask(JSONObject data) {
 		String userName = "Unknown";
