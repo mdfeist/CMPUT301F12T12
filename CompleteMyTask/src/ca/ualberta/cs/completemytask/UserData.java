@@ -12,7 +12,7 @@ import java.util.GregorianCalendar;
  *
  */
 @SuppressWarnings("serial")
-public class UserData implements Serializable {
+public abstract class UserData implements Serializable {
 	
 	User user = null;
 	GregorianCalendar date;
@@ -54,4 +54,6 @@ public class UserData implements Serializable {
 		
 		return strDate;
 	}
+	
+	abstract public String toJSON();
 }

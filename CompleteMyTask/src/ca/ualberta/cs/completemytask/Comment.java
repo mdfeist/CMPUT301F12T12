@@ -35,4 +35,10 @@ public class Comment extends UserData implements UserContent<String> {
 		this.comment = comment;
 	}
 
+	@Override
+	public String toJSON() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -22,5 +22,11 @@ public class MyAudio extends UserData implements UserContent<Object> {
 	public void setContent(Object content) {
 		
 	}
+
+	@Override
+	public String toJSON() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }
