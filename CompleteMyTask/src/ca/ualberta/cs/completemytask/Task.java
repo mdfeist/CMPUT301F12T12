@@ -21,13 +21,10 @@ public class Task extends UserData {
 
 	private boolean shared;
 	private boolean complete;
-	private boolean sync;
 	private boolean local;
 
 	private String name;
 	private String description;
-
-	private String id;
 	
 	private boolean needsComment;
 	private boolean needsPhoto;
@@ -45,10 +42,7 @@ public class Task extends UserData {
 		super();
 		this.shared = false;
 		this.complete = false;
-		this.sync = true;
 		this.local = true;
-
-		this.id = null;
 
 		this.name = name;
 		this.description = description;
@@ -220,22 +214,6 @@ public class Task extends UserData {
 	public String getDescription() {
 		return description;
 	}
-
-	/**
-	 * Set the id of the task.
-	 * @param id
-	 */
-	public void setId(String id) {
-		this.id = id;
-	}
-	
-	/**
-	 * Gets the id of the task.
-	 * @return id
-	 */
-	public String getId() {
-		return this.id;
-	}
 	
 	/**
 	 * Set what this task requires.
@@ -281,13 +259,6 @@ public class Task extends UserData {
 		return this.sync && this.shared;
 	}
 	
-	/**
-	 * Call when finish synchronizing the task with the database.
-	 */
-	public void syncFinished() {
-		this.sync = false;
-	}
-
 	/**
 	 * Returns the task as a string.
 	 * @return A string

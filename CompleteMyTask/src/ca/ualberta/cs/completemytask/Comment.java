@@ -1,5 +1,8 @@
 package ca.ualberta.cs.completemytask;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * A text comment.
  * 
@@ -37,8 +40,24 @@ public class Comment extends UserData implements UserContent<String> {
 
 	@Override
 	public String toJSON() {
-		// TODO Auto-generated method stub
-		return null;
+		JSONObject json = new JSONObject();
+		
+		String userName = "Unknown";
+		
+		if (hasUser()) {
+			userName = getUser().getUserName();
+		}
+		
+        try {
+			json.put( "type", "Comment");
+			json.put( "user", userName);
+			json.put( "comment", this.comment);
+			json.put( "parentID", this.parentID);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+        
+		return json.toString();
 	}
 
 }
