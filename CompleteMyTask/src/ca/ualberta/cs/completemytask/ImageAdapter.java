@@ -22,11 +22,11 @@ public class ImageAdapter extends BaseAdapter {
 
 	public ImageAdapter(Context c) {
 		mContext = c;
-
-		/*TypedArray a = c.obtainStyledAttributes(R.styleable.HelloGallery);
-		mGalleryItemBackground = a.getResourceId(
-				R.styleable.HelloGallery_android_galleryItemBackground, 0);
-		a.recycle();*/
+	}
+	
+	public ImageAdapter(Context c, Integer[] i) {
+		mContext = c;
+		mImageIds = i;
 	}
 
 	public int getCount() {

@@ -1,33 +1,39 @@
 package ca.ualberta.cs.completemytask;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 /**
  * A photo.
  * 
- * @author Michael Feist
+ * @author Michael Feist, Devon Waldon
  *
  */
 @SuppressWarnings("serial")
-public class MyPhoto extends UserData implements UserContent<Object> {
+public class MyPhoto extends UserData implements UserContent<Bitmap> {
 
-	Object image;
+	Bitmap image;
 	
 	public MyPhoto() {
 		
 	}
 
-	public Object getContent() {
-		
-		return null;
+	public Bitmap getContent() {
+		return image;
 	}
 
-	public void setContent(Object content) {
-		
+	public void setContent(Bitmap content) {
+		image = content;
 	}
 
-	@Override
 	public String toJSON() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public void createFake(Context context){
+		BitmapFactory.decodeResource(context.getResources(),R.drawable.img1);
 	}
 	
 	
