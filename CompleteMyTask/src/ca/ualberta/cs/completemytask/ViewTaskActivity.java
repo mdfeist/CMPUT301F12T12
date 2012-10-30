@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
-import android.widget.Gallery;
 import android.widget.TextView;
 
 /**
@@ -28,7 +27,6 @@ public class ViewTaskActivity extends Activity {
 	 * Sets up the task view by populating text fields with relevant data and
 	 * adding images and audio to the respective galleries
 	 * 
-	 *   @TODO Add gallery population
 	 */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,10 +64,6 @@ public class ViewTaskActivity extends Activity {
         	
         	TextView taskRequirements = (TextView) findViewById(R.id.TaskRequirements);
         	taskRequirements.setText(requires);
-        	
-
-            Gallery imageGallery = (Gallery) findViewById(R.id.PhotoGallery);
-            imageGallery.setAdapter(new ImageAdapter(this));
         }
     }
     
@@ -84,7 +78,7 @@ public class ViewTaskActivity extends Activity {
     }
     
     /**
-     * Called to view the comments for a particular task
+     * Called to view the images for a particular task
      * 
      * @param A view
      */
