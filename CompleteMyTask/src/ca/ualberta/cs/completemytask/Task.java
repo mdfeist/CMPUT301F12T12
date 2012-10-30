@@ -6,6 +6,8 @@ import org.json.JSONObject;
 import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * Stores a information about a task.
@@ -33,6 +35,8 @@ public class Task extends UserData {
 	private List<Comment> comments;
 	private List<MyPhoto> photos;
 	private List<MyAudio> audios;
+	
+	private Set<String> ids;
 
 	public Task() {
 		this("New Task", "No Description");
@@ -54,6 +58,8 @@ public class Task extends UserData {
 		this.comments = new ArrayList<Comment>();
 		this.photos = new ArrayList<MyPhoto>();
 		this.audios = new ArrayList<MyAudio>();
+		
+		this.ids = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);  
 
 	}
 	
@@ -70,6 +76,13 @@ public class Task extends UserData {
 	 * @param A comment
 	 */
 	public void addComment(Comment comment) {
+		String id = comment.getId();
+		
+		if (this.ids.contains(id)) {
+			return;
+		}
+		
+		this.ids.add(id);
 		this.comments.add(comment);
 	}
 	
@@ -95,6 +108,14 @@ public class Task extends UserData {
 	 * @param A photo
 	 */
 	public void addPhoto(MyPhoto photo) {
+		String id = photo.getId();
+		
+		if (this.ids.contains(id)) {
+			return;
+		}
+		
+		this.ids.add(id);
+		
 		this.photos.add(photo);
 	}
 	
@@ -120,6 +141,13 @@ public class Task extends UserData {
 	 * @param An audio file
 	 */
 	public void addAudio(MyAudio audio) {
+		String id = audio.getId();
+		
+		if (this.ids.contains(id)) {
+			return;
+		}
+		
+		this.ids.add(id);
 		this.audios.add(audio);
 	}
 	
