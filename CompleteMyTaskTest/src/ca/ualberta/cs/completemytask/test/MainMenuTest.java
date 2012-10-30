@@ -106,7 +106,7 @@ public class MainMenuTest extends ActivityInstrumentationTestCase2<MainMenuActiv
 		try {
 			String post = String
 					.format("%s?action=post&summary=%s&description=%s",
-							DatabaseManager.getInstance().getDatabaseURL(),
+							DatabaseManager.getDatabaseURL(),
 							"Task", task.getDateAsString());
 			
 			String save = String.format("content=%s&id=%s", task.toJSON(), task.getId());
@@ -144,7 +144,7 @@ public class MainMenuTest extends ActivityInstrumentationTestCase2<MainMenuActiv
 		try {
 			String post = String
 					.format("%s?action=remove",
-							DatabaseManager.getInstance().getDatabaseURL());
+							DatabaseManager.getDatabaseURL());
 			
 			String save = String.format("id=%s", task.getId());
 			
