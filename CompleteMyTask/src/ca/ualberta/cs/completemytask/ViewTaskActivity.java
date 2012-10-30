@@ -8,12 +8,20 @@ import android.view.View;
 import android.widget.Gallery;
 import android.widget.TextView;
 
+/**
+ * This class handles the ViewTask activity
+ * 
+ * @author Devon Waldon
+ *
+ */
+
 public class ViewTaskActivity extends Activity {
 
 	// Position of Task in TaskManager
 	private int position;
 	
 	// View IDs
+	private static final int VIEW_IMAGE = 1;
 	private static final int VIEW_COMMENTS = 3;
 	
 	/**
@@ -58,6 +66,10 @@ public class ViewTaskActivity extends Activity {
         	
         	TextView taskRequirements = (TextView) findViewById(R.id.TaskRequirements);
         	taskRequirements.setText(requires);
+        	
+
+            Gallery imageGallery = (Gallery) findViewById(R.id.PhotoGallery);
+            imageGallery.setAdapter(new ImageAdapter(this));
         }
     }
     
@@ -70,14 +82,20 @@ public class ViewTaskActivity extends Activity {
     	Intent intent = new Intent(this, CommentActivity.class);
     	startActivityForResult(intent, VIEW_COMMENTS);
     }
+    
+    /**
+     * Called to view the comments for a particular task
+     * 
+     * @param A view
+     */
+    public void viewImage(View view){
+    	Intent intent = new Intent(this, ViewImage.class);
+    	startActivityForResult(intent, VIEW_IMAGE);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_view_task, menu);
-
-        Gallery g = (Gallery) findViewById(R.id.PhotoGallery);
-        g.setAdapter(new ImageAdapter(this));
-
         return true;
     }
     

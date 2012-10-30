@@ -33,12 +33,15 @@
     <string name="AudioRequirementCheckboxLabel">Requires Audio</string>
     <string name="EditTaskNameHint">Task name</string>
     <string name="EditTaskDescriptionHint">Short task description</string>
-    
+
     <!-- View Task -->
-	<string name="title_activity_view_task">View Task</string>
-	<string name="PhotoGalleryHeaderLabel">Photos:</string>
-	<string name="AudioGalleryHeaderLabel">Audio:</string>
-	<string name="TextHeaderLabel">Text:</string>
+    <string name="title_activity_view_task">View Task</string>
+    <string name="PhotoGalleryHeaderLabel">Photos:</string>
+    <string name="AudioGalleryHeaderLabel">Audio:</string>
+    <string name="TextHeaderLabel">Text:</string>
+    
+    <!-- View Image -->
+    <string name="TaskImageDescription">Task Image</string>
 
     <!-- User Info -->
     <string name="title_activity_user_info">User Info</string>
@@ -47,9 +50,10 @@
     <string name="UserInfoDetials">        Details: \n\nTo use this app you will need to have a user name.
         This will allow other users to know who you are when
         you post.</string>
-        
+
     <!-- Comment View -->
     <string name="title_activity_comment">Comments</string>
     <string name="CommentHint">Comment</string>
+    <string name="title_activity_view_image">View Image</string>
 
 </resources>
