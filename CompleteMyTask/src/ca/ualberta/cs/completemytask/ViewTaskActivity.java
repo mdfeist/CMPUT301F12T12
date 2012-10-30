@@ -83,7 +83,7 @@ public class ViewTaskActivity extends Activity {
      * @param A view
      */
     public void viewImage(View view){
-    	Intent intent = new Intent(this, ViewImage.class);
+    	Intent intent = new Intent(this, ViewImageActivity.class);
     	startActivityForResult(intent, VIEW_IMAGE);
     }
 

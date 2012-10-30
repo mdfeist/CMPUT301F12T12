@@ -21,7 +21,7 @@ import android.widget.Gallery;
  * @author Devon Waldon
  *
  */
-public class ViewImage extends Activity {
+public class ViewImageActivity extends Activity {
 
 	private static final int CAPTURE_IMAGE_REQUEST_CODE = 100;
 	Uri imageFileUri;
