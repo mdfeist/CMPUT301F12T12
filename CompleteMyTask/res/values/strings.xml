@@ -16,6 +16,7 @@
     <string name="ClearDataButtonLabel">Clear Data</string>
     <string name="EditUserButtonLabel">Edit User</string>
     <string name="ViewCommentsButtonLabel">View Comments</string>
+    <string name="TakePictureButtonLabel">Add Photo</string>
 
     <!-- Main Menu -->
     <string name="title_activity_main_menu">Main Menu</string>
