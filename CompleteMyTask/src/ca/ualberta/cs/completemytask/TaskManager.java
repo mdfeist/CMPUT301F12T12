@@ -85,17 +85,23 @@ public class TaskManager {
 	
 	/**
 	 * Returns the task at the given position.
-	 * 
-	 * @param position
-	 * @return task
+	 * @param position of task
+	 * @return task at postion
 	 */
 	public Task getTaskAt(int position) {
 		return this.tasks.get(position);
 	}
 	
 	/**
+	 * Removes the task at the given position.
+	 * @param position of task
+	 */
+	public void removeTaskAt(int position) {
+		this.tasks.remove(position);
+	}
+	
+	/**
 	 * Sets the current task that the user is viewing.
-	 * 
 	 * @param position of task
 	 */
 	public void setCurrentTaskPosition(int position) {
@@ -104,7 +110,6 @@ public class TaskManager {
 	
 	/**
 	 * Gets the current task that the user is viewing.
-	 * 
 	 * @return position of task
 	 */
 	public int getCurrentTaskPosition() {
@@ -122,7 +127,6 @@ public class TaskManager {
 	
 	/**
 	 * Loads tasks that were saved locally.
-	 * 
 	 * @param file
 	 */
 	public void loadLocalData(File file) {
@@ -157,7 +161,6 @@ public class TaskManager {
 	
 	/**
 	 * Save tasks to local storage.
-	 * 
 	 * @param A local file
 	 */
 	public void saveLocalData(File file) {
@@ -187,7 +190,6 @@ public class TaskManager {
 	
 	/**
 	 * Delete all tasks from local storage.
-	 * 
 	 * @param A local file
 	 */
 	public void deleteLocalData(File file) {

@@ -37,9 +37,25 @@ public class MainMenuActivity extends Activity {
 	private int MAIN_MENU_LAYOUT = R.id.main_menu_layout;
 	private int TASK_LIST = R.id.TasksList;
 	
-	private static final int ADD_TASK = 1;
-	private static final int USER = 2;
-	private static final int VIEW_TASK = 3;
+	
+	/**
+	 *  Used to know what display are we going to 
+	 *  and coming from
+	 */
+	enum Display {
+		ADD_TASK(1),
+		VIEW_TASK(2),
+		EDIT_USER(3);
+		
+		private final int value;
+	    private Display(int value) {
+	        this.value = value;
+	    }
+
+	    public int getValue() {
+	        return value;
+	    }
+	};
 	
 	/**
 	 * Set's up the application. First method called.
@@ -92,7 +108,7 @@ public class MainMenuActivity extends Activity {
     	
     	if (needsUser) {
     		Intent intent = new Intent(this, UserInfoActivity.class);
-        	startActivityForResult(intent, USER);
+        	startActivityForResult(intent, Display.EDIT_USER.getValue());
     	}
     }
     
@@ -103,7 +119,7 @@ public class MainMenuActivity extends Activity {
      */
     public void editUser(View view) {
     	Intent intent = new Intent(this, UserInfoActivity.class);
-    	startActivityForResult(intent, USER);
+    	startActivityForResult(intent, Display.EDIT_USER.getValue());
     } 
     
     /**
@@ -114,7 +130,7 @@ public class MainMenuActivity extends Activity {
     public void createNewTask(View view) {
     	Intent intent = new Intent(this, AddTaskActivity.class);
     	TaskManager.getInstance().setCurrentTaskPosition(-1);
-    	startActivityForResult(intent, ADD_TASK);
+    	startActivityForResult(intent, Display.ADD_TASK.getValue());
     }
     
     /**
@@ -123,7 +139,7 @@ public class MainMenuActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
     	// If task added save and update the list view
-        if(requestCode == ADD_TASK) {
+        if(requestCode == Display.ADD_TASK.getValue()) {
             if(resultCode == RESULT_OK && intent != null) {
             	Log.v(TAG, "Task added");
             	
@@ -143,7 +159,7 @@ public class MainMenuActivity extends Activity {
         }
         
         // Save user updated
-        if(requestCode == USER) {
+        if(requestCode == Display.EDIT_USER.getValue()) {
             if(resultCode == RESULT_OK && intent != null) {
             	if (intent.getBooleanExtra("User", false)) {
             		Log.v(TAG, "User added: \n" + Settings.getInstance().getUserName());
@@ -336,11 +352,11 @@ public class MainMenuActivity extends Activity {
 						!task.isPublic()) {
 					intent = new Intent(view.getContext(), AddTaskActivity.class);
 					TaskManager.getInstance().setCurrentTaskPosition(position); 
-			    	startActivityForResult(intent, ADD_TASK);
+			    	startActivityForResult(intent, Display.ADD_TASK.getValue());
 				} else {
 					intent = new Intent(view.getContext(), ViewTaskActivity.class);
 					TaskManager.getInstance().setCurrentTaskPosition(position); 
-			    	startActivityForResult(intent, VIEW_TASK);
+			    	startActivityForResult(intent, Display.VIEW_TASK.getValue());
 				}
 			}
 

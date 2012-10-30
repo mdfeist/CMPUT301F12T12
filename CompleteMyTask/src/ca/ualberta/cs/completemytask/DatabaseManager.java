@@ -1,17 +1,8 @@
 package ca.ualberta.cs.completemytask;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,22 +16,85 @@ import android.util.Log;
  *
  */
 public class DatabaseManager {
-
+	
+	// For testing Don't use ///////////////////////
+	public static boolean testSyncComplete = false;
+	///////////////////////////////////////////////
+	
 	private static final String TAG = "DatabaseManager";
 	private static final String DATABASE_URL = "http://crowdsourcer.softwareprocess.es/F12/CMPUT301F12T12/";
-	
-	//For testing
-	public static boolean testSyncComplete = false;
-	
 	private static DatabaseManager instance = null;
 	
-	private Map<String, Task> foundTasks;
-	
 	private boolean hasSynced;
+	
+	private WebService webService;
+	
+	/**
+	 * Template for data classes
+	 * @author Michael Feist
+	 *
+	 */
+	public class Data {
+		String parentID;
+		
+		public String getParentId() {
+			return this.parentID;
+		}
+	}
+	
+	/**
+	 * Holds the information of a photo
+	 * from the database;
+	 * @author Michael Feist
+	 *
+	 */
+	public class DataPhoto extends Data {
+		public MyPhoto photo;
+		
+		public DataPhoto(String parentID, MyPhoto photo) {
+			this.parentID = parentID;
+			this.photo = photo;
+		}
+		
+		public MyPhoto getPhoto() {
+			return this.photo;
+		}
+	}
+	
+	/**
+	 * Holds the information of an audio
+	 * file from the database;
+	 * @author Michael Feist
+	 *
+	 */
+	public class DataAudio extends Data {
+		public MyAudio audio;
+		
+		public DataAudio(String parentID, MyAudio audio) {
+			this.parentID = parentID;
+			this.audio = audio;
+		}
+		
+		public MyAudio getAudio() {
+			return this.audio;
+		}
+	}
+	
+	/**
+	 * Data
+	 */
+	private Map<String, Task> foundTasks;
+	private Map<String, DataPhoto> foundPhotos;
+	private Map<String, DataAudio> foundAudio;
 
 	protected DatabaseManager() {
 		this.hasSynced = false;
+		
 		this.foundTasks = new HashMap<String, Task>();
+		this.foundPhotos = new HashMap<String, DataPhoto>();
+		this.foundAudio = new HashMap<String, DataAudio>();
+		
+		this.webService = new WebService(DATABASE_URL);
 	}
 
 	/**
@@ -59,53 +113,26 @@ public class DatabaseManager {
 	 * Gets the web url of the database.
 	 * @return URL as string
 	 */
-	public String getDatabaseURL() {
+	public static String getDatabaseURL() {
 		return DATABASE_URL;
 	}
 	
 	/**
-	 * Lists the id's of the items in the database.
-	 * 
-	 * @return String in JSON form
+	 * Sorts and stores all the different
+	 * data types currently in the database.
+	 * For example all the tasks will go into
+	 * one array and all the images into another.
 	 */
-	public String listDatabase() {
-		HttpClient httpClient = new DefaultHttpClient();
-
-		try {
-			String get = String
-					.format("%s?action=list", DATABASE_URL);
-
-			HttpGet request = new HttpGet(get);
-
-			ResponseHandler<String> responseHandler = new BasicResponseHandler();
-			String response = httpClient.execute(request, responseHandler);
-
-			return response;
-
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	public void getData() {
+		String response = this.webService.getJSONList();
 		
-		return null;
-	}
-	
-	/**
-	 * Get all the tasks that are in the database and 
-	 * adds them to the TaskManager.
-	 */
-	private void getAllTasksFromDatabase() {
+		if (response == null) {
+			Log.w(TAG, "Failed to get the list from database");
+			return;
+		}
 		
 		JSONArray jsonlist;
 		String id = null;
-		
-		String response = listDatabase();
-
-		if (response == null) {
-			Log.v(TAG, "Failed to get list from data base");
-			return;
-		}
 		
 		try {
 			jsonlist = new JSONArray(response);
@@ -113,198 +140,139 @@ public class DatabaseManager {
 			for (int i = 0; i < jsonlist.length(); ++i) {
 				JSONObject idObject = jsonlist.getJSONObject(i);
 				id = idObject.getString("id");
-
-				Log.v(TAG, "ID: " + id);
-				
-				if (!this.foundTasks.containsKey(id)) {
-					Task task = getTaskFromDatabase(id);
-	
-					if (task != null) {
-						TaskManager.getInstance().addTask(task);
-					}
-				}
+				getData(id);
 			}
 
 		} catch (JSONException e) {
 			Log.w(TAG, e.toString());
 		}
-
 	}
 	
 	/**
-	 * Loads the task with the given id from the database.
-	 * 
-	 * @param The task id
-	 * @return The task with the given id
+	 * Checks if the object with the given id
+	 * has already been retrieved by the database.
+	 * @param id of object
+	 * @return true if already retrieved
 	 */
-	private Task getTaskFromDatabase(String id) {
-		
-		Task task = null;
-		
+	private boolean has(String id) {
 		if (this.foundTasks.containsKey(id)) {
-			return this.foundTasks.get(id);
+			return true;
 		}
 		
-		HttpClient httpClient = new DefaultHttpClient();
+		if (this.foundPhotos.containsKey(id)) {
+			return true;
+		}
 		
-		try {
-			String get = String
-					.format("%s?action=get&id=%s", DATABASE_URL, id);
-    		
-    		HttpGet request = new HttpGet(get);
-    		
-			ResponseHandler<String> responseHandler = new BasicResponseHandler();
+		if (this.foundAudio.containsKey(id)) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Retrieves an object from the database.
+	 * @param id of object in database
+	 */
+	public void getData(String id) {
+		// Check if already found
+		if(!has(id)) {
+			JSONObject data = this.webService.getJSONObjectWithID(id);
 			
-			String response = httpClient.execute(request,
-					responseHandler);
-			
-			Log.v(TAG, "Response: " + response);
-			
-			JSONObject json;
-			
-			try {
-				json = new JSONObject( response );
-				JSONObject data = json.getJSONObject("content");
-				
-				String type = data.getString("type");
-				
-				if (type.equals("Task")) {
-					
-					String userName = "Unknown";
-					String name = "Unknown";
-					String description = "Unknown";
-					
-					boolean needsComment = false;
-					boolean needsPhoto = false;
-					boolean needsAudio = false;
-					
-					boolean complete = false;
-					
-					try {
-						name = data.getString("name");
-					} catch (JSONException e) {
-						Log.w(TAG, "Failed to get task name.");
-						name = "Unknown";
-					}
-					
-					try {
-						description = data.getString("description");
-					} catch (JSONException e) {
-						Log.w(TAG, "Failed to get task description.");
-						description = "Unknown";
-					}		
-					
-					try {
-						userName = data.getString("user");
-					} catch (JSONException e) {
-						Log.w(TAG, "Failed to get user.");
-						userName = "Unknown";
-					} 
-					
-					try {
-						needsComment = data.getBoolean("needsComment");
-					} catch (JSONException e) {
-						Log.w(TAG, "Failed to get needsComment.");
-						needsComment = false;
-					} 
-					
-					try {
-						needsPhoto = data.getBoolean("needsPhoto");
-					} catch (JSONException e) {
-						Log.w(TAG, "Failed to get needsPhoto.");
-						needsPhoto = false;
-					} 
-					
-					try {
-						needsAudio = data.getBoolean("needsAudio");
-					} catch (JSONException e) {
-						Log.w(TAG, "Failed to get needsAudio.");
-						needsAudio = false;
-					} 
-					
-					try {
-						complete = data.getBoolean("isComplete");
-					} catch (JSONException e) {
-						Log.w(TAG, "Failed to get completion.");
-						complete = false;
-					} 
-					
-					User user = new User(userName);
-					
-					task = new Task(name, description);
-					task.setUser(user);
-					task.setRequirements(needsComment, needsPhoto, needsAudio);
-					task.setPublic(true);
-					task.setComplete(complete);
-					task.setId(id);
-					task.setLocal(false);
-					task.syncFinished();
-					
-					Log.v(TAG, task.toString());
+			if (data != null) {
+				String type = null;
+				try {
+					type = data.getString("type");
+				} catch (JSONException e) {
+					Log.w(TAG, "Unable to get type in getData");
+					return;
 				}
 				
-			} catch (JSONException e) {
-				Log.w(TAG, "Failed to get list.");
-			}        
-
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+				if (type.equals("Task")) {
+					Task task = decodeTask(data);
+					task.setId(id);
+					this.foundTasks.put(id, task);
+				}
+			}
 		}
-		
-		return task;
 	}
 	
 	/**
-	 * Inserts or updates depending on the given action a task
-	 * into the database. The action can either be post or
-	 * update.
-	 * 
-	 * @param Action
-	 * @param A task
-	 * @return http response
+	 * From the given JSONObject retrive the needed
+	 * info for the task.
+	 * @param JSON data
 	 */
-	private String insertIntoDatabase(String action, Task task) {
+	private Task decodeTask(JSONObject data) {
+		String userName = "Unknown";
+		String name = "Unknown";
+		String description = "Unknown";
 		
-		HttpClient httpClient = new DefaultHttpClient();
-
+		boolean needsComment = false;
+		boolean needsPhoto = false;
+		boolean needsAudio = false;
+		
+		boolean complete = false;
+		
 		try {
-			String post = String
-					.format("%s?action=%s&summary=%s&description=%s",
-							DATABASE_URL, action, "Task", task.getDateAsString());
-			
-			String save = String.format("content=%s&id=%s", task.toJSON(), task.getId());
-
-			Log.v(TAG, action);
-			Log.v(TAG, "Content: " + save);
-
-			HttpPost request = new HttpPost(post);
-
-			StringEntity se = new StringEntity(save);	
-			
-			request.setEntity(se);
-			
-			request.setHeader("Connection", "keep-alive");
-			request.setHeader("Accept", "application/json");
-			request.setHeader("Content-type", "application/x-www-form-urlencoded");
-			
-			ResponseHandler<String> responseHandler = new BasicResponseHandler();
-			String response = httpClient.execute(request, responseHandler);
-
-			Log.v(TAG, "Response: " + response);
-			
-			return response;
-
-		} catch (ClientProtocolException e) {
-			Log.w(TAG, "ClientProtocolException: " + e.toString());
-		} catch (IOException e) {
-			Log.w(TAG, "IOException: " + e.toString());
-		} finally {
-			httpClient.getConnectionManager().shutdown();
+			name = data.getString("name");
+		} catch (JSONException e) {
+			Log.w(TAG, "Failed to get task name.");
+			name = "Unknown";
 		}
 		
-		return null;
+		try {
+			description = data.getString("description");
+		} catch (JSONException e) {
+			Log.w(TAG, "Failed to get task description.");
+			description = "Unknown";
+		}		
+		
+		try {
+			userName = data.getString("user");
+		} catch (JSONException e) {
+			Log.w(TAG, "Failed to get user.");
+			userName = "Unknown";
+		} 
+		
+		try {
+			needsComment = data.getBoolean("needsComment");
+		} catch (JSONException e) {
+			Log.w(TAG, "Failed to get needsComment.");
+			needsComment = false;
+		} 
+		
+		try {
+			needsPhoto = data.getBoolean("needsPhoto");
+		} catch (JSONException e) {
+			Log.w(TAG, "Failed to get needsPhoto.");
+			needsPhoto = false;
+		} 
+		
+		try {
+			needsAudio = data.getBoolean("needsAudio");
+		} catch (JSONException e) {
+			Log.w(TAG, "Failed to get needsAudio.");
+			needsAudio = false;
+		} 
+		
+		try {
+			complete = data.getBoolean("isComplete");
+		} catch (JSONException e) {
+			Log.w(TAG, "Failed to get completion.");
+			complete = false;
+		} 
+		
+		User user = new User(userName);
+		
+		Task task = new Task(name, description);
+		task.setUser(user);
+		task.setRequirements(needsComment, needsPhoto, needsAudio);
+		task.setPublic(true);
+		task.setComplete(complete);
+		task.setLocal(false);
+		task.syncFinished();
+		
+		return task;
 	}
 	
 	/**
@@ -334,19 +302,20 @@ public class DatabaseManager {
 				action = "update";
 			}
 			
-			String response = insertIntoDatabase(action, task);
+			String save = String.format("action=%s&content=%s&id=%s", 
+					action, task.toJSON(), task.getId());
+			
+			String response = this.webService.httpRequest(save);
 			
 			if (response == null) {
 				return;
 			}
 			
 			JSONObject json;
+			
 			try {
 				json = new JSONObject(response);
-				
 				task.setId(json.getString("id"));
-				Log.v(TAG, "ID: " + task.getId());
-				
 				this.foundTasks.put(task.getId(), task);
 			} catch (JSONException e) {
 				Log.w(TAG, "Failed to get id.");
@@ -369,7 +338,13 @@ public class DatabaseManager {
     				this.foundTasks.put(t.getId(), t);
     			}
     		}
-    		getAllTasksFromDatabase();
+    		
+    		getData();
+    		
+    		for (Task task : this.foundTasks.values()) {
+    		    TaskManager.getInstance().addTask(task);
+    		}
+    		
     		hasSynced = true;
 		}
     	
