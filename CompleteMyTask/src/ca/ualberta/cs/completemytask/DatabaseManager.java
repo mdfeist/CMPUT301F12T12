@@ -279,18 +279,13 @@ public class DatabaseManager {
 	public void syncData(UserData data) {
 		if (data.needsSync()) {
 			
-			String action = null;
+			String response = null;
 			
 			if (data.getId() == null) {
-				action = "post";
+				response = this.webService.insertEntry("Data", "New Data", data.toJSON());
 			} else {
-				action = "update";
+				response = this.webService.replaceEntry(data.getId(), "Data", "New Data", data.toJSON());
 			}
-			
-			String save = String.format("action=%s&content=%s&id=%s", 
-					action, data.toJSON(), data.getId());
-			
-			String response = this.webService.httpRequest(save);
 			
 			if (response == null) {
 				return;

@@ -29,11 +29,13 @@ public class MainMenuActivity extends Activity {
 	private TaskAdapter adapter;
 	private File localDataFile;
 	
+	private LoadingView loadingView;
+	
 	// View id's
 	//private int ADD_TASK_BUTTON = R.id.AddTaskButton;
 	//private int SYNC_TASK_BUTTON = R.id.SyncTaskButton;
-	private int LOAD_VIEW_STUB = R.id.stub_import;
-	private int LOAD_VIEW = R.id.panel_import;
+	//private int LOAD_VIEW_STUB = R.id.stub_import;
+	//private int LOAD_VIEW = R.id.panel_import;
 	private int MAIN_MENU_LAYOUT = R.id.main_menu_layout;
 	private int TASK_LIST = R.id.TasksList;
 	
@@ -64,6 +66,9 @@ public class MainMenuActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
+        
+        this.loadingView = new LoadingView(this, R.id.main_menu_layout,
+        		"Syncing with Database");
         
         setupSettings();
         setupList();
@@ -149,9 +154,9 @@ public class MainMenuActivity extends Activity {
             		if (position >= 0) {
             			syncTask(position);
             		}
-            	} else {
-            		TaskManager.getInstance().saveLocalData(localDataFile);
             	}
+            	
+            	TaskManager.getInstance().saveLocalData(localDataFile);
             	
             	TaskManager.getInstance().sort();
             	adapter.notifyDataSetChanged();
@@ -175,40 +180,12 @@ public class MainMenuActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, intent);
     }
     
-    /**
-     * Hides and displays the loading screen when the
-     * application is syncing with the database.
-     * 
-     * @param whether the screen should be displayed
-     */
-    private void displaySyncScreen(boolean display) {
-    	if (display) {
-    		enableView(false);
-			ViewStub loadViewStub = (ViewStub) findViewById(LOAD_VIEW_STUB);
-			
-			if (loadViewStub != null) {
-				loadViewStub.inflate();
-			} else {
-				View loadView = (View) findViewById(LOAD_VIEW);
-	        	loadView.setVisibility(View.VISIBLE);
-			}
-    	} else {
-    		TaskManager.getInstance().sort();
-    		adapter.notifyDataSetChanged();
-            
-            enableView(true);
-            
-        	View loadView = (View) findViewById(LOAD_VIEW);
-        	loadView.setVisibility(View.INVISIBLE);
-    	}
-    }
-    
     public void syncTask(final int position) {
     	class SyncTaskAsyncTask extends AsyncTask<String, Void, Long>{
     		
     		@Override
     		protected void onPreExecute() {
-    			displaySyncScreen(true);
+    			loadingView.showLoadView(true);
     		}
     		
 	        @Override
@@ -235,7 +212,11 @@ public class MainMenuActivity extends Activity {
 	            }
 	            
 	            TaskManager.getInstance().saveLocalData(localDataFile);
-	            displaySyncScreen(false);
+	            
+	            TaskManager.getInstance().sort();
+	    		adapter.notifyDataSetChanged();
+	            
+	            loadingView.showLoadView(false);
 	        }        
 		}
 		
@@ -260,7 +241,7 @@ public class MainMenuActivity extends Activity {
     		
     		@Override
     		protected void onPreExecute() {
-    			displaySyncScreen(true);
+    			loadingView.showLoadView(true);
     		}
     		
 	        @Override
@@ -286,43 +267,16 @@ public class MainMenuActivity extends Activity {
 	            	Log.v(TAG, "Invalid HTTP post");
 	            }
 	            
-	            displaySyncScreen(false);
+	            TaskManager.getInstance().sort();
+	    		adapter.notifyDataSetChanged();
+	            
+	            loadingView.showLoadView(false);
 	        }        
 		}
 		
     	SyncDatabasteAsyncTask syncTasks = new SyncDatabasteAsyncTask();
     	syncTasks.execute(); 
     	
-    }
-    
-    /**
-     * Disables the main view so buttons can't be
-     * clicked.
-     * 
-     * @param enable or disable
-     */
-    private void enableView(boolean enable) {
-    	RelativeLayout layout = (RelativeLayout)findViewById(MAIN_MENU_LAYOUT);
-        enableView(enable, layout);
-    }
-    
-    /**
-     * A helper class of enableView(boolean) to find all
-     * the views contained in ViewGroups.
-     * 
-     * @param enable or disable
-     * @param A ViewGroup
-     */
-    private void enableView(boolean enable, ViewGroup viewGroup) {
-    	for (int i = 0; i < viewGroup.getChildCount(); i++) {
-    		View child = viewGroup.getChildAt(i);
-    		
-            if (ViewGroup.class.isAssignableFrom(child.getClass())) {
-            	enableView(enable, (ViewGroup)child);
-            }
-            
-            child.setEnabled(enable);
-        }
     }
     
     /**

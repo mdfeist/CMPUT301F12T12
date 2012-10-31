@@ -22,7 +22,7 @@
     <string name="title_activity_main_menu">Main Menu</string>
     <string name="MyTasksHeader">My Tasks</string>
     <string name="PublicTasksHeader">Public Tasks</string>
-    <string name="SyncTaskLabel">Syncing with Database</string>
+    <string name="LoadingLabel">Loading</string>
 
     <!-- Add Task -->
     <string name="title_activity_add_task">Add Task</string>

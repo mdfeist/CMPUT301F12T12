@@ -61,12 +61,4 @@
             android:textColor="#ffffffff" />
     </LinearLayout>
 
-    <ViewStub
-        android:id="@+id/stub_import"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_gravity="bottom"
-        android:inflatedId="@+id/panel_import"
-        android:layout="@layout/progress_overlay" />
-
 </RelativeLayout>
