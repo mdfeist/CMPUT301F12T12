@@ -10,12 +10,9 @@ import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewStub;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 
 /**
  * Main Menu View
@@ -67,13 +64,14 @@ public class MainMenuActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
         
-        this.loadingView = new LoadingView(this, R.id.main_menu_layout,
+        this.loadingView = new LoadingView(this, MAIN_MENU_LAYOUT,
         		"Syncing with Database");
         
         setupSettings();
         setupList();
         
         localDataFile = new File(getFilesDir(), Settings.DATA_NAME);
+        TaskManager.getInstance().setLocalDataFile(localDataFile);
         TaskManager.getInstance().loadLocalData(localDataFile);
         adapter.notifyDataSetChanged();
         
@@ -97,7 +95,7 @@ public class MainMenuActivity extends Activity {
         super.onDestroy();
         // The activity is about to be destroyed.
         Log.v(TAG, "Finishing");
-        TaskManager.getInstance().saveLocalData(localDataFile);
+        TaskManager.getInstance().saveLocalData();
     }
     
     /**
@@ -156,7 +154,7 @@ public class MainMenuActivity extends Activity {
             		}
             	}
             	
-            	TaskManager.getInstance().saveLocalData(localDataFile);
+            	TaskManager.getInstance().saveLocalData();
             	
             	TaskManager.getInstance().sort();
             	adapter.notifyDataSetChanged();
@@ -211,7 +209,7 @@ public class MainMenuActivity extends Activity {
 	            	Log.v(TAG, "Invalid HTTP post");
 	            }
 	            
-	            TaskManager.getInstance().saveLocalData(localDataFile);
+	            TaskManager.getInstance().saveLocalData();
 	            
 	            TaskManager.getInstance().sort();
 	    		adapter.notifyDataSetChanged();
@@ -300,18 +298,9 @@ public class MainMenuActivity extends Activity {
 				Task task = TaskManager.getInstance().getTaskAt(position);
 				Log.v(TAG, "Clicked: " + task.getName());
 				
-				Intent intent;
-				
-				if (task.isLocal() &&
-						!task.isPublic()) {
-					intent = new Intent(view.getContext(), AddTaskActivity.class);
-					TaskManager.getInstance().setCurrentTaskPosition(position); 
-			    	startActivityForResult(intent, Display.ADD_TASK.getValue());
-				} else {
-					intent = new Intent(view.getContext(), ViewTaskActivity.class);
-					TaskManager.getInstance().setCurrentTaskPosition(position); 
-			    	startActivityForResult(intent, Display.VIEW_TASK.getValue());
-				}
+				Intent intent = new Intent(view.getContext(), ViewTaskActivity.class);
+				TaskManager.getInstance().setCurrentTaskPosition(position); 
+		    	startActivityForResult(intent, Display.VIEW_TASK.getValue());
 			}
 
 		});

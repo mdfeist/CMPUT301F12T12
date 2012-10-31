@@ -32,16 +32,18 @@ public class TaskManager {
 	private boolean loadedData;
 	
 	private int currentPosition;
+	
+	private File localDataFile;
 
 	protected TaskManager() {
 		this.tasks = new ArrayList<Task>();
 		this.loadedData = false;
 		this.currentPosition = -1;
+		this.localDataFile = null;
 	}
 
 	/**
 	 * Returns the singleton's instance.
-	 * 
 	 * @return instances
 	 */
 	public static TaskManager getInstance() {
@@ -51,9 +53,12 @@ public class TaskManager {
 		return instance;
 	}
 	
+	public void setLocalDataFile(File file) {
+		this.localDataFile = file;
+	}
+	
 	/**
 	 * Returns the number of tasks.
-	 * 
 	 * @return number of tasks
 	 */
 	public int size() {
@@ -62,7 +67,6 @@ public class TaskManager {
 	
 	/**
 	 * Add a task to the task manager.
-	 * 
 	 * @param task
 	 * @return index of task
 	 */
@@ -118,7 +122,6 @@ public class TaskManager {
 	
 	/**
 	 * Returns a list with all the tasks.
-	 * 
 	 * @return List<Task>
 	 */
 	public List<Task> getTaskArray() {
@@ -157,6 +160,10 @@ public class TaskManager {
 
 			this.loadedData = true;
 		}
+	}
+	
+	public void saveLocalData() {
+		saveLocalData(this.localDataFile);
 	}
 	
 	/**

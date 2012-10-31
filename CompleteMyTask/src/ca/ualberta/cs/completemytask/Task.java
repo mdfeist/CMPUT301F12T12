@@ -78,6 +78,9 @@ public class Task extends UserData {
 	public void addComment(Comment comment) {
 		String id = comment.getId();
 		
+		if (id == null)
+			return;
+		
 		if (this.ids.contains(id)) {
 			return;
 		}

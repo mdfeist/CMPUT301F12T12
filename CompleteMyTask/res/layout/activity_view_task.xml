@@ -126,9 +126,13 @@
         android:weightSum="1.0" >
 
         <Space
+            android:id="@+id/EditTaskSpacer"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight=".33" />
+            android:layout_marginLeft="5dp"
+            android:layout_weight=".33"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp" />
 
         <Space
             android:layout_width="0dp"
