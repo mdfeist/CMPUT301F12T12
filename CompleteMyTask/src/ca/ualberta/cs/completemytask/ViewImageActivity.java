@@ -9,11 +9,11 @@ import android.provider.MediaStore;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Gallery;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 /**
  * 
@@ -31,10 +31,10 @@ public class ViewImageActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_view_image);
-		
+
 		Gallery photoGallery = (Gallery) findViewById(R.id.ImageGallery);
 		ImageAdapter adapter = new ImageAdapter(this);
-		
+
 		photoGallery.setAdapter(adapter);
 	}
 
@@ -43,72 +43,40 @@ public class ViewImageActivity extends Activity {
 		getMenuInflater().inflate(R.menu.activity_view_image, menu);
 		return true;
 	}
-	
+
 	public void takePhoto(View view){
-		Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-	    startActivityForResult(takePictureIntent, CAPTURE_IMAGE_REQUEST_CODE);
+		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+		String folder = Environment.getExternalStorageDirectory().getAbsolutePath() + "/tmp";
+		File folderF = new File(folder);
+		if (!folderF.exists()) {
+			folderF.mkdir();
+		}
+
+		String imageFilePath = folder + "/" + String.valueOf(System.currentTimeMillis()) +".jpg";
+		File imageFile = new File(imageFilePath);
+		imageFileUri = Uri.fromFile(imageFile);
+
+		intent.putExtra(MediaStore.ACTION_IMAGE_CAPTURE, imageFileUri);
+		startActivityForResult(intent, CAPTURE_IMAGE_REQUEST_CODE);
+	}
+
+	private Bitmap getBitmap(Intent intent) {
+		Bundle extras = intent.getExtras();
+		Bitmap newPhoto = (Bitmap) extras.get("data");
+		return newPhoto;
+	}
+
+	protected void onActivityResult(int requestCode, int resultCode, Intent intent){
+		if(requestCode == CAPTURE_IMAGE_REQUEST_CODE){
+			Toast.makeText(getApplicationContext(), "Result!", Toast.LENGTH_SHORT).show();
+			Bitmap b = getBitmap(intent);
+			ImageView i = (ImageView) findViewById(R.id.TaskImageView);
+			i.setImageBitmap(b);
+			Toast.makeText(getApplicationContext(), "Set", Toast.LENGTH_SHORT).show();
+		}
 	}
 	
-	protected void onActivityResult(int requestCode, int resultCode, Intent data){
-		Bundle extras = data.getExtras();
-	    Bitmap newPhoto = (Bitmap) extras.get("data");
-	    
-	    if (newPhoto!=null){
-			MyPhoto image = new MyPhoto();
-			image.setContent(newPhoto);
-			int taskPosition = TaskManager.getInstance().getCurrentTaskPosition();
-			TaskManager.getInstance().getTaskAt(taskPosition).addPhoto(image);
-			Log.v(TAG,getString(TaskManager.getInstance().getTaskAt(taskPosition).getNumberOfPhotos()));
-		}
-	}
-
-	/*public void takePhoto(){
-		Int	Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-		String folder = Environment.getExternalStorageDirectory().getAbsolutePath() + "/tmp";
-		File folderF = new File(folder);
-		if (!folderF.exists()) {
-			folderF.mkdir();
-		}
-
-		String imageFilePath = folder + "/" + String.valueOf(System.currentTimeMillis()) +".jpg";
-		File imageFile = new File(imageFilePath);
-		imageFileUri = Uri.fromFile(imageFile);
-
-		intent.putExtra(MediaStore.EXTRA_OUTPUT, imageFileUri);
-		startActivityForResult(intent, CAPTURE_IMAGE_REQUEST_CODE);
-	}
-
-	protected void onActivityResult(int requestCode, int resultCode, Intent data){
-		if (requestCode == CAPTURE_IMAGE_REQUEST_CODE) {
-			if (resultCode == RESULT_OK){    			
-				newPhoto = BitmapFactory.decodeFile(imageFileUri.getPath());
-			}
-		}
-	}ent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-		String folder = Environment.getExternalStorageDirectory().getAbsolutePath() + "/tmp";
-		File folderF = new File(folder);
-		if (!folderF.exists()) {
-			folderF.mkdir();
-		}
-
-		String imageFilePath = folder + "/" + String.valueOf(System.currentTimeMillis()) +".jpg";
-		File imageFile = new File(imageFilePath);
-		imageFileUri = Uri.fromFile(imageFile);
-
-		intent.putExtra(MediaStore.EXTRA_OUTPUT, imageFileUri);
-		startActivityForResult(intent, CAPTURE_IMAGE_REQUEST_CODE);
-	}
-
-	protected void onActivityResult(int requestCode, int resultCode, Intent data){
-		if (requestCode == CAPTURE_IMAGE_REQUEST_CODE) {
-			if (resultCode == RESULT_OK){    			
-				newPhoto = BitmapFactory.decodeFile(imageFileUri.getPath());
-			}
-		}
-	}*/
-
 	/**
 	 * Closes the task
 	 * 
