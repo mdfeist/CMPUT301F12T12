@@ -14,13 +14,11 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Gallery;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 /**
  * 
  * 
  * @author Devon Waldon
- *
  */
 public class ViewImageActivity extends Activity {
 
@@ -31,22 +29,28 @@ public class ViewImageActivity extends Activity {
 	ImageView imagePreview;
 	private Task task;
 	Uri imageFileUri;
+	
+	private LoadingView loadingView;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_view_image);
+		
+		this.loadingView = new LoadingView(this, R.id.ViewImageMain,
+        		"Getting Image ...");
 
 		int position = TaskManager.getInstance().getCurrentTaskPosition();
 		task = TaskManager.getInstance().getTaskAt(position);
 
 		photoGallery = (Gallery) findViewById(R.id.ImageGallery);
 		imagePreview = (ImageView) findViewById(R.id.TaskImageView);
-		adapter = new ImageAdapter(this);
-
-		for(int i=0; i<task.getNumberOfPhotos(); i++){
+		adapter = new ImageAdapter(this, task);
+		/*
+		for(int i=0; i< task.getNumberOfPhotos(); i++){
 			adapter.addBitmap(task.getPhotoAt(i).getContent());
 		}
+		*/
 		photoGallery.setAdapter(adapter);
 	}
 
@@ -79,7 +83,6 @@ public class ViewImageActivity extends Activity {
 
 	/**
 	 * Gets the bitmap out of an intent. 
-	 * 
 	 * @param intent
 	 * @return a bitmap that was carried by the intent
 	 */
@@ -91,7 +94,6 @@ public class ViewImageActivity extends Activity {
 
 	/**
 	 * Adds the bitmap 'b' to both the task and the ImageView gallery
-	 * 
 	 * @param b
 	 */
 	private void addImage(Bitmap b){
@@ -111,13 +113,12 @@ public class ViewImageActivity extends Activity {
 
 		sync(image);
 		
-		adapter.addBitmap(b);
-		photoGallery.setAdapter(adapter);
+		//adapter.addBitmap(b);
+		//photoGallery.setAdapter(adapter);
 	}
 
 	/**
 	 * Syncs the image to the task (copied from CommentActivity, 12/11/01)
-	 * 
 	 * @param image
 	 */
 	public void sync(final MyPhoto image) {
@@ -125,6 +126,7 @@ public class ViewImageActivity extends Activity {
 
 			@Override
 			protected void onPreExecute() {
+				loadingView.showLoadView(true);
 			}
 
 			@Override
@@ -142,12 +144,14 @@ public class ViewImageActivity extends Activity {
 
 			@Override
 			protected void onProgressUpdate(Void... voids) {
-
+				
 			}
 
 			@Override
 			protected void onPostExecute(Long result) {
 				super.onPostExecute(null);
+				loadingView.showLoadView(false);
+				adapter.notifyDataSetChanged();
 			}        
 		}
 
@@ -169,7 +173,6 @@ public class ViewImageActivity extends Activity {
 
 	/**
 	 * Closes the task
-	 * 
 	 * @param view
 	 */
 	public void close(View view) {
