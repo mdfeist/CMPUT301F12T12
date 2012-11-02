@@ -21,15 +21,25 @@ import android.widget.ImageView;
  */
 public class ImageAdapter extends BaseAdapter {
 	private Context context;
-
-	private List<Bitmap> bitmaps = new ArrayList<Bitmap>();
+	private Task task = null;
+	//private List<Bitmap> bitmaps = new ArrayList<Bitmap>();
 
 	public ImageAdapter(Context c) {
-		context = c;
+		this.context = c;
+	}
+	
+	public ImageAdapter(Context c, Task task) {
+		this.context = c;
+		this.task = task;
 	}
 
 	public int getCount() {
-		return bitmaps.size();
+		
+		if (task == null) {
+			return 0;
+		}
+		
+		return task.getNumberOfPhotos();
 	}
 
 	public Object getItem(int position) {
@@ -43,13 +53,14 @@ public class ImageAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ImageView i = new ImageView(context);
 		
-		i.setImageBitmap(bitmaps.get(position));
+		i.setImageBitmap(task.getPhotoAt(position).getContent());
 		i.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 
 		return i;
 	}
-	
+	/*
 	public void addBitmap(Bitmap b){
 		bitmaps.add(b);
 	}
+	*/
 }
