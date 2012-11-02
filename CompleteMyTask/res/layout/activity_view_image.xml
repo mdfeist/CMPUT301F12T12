@@ -6,7 +6,8 @@
     <ImageView
         android:id="@+id/TaskImageView"
         android:layout_width="match_parent"
-        android:layout_height="256dp"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/ImageGallery"
         android:layout_centerHorizontal="true"
         android:background="@drawable/image_bg"
         android:contentDescription="Test Image" />
@@ -14,8 +15,7 @@
     <Gallery
         android:id="@+id/ImageGallery"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/TaskImageView"
+        android:layout_height="128dp"
         android:layout_above="@+id/Bar"
         android:layout_centerHorizontal="true" />
 

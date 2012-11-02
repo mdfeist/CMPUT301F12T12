@@ -1,6 +1,10 @@
 package ca.ualberta.cs.completemytask;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -14,23 +18,14 @@ public class ImageAdapter extends BaseAdapter {
 	int mGalleryItemBackground;
 	private Context mContext;
 
-	private Integer[] mImageIds = {
-			R.drawable.img1,
-			R.drawable.img2,
-			R.drawable.img3,
-	};
+	private List<Bitmap> bitmaps = new ArrayList<Bitmap>();
 
 	public ImageAdapter(Context c) {
 		mContext = c;
 	}
-	
-	public ImageAdapter(Context c, Integer[] i) {
-		mContext = c;
-		mImageIds = i;
-	}
 
 	public int getCount() {
-		return mImageIds.length;
+		return bitmaps.size();
 	}
 
 	public Object getItem(int position) {
@@ -44,11 +39,15 @@ public class ImageAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ImageView i = new ImageView(mContext);
 		
-		i.setImageResource(mImageIds[position]);
-		i.setLayoutParams(new Gallery.LayoutParams(150, 100));
-		i.setScaleType(ImageView.ScaleType.FIT_XY);
-		i.setBackgroundResource(mGalleryItemBackground);
+		i.setImageBitmap(bitmaps.get(position));
+		//i.setLayoutParams(new Gallery.LayoutParams(150, 150));
+		i.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+		//i.setBackgroundResource(mGalleryItemBackground);
 
 		return i;
+	}
+	
+	public void addBitmap(Bitmap b){
+		bitmaps.add(b);
 	}
 }
