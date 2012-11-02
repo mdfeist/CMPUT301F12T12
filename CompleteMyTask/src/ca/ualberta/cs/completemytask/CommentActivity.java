@@ -1,7 +1,5 @@
 package ca.ualberta.cs.completemytask;
 
-import java.io.File;
-
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
