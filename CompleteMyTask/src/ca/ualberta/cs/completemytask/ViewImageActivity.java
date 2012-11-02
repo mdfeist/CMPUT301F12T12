@@ -28,6 +28,7 @@ public class ViewImageActivity extends Activity {
 	private static final String TAG = "ViewImageActivity";
 	Gallery photoGallery;
 	ImageAdapter adapter;
+	ImageView imagePreview;
 	private Task task;
 	Uri imageFileUri;
 
@@ -40,6 +41,7 @@ public class ViewImageActivity extends Activity {
 		task = TaskManager.getInstance().getTaskAt(position);
 
 		photoGallery = (Gallery) findViewById(R.id.ImageGallery);
+		imagePreview = (ImageView) findViewById(R.id.TaskImageView);
 		adapter = new ImageAdapter(this);
 
 		for(int i=0; i<task.getNumberOfPhotos(); i++){
@@ -54,6 +56,10 @@ public class ViewImageActivity extends Activity {
 		return true;
 	}
 
+	/**
+	 * Calls for the camera to take a picture and save it to local storage
+	 * @param view
+	 */
 	public void takePhoto(View view){
 		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
@@ -71,13 +77,24 @@ public class ViewImageActivity extends Activity {
 		startActivityForResult(intent, CAPTURE_IMAGE_REQUEST_CODE);
 	}
 
+	/**
+	 * Gets the bitmap out of an intent. 
+	 * 
+	 * @param intent
+	 * @return a bitmap that was carried by the intent
+	 */
 	private Bitmap getBitmap(Intent intent) {
 		Bundle extras = intent.getExtras();
 		Bitmap newPhoto = (Bitmap) extras.get("data");
 		return newPhoto;
 	}
 
-	private void addImageToTask(Bitmap b){
+	/**
+	 * Adds the bitmap 'b' to both the task and the ImageView gallery
+	 * 
+	 * @param b
+	 */
+	private void addImage(Bitmap b){
 		MyPhoto image = new MyPhoto();
 		image.setContent(b);
 
@@ -99,7 +116,8 @@ public class ViewImageActivity extends Activity {
 	}
 
 	/**
-	 * Syncs the image to the task
+	 * Syncs the image to the task (copied from CommentActivity, 12/11/01)
+	 * 
 	 * @param image
 	 */
 	public void sync(final MyPhoto image) {
@@ -144,11 +162,8 @@ public class ViewImageActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent intent){
 		if(requestCode == CAPTURE_IMAGE_REQUEST_CODE){
 			Bitmap b = getBitmap(intent);
-
-			ImageView i = (ImageView) findViewById(R.id.TaskImageView);
-			i.setImageBitmap(b);
-
-			addImageToTask(b);
+			imagePreview.setImageBitmap(b);
+			addImage(b);
 		}
 	}
 

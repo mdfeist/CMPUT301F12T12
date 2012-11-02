@@ -46,6 +46,7 @@
 	<string name="CommentButtonDescription">Comment Button</string>
 	<string name="PhotoButtonDescription">Photo Button</string>
 	<string name="AudioButtonDescription">Audio Button</string>
+	<string name="GalleryImageViewDescription">Selected Gallery Image</string>
 
     <!-- User Info -->
     <string name="title_activity_user_info">User Info</string>

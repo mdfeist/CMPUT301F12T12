@@ -10,7 +10,7 @@
         android:layout_above="@+id/ImageGallery"
         android:layout_centerHorizontal="true"
         android:background="@drawable/image_bg"
-        android:contentDescription="Test Image" />
+        android:contentDescription="@string/GalleryImageViewDescription" />
 
     <Gallery
         android:id="@+id/ImageGallery"
