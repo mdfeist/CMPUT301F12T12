@@ -78,9 +78,9 @@ public class MyPhoto extends UserData implements UserContent<Bitmap> {
 		/*
 		* This Function converts the String back to Bitmap
 		* */
-		byte[] decodedString = Base64.decode(imageString, Base64.DEFAULT);
-		Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-		return decodedByte;
+		//byte[] decodedString = Base64.decode(imageString, Base64.DEFAULT);
+		//Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+		return null;
 	}
 	
 	/**

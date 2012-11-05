@@ -10,6 +10,7 @@ import android.provider.MediaStore;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Gallery;
@@ -52,6 +53,9 @@ public class ViewImageActivity extends Activity {
 		}
 		*/
 		photoGallery.setAdapter(adapter);
+		adapter.notifyDataSetChanged();
+		
+		Log.v(TAG, "# of Images: " + task.getNumberOfPhotos());
 	}
 
 	@Override

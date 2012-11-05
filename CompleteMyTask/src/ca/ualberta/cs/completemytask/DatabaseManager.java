@@ -151,6 +151,10 @@ public class DatabaseManager {
 					Comment comment = decodeComment(data);
 					comment.setId(id);
 					this.foundComments.put(id, comment);
+				}  else if (type.equals("Photo")) {
+					MyPhoto photo = decodePhoto(data);
+					photo.setId(id);
+					this.foundPhotos.put(id, photo);
 				}
 			}
 		}
@@ -196,6 +200,51 @@ public class DatabaseManager {
 		
 		return comment;
 	}
+	
+	/**
+	 * From the given JSONObject retrieve the needed
+	 * info for the photo
+	 * @param A JSONObject of the photo
+	 * @return A photo
+	 */
+	private MyPhoto decodePhoto(JSONObject data) {
+		
+		Log.v(TAG, "Decoding Image Data");
+		
+		String userName = "Unknown";
+		String imageString = "";
+		String parentID = "";
+		
+		try {
+			userName = data.getString("user");
+		} catch (JSONException e) {
+			Log.w(TAG, "Failed to get user.");
+			userName = "Unknown";
+		}
+		
+		try {
+			imageString = data.getString("image");
+		} catch (JSONException e) {
+			Log.w(TAG, "Failed to get image.");
+			imageString = "";
+		}
+		
+		try {
+			parentID = data.getString("parentID");
+		} catch (JSONException e) {
+			Log.w(TAG, "Failed to get parentID.");
+			parentID = "";
+		}
+		
+		User user = new User(userName);
+		MyPhoto photo = new MyPhoto();
+		photo.setUser(user);
+		photo.setImageFromString(imageString);
+		photo.setParentId(parentID);
+		
+		return photo;
+	}
+	
 	
 	/**
 	 * From the given JSONObject retrive the needed
@@ -362,6 +411,16 @@ public class DatabaseManager {
     		
     		if (task != null) {
     			task.addComment(comment);
+    		}
+    	}
+    	
+    	for (MyPhoto photo : this.foundPhotos.values()) {
+    		String parentID = photo.getParentId();
+    		Task task = this.foundTasks.get(parentID);
+    		
+    		if (task != null) {
+    			Log.v(TAG, "Adding photo");
+    			task.addPhoto(photo);
     		}
     	}
 		
