@@ -1,0 +1,10 @@
+<resources>
+
+    <string name="app_name">MicrophoneTest</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_microphone">MicrophoneActivity</string>
+    <string name="RecordButton">Record</string>
+	<string name="StopButton">Stop</string>
+    
+</resources>
