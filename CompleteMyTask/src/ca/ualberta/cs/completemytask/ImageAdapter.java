@@ -1,14 +1,14 @@
 package ca.ualberta.cs.completemytask;
 
-import java.util.ArrayList;
-import java.util.List;
+//import java.util.ArrayList;
+//import java.util.List;
 
 import android.content.Context;
-import android.graphics.Bitmap;
+//import android.graphics.Bitmap;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Gallery;
+//import android.widget.Gallery;
 import android.widget.ImageView;
 
 
