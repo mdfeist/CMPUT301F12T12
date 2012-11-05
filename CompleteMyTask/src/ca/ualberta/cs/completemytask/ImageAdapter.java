@@ -16,7 +16,7 @@ import android.widget.ImageView;
  * A modified ImageAdapter for displaying task images in the Gallery view.
  * Able to add images to the gallery by calling 'add(bitmap)' on this class 
  * 
- * @author devon
+ * @author Devon Waldon
  *
  */
 public class ImageAdapter extends BaseAdapter {
