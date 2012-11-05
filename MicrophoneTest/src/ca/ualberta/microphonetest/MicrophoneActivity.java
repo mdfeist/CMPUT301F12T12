@@ -1,13 +1,13 @@
 package ca.ualberta.microphonetest;
 
-import android.R.string;
+import java.io.File;
+import java.io.IOException;
+
 import android.media.MediaRecorder;
 import android.os.Bundle;
-import android.os.Environment;
 import android.app.Activity;
 import android.view.Menu;
 import android.view.View;
-
 
 
 /**
@@ -26,9 +26,7 @@ import android.view.View;
 
 public class MicrophoneActivity extends Activity {
 
-	private static final String file = "audio";	
     MediaRecorder recorder = new MediaRecorder();
-
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,28 +37,25 @@ public class MicrophoneActivity extends Activity {
     
     public void onStart(){
     	super.onStart();
-
+    	
+    	boolean exists = (new File(android.os.Environment.getExternalStorageDirectory() + "/Record/")).exists();
+    	if (!exists) {
+    	    new File(android.os.Environment.getExternalStorageDirectory() + "/Record/").mkdirs();
+    	}
+    	
         recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+        recorder.setOutputFile(android.os.Environment.getExternalStorageDirectory()+"/Record/test.3gp");
         recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-        recorder.setOutputFile(Environment.getExternalStorageDirectory().getPath() + file);
         
-        try {
-            recorder.prepare();
-        } catch (Exception e){
-              e.printStackTrace();
-        }
- 
-        /**
-         * On button press start recording
-         */
-        //recorder.start(); 
-        
-        /**
-         * On button press stop recording
-         */
-        //recorder.stop();
-        //recorder.release();
+//        try {
+//            recorder.prepare();
+//            System.out.println("Recorder prepared");
+//        } catch (Exception e){
+//        	System.out.println("Prepare did not work");
+//              e.printStackTrace();
+//        }
+
     }
     
     @Override
@@ -69,24 +64,35 @@ public class MicrophoneActivity extends Activity {
         return true;
     }
 
-    public void RecordStart(View view) {
-    	recorder.start(); 
+    public void RecordStart(View view) throws IOException {
+    	try {
+    		recorder.prepare();
+    		System.out.println("Recorder prepared");
+    		recorder.start(); 
+			System.out.println("Recorder started");
+
+    	} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Failed to start properly");
+			e.printStackTrace();
+		}
+    	
+    	
+    	
+    	
     }
     
     public void RecordStop(View view) {
-        // Kabloey
-        recorder.stop();
-        recorder.release();
-    }
-    
-    
-    public void RecordAudio(string file){
-/*        final Button button = (Button) findViewById(R.id.button_id);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Perform action on click
-            }
-        });*/
+    	try {
+			System.out.println("About to stop...");
+			recorder.stop();
+			System.out.println("It worked After stop");
+			recorder.release();
+			System.out.println("Recorder released");
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Recorder failed to stop");
+			e.printStackTrace();
+		}
     }
 }
-
