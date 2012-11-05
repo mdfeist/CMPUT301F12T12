@@ -7,6 +7,15 @@ import android.view.ViewStub;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+/**
+ * A loading screen that can be used to
+ * briefly hide the interface and prevent
+ * the user from acting when there are
+ * other commands pending.
+ * 
+ * @author Michael Feist
+ *
+ */
 public class LoadingView {
 	private Activity activity;
 	

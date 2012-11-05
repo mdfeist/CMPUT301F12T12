@@ -51,6 +51,9 @@ public class UserInfoActivity extends Activity {
         return true;
     }
     
+    /**
+     * Used to delete all local tasks.  Use carefully!
+     */
     public void deleteLocalData(View view) {
     	
     	AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -80,6 +83,10 @@ public class UserInfoActivity extends Activity {
     	
     }
     
+    /**
+     * Attaches a UserName to the user to use as identification
+     * when interacting with Tasks.
+     */
     public void newUser(View view) {
     	
     	EditText editUserNameEditText = (EditText) findViewById(R.id.EditUserName);

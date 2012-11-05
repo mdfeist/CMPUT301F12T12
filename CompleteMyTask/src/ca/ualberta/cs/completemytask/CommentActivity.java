@@ -11,6 +11,15 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
+/**
+ * Handles the adding of a comment.  The user
+ * enters their comment into the EditText 
+ * "Comment" and it is added to the task with
+ * the button "SendButton".
+ * 
+ * @author 
+ *
+ */
 public class CommentActivity extends Activity {
 
 	private static final String TAG = "CommentActivity";
