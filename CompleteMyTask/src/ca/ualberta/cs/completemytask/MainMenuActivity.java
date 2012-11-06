@@ -3,7 +3,6 @@ package ca.ualberta.cs.completemytask;
 
 import java.io.File;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -20,7 +19,7 @@ import android.widget.ListView;
  * @author Michael Feist
  *
  */
-public class MainMenuActivity extends Activity {
+public class MainMenuActivity extends Activity{
 
 	private static final String TAG = "MainMenuActivity";
 	private TaskAdapter adapter;
@@ -117,7 +116,6 @@ public class MainMenuActivity extends Activity {
     
     /**
      * Called when user wants to edit their information.
-     * 
      * @param A view
      */
     public void editUser(View view) {
@@ -127,7 +125,6 @@ public class MainMenuActivity extends Activity {
     
     /**
      * Called when the user wants to create a new task.
-     * 
      * @param A view
      */
     public void createNewTask(View view) {
@@ -178,105 +175,6 @@ public class MainMenuActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, intent);
     }
     
-    public void syncTask(final int position) {
-    	class SyncTaskAsyncTask extends AsyncTask<String, Void, Long>{
-    		
-    		@Override
-    		protected void onPreExecute() {
-    			loadingView.showLoadView(true);
-    		}
-    		
-	        @Override
-	        protected Long doInBackground(String... params) {
-	        	
-	        	DatabaseManager.getInstance().syncTaskToDatabase(position);
-	        	
-				return (long) 1;
-			}
-	        
-	        @Override
-	        protected void onProgressUpdate(Void... voids) {
-	        	
-	        }
-	        
-	        @Override
-	        protected void onPostExecute(Long result) {
-	            super.onPostExecute(null);
-
-	            if(result == 1){
-	            	Log.v(TAG, "HTTP post done");
-	            }else{
-	            	Log.v(TAG, "Invalid HTTP post");
-	            }
-	            
-	            TaskManager.getInstance().saveLocalData();
-	            
-	            TaskManager.getInstance().sort();
-	    		adapter.notifyDataSetChanged();
-	            
-	            loadingView.showLoadView(false);
-	        }        
-		}
-		
-    	SyncTaskAsyncTask syncTask = new SyncTaskAsyncTask();
-    	syncTask.execute(); 
-    }
-    
-    /**
-     * Makes a call to the Database and sync's the data base with
-     * the TaskManager. While the program is syncing the screen
-     * is locked and a spinning load screen will appear. The
-     * reason for the screen locking is we don't want the user
-     * changing content while we are trying to sync. Sync's are
-     * done on another thread because if done
-     * on the UI thread the application will crash.
-     * 
-     * @param A view
-     */
-    public void sync(View view) {
-    	
-    	class SyncDatabasteAsyncTask extends AsyncTask<String, Void, Long>{
-    		
-    		@Override
-    		protected void onPreExecute() {
-    			loadingView.showLoadView(true);
-    		}
-    		
-	        @Override
-	        protected Long doInBackground(String... params) {
-	        	
-	        	DatabaseManager.getInstance().syncDatabase();
-	        	
-				return (long) 1;
-			}
-	        
-	        @Override
-	        protected void onProgressUpdate(Void... voids) {
-	        	
-	        }
-	        
-	        @Override
-	        protected void onPostExecute(Long result) {
-	            super.onPostExecute(null);
-
-	            if(result == 1){
-	            	Log.v(TAG, "HTTP post done");
-	            }else{
-	            	Log.v(TAG, "Invalid HTTP post");
-	            }
-	            
-	            TaskManager.getInstance().sort();
-	    		adapter.notifyDataSetChanged();
-	            
-	            loadingView.showLoadView(false);
-	        }        
-		}
-		
-    	SyncDatabasteAsyncTask syncTasks = new SyncDatabasteAsyncTask();
-    	syncTasks.execute(); 
-    	
-    }
-    
     /**
      * Create a new list adapter and 
      * click listener for the main
@@ -305,5 +203,63 @@ public class MainMenuActivity extends Activity {
 
 		});
     }
+
+    /**
+     * Makes a call to the Database and sync's the data base with
+     * the TaskManager. While the program is syncing the screen
+     * is locked and a spinning load screen will appear. The
+     * reason for the screen locking is we don't want the user
+     * changing content while we are trying to sync. Sync's are
+     * done on another thread because if done
+     * on the UI thread the application will crash.
+     * @param A view
+     */
+    public void sync(View view) {
+    	BackgroundTask bg = new BackgroundTask();
+    	bg.runInBackGround(new HandleInBackground() {
+    		public void onPreExecute() {
+    			onPreExecute();
+    		}
+    		
+    		public void onPostExecute() {
+    			onPostExecute();
+    		}
+    		
+    		public int handleInBackground(Object o) {
+    			DatabaseManager.getInstance().syncDatabase();
+				return 0;
+    		}
+    	});
+    }
+    
+    public void syncTask(final int position) {
+    	BackgroundTask bg = new BackgroundTask();
+    	bg.runInBackGround(new HandleInBackground() {
+    		public void onPreExecute() {
+    			onPreExecute();
+    		}
+    		
+    		public void onPostExecute() {
+    			onPostExecute();
+    		}
+    		
+    		public int handleInBackground(Object o) {
+    			DatabaseManager.getInstance().syncTaskToDatabase(position);
+				return 0;
+    		}
+    	});
+    	
+    }
+    
+	public void onPreExecute() {
+		loadingView.showLoadView(true);		
+	}
+
+	public void onPostExecute() {
+		TaskManager.getInstance().sort();
+ 		adapter.notifyDataSetChanged();
+ 		
+		loadingView.showLoadView(false);		
+	}
 
 }
