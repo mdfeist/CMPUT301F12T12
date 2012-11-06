@@ -116,7 +116,7 @@ public class MyPhoto extends UserData implements UserContent<Bitmap> {
 		try {
 			json.put( "type", "Photo");
 			json.put( "user", userName);
-			json.put( "image", getStringFromBitmap(this.image));
+			json.put( "image", "'" + getStringFromBitmap(this.image) + "'");
 			json.put( "parentID", this.parentID);
 		} catch (JSONException e) {
 			e.printStackTrace();

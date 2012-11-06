@@ -224,6 +224,7 @@ public class DatabaseManager {
 		
 		try {
 			imageString = data.getString("image");
+			imageString = imageString.substring(1, imageString.length() - 1);
 		} catch (JSONException e) {
 			Log.w(TAG, "Failed to get image.");
 			imageString = "";
@@ -235,6 +236,8 @@ public class DatabaseManager {
 			Log.w(TAG, "Failed to get parentID.");
 			parentID = "";
 		}
+		
+		Log.v(TAG, imageString);
 		
 		User user = new User(userName);
 		MyPhoto photo = new MyPhoto();

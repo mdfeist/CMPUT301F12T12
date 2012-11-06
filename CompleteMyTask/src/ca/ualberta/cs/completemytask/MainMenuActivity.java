@@ -218,11 +218,14 @@ public class MainMenuActivity extends Activity{
     	BackgroundTask bg = new BackgroundTask();
     	bg.runInBackGround(new HandleInBackground() {
     		public void onPreExecute() {
-    			onPreExecute();
+    			loadingView.showLoadView(true);	
     		}
     		
     		public void onPostExecute() {
-    			onPostExecute();
+    			TaskManager.getInstance().sort();
+    	 		adapter.notifyDataSetChanged();
+    	 		
+    			loadingView.showLoadView(false);
     		}
     		
     		public int handleInBackground(Object o) {
@@ -236,11 +239,14 @@ public class MainMenuActivity extends Activity{
     	BackgroundTask bg = new BackgroundTask();
     	bg.runInBackGround(new HandleInBackground() {
     		public void onPreExecute() {
-    			onPreExecute();
+    			loadingView.showLoadView(true);	
     		}
     		
     		public void onPostExecute() {
-    			onPostExecute();
+    			TaskManager.getInstance().sort();
+    	 		adapter.notifyDataSetChanged();
+    	 		
+    			loadingView.showLoadView(false);
     		}
     		
     		public int handleInBackground(Object o) {
@@ -250,16 +256,5 @@ public class MainMenuActivity extends Activity{
     	});
     	
     }
-    
-	public void onPreExecute() {
-		loadingView.showLoadView(true);		
-	}
-
-	public void onPostExecute() {
-		TaskManager.getInstance().sort();
- 		adapter.notifyDataSetChanged();
- 		
-		loadingView.showLoadView(false);		
-	}
 
 }

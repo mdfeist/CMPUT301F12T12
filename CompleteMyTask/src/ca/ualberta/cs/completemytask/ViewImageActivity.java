@@ -46,6 +46,11 @@ public class ViewImageActivity extends Activity {
 
 		photoGallery = (Gallery) findViewById(R.id.ImageGallery);
 		imagePreview = (ImageView) findViewById(R.id.TaskImageView);
+		
+		if (task.getNumberOfPhotos() > 0) {
+			imagePreview.setImageBitmap(task.getPhotoAt(0).getContent());
+		}
+		
 		adapter = new ImageAdapter(this, task);
 
 		photoGallery.setAdapter(adapter);
