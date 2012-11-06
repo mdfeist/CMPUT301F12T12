@@ -1,5 +1,6 @@
 package ca.ualberta.cs.completemytask;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
 import org.json.JSONException;
@@ -18,9 +19,10 @@ import android.util.Base64;
  */
 @SuppressWarnings("serial")
 public class MyPhoto extends UserData implements UserContent<Bitmap> {
+	protected final String TAG = "MyPhoto";
 
 	Bitmap image;
-	
+
 	public MyPhoto() {
 		this.image = null;
 	}
@@ -40,7 +42,7 @@ public class MyPhoto extends UserData implements UserContent<Bitmap> {
 	public void setContent(Bitmap content) {
 		this.image = content;
 	}
-	
+
 	/**
 	 * Posted by Manav on Dec 17, 2011 in Learn, Tutorials |
 	 * <br/>
@@ -56,15 +58,17 @@ public class MyPhoto extends UserData implements UserContent<Bitmap> {
 		 * JSONified.
 		 */
 		final int COMPRESSION_QUALITY = 80;
-		String encodedImage;
+		
 		ByteArrayOutputStream byteArrayBitmapStream = new ByteArrayOutputStream();
 		bitmapPicture.compress(Bitmap.CompressFormat.PNG, COMPRESSION_QUALITY,
 				byteArrayBitmapStream);
-		byte[] b = byteArrayBitmapStream.toByteArray();
-		encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
-		return encodedImage;
+		byte[] encodedByteArray = byteArrayBitmapStream.toByteArray();
+		
+		String encodedString = Base64.encodeToString(encodedByteArray, Base64.DEFAULT);
+
+		return encodedString;
 	}
-	
+
 	/**
 	 * Posted by Manav on Dec 17, 2011 in Learn, Tutorials |
 	 * <br/>
@@ -76,13 +80,17 @@ public class MyPhoto extends UserData implements UserContent<Bitmap> {
 	 */
 	public Bitmap getBitmapFromString(String imageString) {
 		/*
-		* This Function converts the String back to Bitmap
-		* */
-		//byte[] decodedString = Base64.decode(imageString, Base64.DEFAULT);
-		//Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-		return null;
+		 * This Function converts the String back to Bitmap
+		 * */
+
+		byte[] decodedByteArray = Base64.decode(imageString, Base64.DEFAULT);
+		
+		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(decodedByteArray);
+		Bitmap decodedBitmap = BitmapFactory.decodeStream(byteArrayInputStream);
+		
+		return decodedBitmap;
 	}
-	
+
 	/**
 	 * Decodes a string into a bitmap image and then
 	 * sets"image" in my MyPhoto to the decoded bitmap.
@@ -98,14 +106,14 @@ public class MyPhoto extends UserData implements UserContent<Bitmap> {
 	 */
 	public String toJSON() {
 		JSONObject json = new JSONObject();
-		
+
 		String userName = "Unknown";
-		
+
 		if (hasUser()) {
 			userName = getUser().getUserName();
 		}
-		
-        try {
+
+		try {
 			json.put( "type", "Photo");
 			json.put( "user", userName);
 			json.put( "image", getStringFromBitmap(this.image));
@@ -113,14 +121,11 @@ public class MyPhoto extends UserData implements UserContent<Bitmap> {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-        
+
 		return json.toString();
 	}
-	
+
 	public void createFake(Context context){
 		BitmapFactory.decodeResource(context.getResources(),R.drawable.img1);
 	}
-	
-	
-	
 }

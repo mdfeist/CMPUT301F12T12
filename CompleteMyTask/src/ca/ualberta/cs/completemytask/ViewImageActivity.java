@@ -47,11 +47,7 @@ public class ViewImageActivity extends Activity {
 		photoGallery = (Gallery) findViewById(R.id.ImageGallery);
 		imagePreview = (ImageView) findViewById(R.id.TaskImageView);
 		adapter = new ImageAdapter(this, task);
-		/*
-		for(int i=0; i< task.getNumberOfPhotos(); i++){
-			adapter.addBitmap(task.getPhotoAt(i).getContent());
-		}
-		*/
+
 		photoGallery.setAdapter(adapter);
 		adapter.notifyDataSetChanged();
 		
@@ -116,9 +112,6 @@ public class ViewImageActivity extends Activity {
 		image.setParentId(task.getId());
 
 		sync(image);
-		
-		//adapter.addBitmap(b);
-		//photoGallery.setAdapter(adapter);
 	}
 
 	/**
