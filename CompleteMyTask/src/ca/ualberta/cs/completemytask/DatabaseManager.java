@@ -30,69 +30,20 @@ public class DatabaseManager {
 	private WebService webService;
 	
 	/**
-	 * Template for data classes
-	 * @author Michael Feist
-	 *
-	 */
-	public class Data {
-		String parentID;
-		
-		public String getParentId() {
-			return this.parentID;
-		}
-	}
-	
-	/**
-	 * Holds the information of a photo
-	 * from the database;
-	 * @author Michael Feist
-	 *
-	 */
-	public class DataPhoto extends Data {
-		public MyPhoto photo;
-		
-		public DataPhoto(String parentID, MyPhoto photo) {
-			this.parentID = parentID;
-			this.photo = photo;
-		}
-		
-		public MyPhoto getPhoto() {
-			return this.photo;
-		}
-	}
-	
-	/**
-	 * Holds the information of an audio
-	 * file from the database;
-	 * @author Michael Feist
-	 *
-	 */
-	public class DataAudio extends Data {
-		public MyAudio audio;
-		
-		public DataAudio(String parentID, MyAudio audio) {
-			this.parentID = parentID;
-			this.audio = audio;
-		}
-		
-		public MyAudio getAudio() {
-			return this.audio;
-		}
-	}
-	
-	/**
 	 * Data
 	 */
 	private Map<String, Task> foundTasks;
-	private Map<String, DataPhoto> foundPhotos;
-	private Map<String, DataAudio> foundAudio;
+	private Map<String, Comment> foundComments;
+	private Map<String, MyPhoto> foundPhotos;
+	private Map<String, MyAudio> foundAudio;
 
 	protected DatabaseManager() {
 		this.hasSynced = false;
 		
 		this.foundTasks = new HashMap<String, Task>();
-		this.foundPhotos = new HashMap<String, DataPhoto>();
-		this.foundAudio = new HashMap<String, DataAudio>();
+		this.foundComments = new HashMap<String, Comment>();
+		this.foundPhotos = new HashMap<String, MyPhoto>();
+		this.foundAudio = new HashMap<String, MyAudio>();
 		
 		this.webService = new WebService(DATABASE_URL);
 	}
@@ -159,6 +110,10 @@ public class DatabaseManager {
 			return true;
 		}
 		
+		if (this.foundComments.containsKey(id)) {
+			return true;
+		}
+		
 		if (this.foundPhotos.containsKey(id)) {
 			return true;
 		}
@@ -192,15 +147,110 @@ public class DatabaseManager {
 					Task task = decodeTask(data);
 					task.setId(id);
 					this.foundTasks.put(id, task);
+				} else if (type.equals("Comment")) {
+					Comment comment = decodeComment(data);
+					comment.setId(id);
+					this.foundComments.put(id, comment);
+				}  else if (type.equals("Photo")) {
+					MyPhoto photo = decodePhoto(data);
+					photo.setId(id);
+					this.foundPhotos.put(id, photo);
 				}
 			}
 		}
 	}
 	
 	/**
+	 * From the given JSONObject retrieve the needed
+	 * info for the task
+	 * @param A JSONObject of the comment
+	 * @return A comment
+	 */
+	private Comment decodeComment(JSONObject data) {
+		String userName = "Unknown";
+		String commentString = "";
+		String parentID = "";
+		
+		try {
+			userName = data.getString("user");
+		} catch (JSONException e) {
+			Log.w(TAG, "Failed to get user.");
+			userName = "Unknown";
+		}
+		
+		try {
+			commentString = data.getString("comment");
+		} catch (JSONException e) {
+			Log.w(TAG, "Failed to get comment.");
+			commentString = "";
+		}
+		
+		try {
+			parentID = data.getString("parentID");
+		} catch (JSONException e) {
+			Log.w(TAG, "Failed to get parentID.");
+			parentID = "";
+		}
+		
+		User user = new User(userName);
+		Comment comment = new Comment();
+		comment.setUser(user);
+		comment.setContent(commentString);
+		comment.setParentId(parentID);
+		
+		return comment;
+	}
+	
+	/**
+	 * From the given JSONObject retrieve the needed
+	 * info for the photo
+	 * @param A JSONObject of the photo
+	 * @return A photo
+	 */
+	private MyPhoto decodePhoto(JSONObject data) {
+		
+		Log.v(TAG, "Decoding Image Data");
+		
+		String userName = "Unknown";
+		String imageString = "";
+		String parentID = "";
+		
+		try {
+			userName = data.getString("user");
+		} catch (JSONException e) {
+			Log.w(TAG, "Failed to get user.");
+			userName = "Unknown";
+		}
+		
+		try {
+			imageString = data.getString("image");
+		} catch (JSONException e) {
+			Log.w(TAG, "Failed to get image.");
+			imageString = "";
+		}
+		
+		try {
+			parentID = data.getString("parentID");
+		} catch (JSONException e) {
+			Log.w(TAG, "Failed to get parentID.");
+			parentID = "";
+		}
+		
+		User user = new User(userName);
+		MyPhoto photo = new MyPhoto();
+		photo.setUser(user);
+		photo.setImageFromString(imageString);
+		photo.setParentId(parentID);
+		
+		return photo;
+	}
+	
+	
+	/**
 	 * From the given JSONObject retrive the needed
 	 * info for the task.
 	 * @param JSON data
+	 * @return A task
 	 */
 	private Task decodeTask(JSONObject data) {
 		String userName = "Unknown";
@@ -275,37 +325,16 @@ public class DatabaseManager {
 		return task;
 	}
 	
-	/**
-	 * Syncs a task based on it's location in the TaskManager.
-	 * 
-	 * @param Position of task in TaskManager
-	 */
-	public void syncTaskToDatabase(int position) {
-		Task task = TaskManager.getInstance().getTaskAt(position);
-		syncTaskToDatabase(task);
-	}
-	
-	/**
-	 * Syncs the given task with the database.
-	 * 
-	 * @param A task
-	 */
-	public void syncTaskToDatabase(Task task) {
-		
-		if (task.needsSync()) {
+	public void syncData(UserData data) {
+		if (data.needsSync()) {
 			
-			String action = null;
+			String response = null;
 			
-			if (task.getId() == null) {
-				action = "post";
+			if (data.getId() == null) {
+				response = this.webService.insertEntry("Data", "New Data", data.toJSON());
 			} else {
-				action = "update";
+				response = this.webService.replaceEntry(data.getId(), "Data", "New Data", data.toJSON());
 			}
-			
-			String save = String.format("action=%s&content=%s&id=%s", 
-					action, task.toJSON(), task.getId());
-			
-			String response = this.webService.httpRequest(save);
 			
 			if (response == null) {
 				return;
@@ -315,13 +344,39 @@ public class DatabaseManager {
 			
 			try {
 				json = new JSONObject(response);
-				task.setId(json.getString("id"));
-				this.foundTasks.put(task.getId(), task);
+				data.setId(json.getString("id"));
 			} catch (JSONException e) {
 				Log.w(TAG, "Failed to get id.");
 			}
 			
-			task.syncFinished();
+			data.syncFinished();
+		}
+	}
+	
+	/**
+	 * Syncs a task based on it's location in the TaskManager.
+	 * @param Position of task in TaskManager
+	 */
+	public void syncTaskToDatabase(int position) {
+		Task task = TaskManager.getInstance().getTaskAt(position);
+		syncTaskToDatabase(task);
+	}
+	
+	/**
+	 * Syncs the given task with the database.
+	 * @param A task
+	 */
+	public void syncTaskToDatabase(Task task) {
+		
+		if (task.needsSync()) {
+			syncData(task);
+		}
+		
+		// Sync Comments
+		for (int i = 0; i < task.getNumberOfComments(); i++) {
+			Comment comment = task.getCommentAt(i);
+			comment.setParentId(task.getId());
+			syncData(comment);
 		}
 	}
 	
@@ -339,12 +394,6 @@ public class DatabaseManager {
     			}
     		}
     		
-    		getData();
-    		
-    		for (Task task : this.foundTasks.values()) {
-    		    TaskManager.getInstance().addTask(task);
-    		}
-    		
     		hasSynced = true;
 		}
     	
@@ -353,6 +402,31 @@ public class DatabaseManager {
     		Log.v(TAG, "Syncing Task: " + t.getName());
 			this.syncTaskToDatabase(t);
 		}	
+    	
+    	getData();
+    	
+    	for (Comment comment : this.foundComments.values()) {
+    		String parentID = comment.getParentId();
+    		Task task = this.foundTasks.get(parentID);
+    		
+    		if (task != null) {
+    			task.addComment(comment);
+    		}
+    	}
+    	
+    	for (MyPhoto photo : this.foundPhotos.values()) {
+    		String parentID = photo.getParentId();
+    		Task task = this.foundTasks.get(parentID);
+    		
+    		if (task != null) {
+    			Log.v(TAG, "Adding photo");
+    			task.addPhoto(photo);
+    		}
+    	}
+		
+		for (Task task : this.foundTasks.values()) {
+		    TaskManager.getInstance().addTask(task);
+		}
     	
     	testSyncComplete = true;
 	}

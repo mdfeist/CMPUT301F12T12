@@ -14,16 +14,57 @@ import java.util.GregorianCalendar;
 @SuppressWarnings("serial")
 public abstract class UserData implements Serializable {
 	
-	User user = null;
+	User user;
 	GregorianCalendar date;
 	
+	protected String id;
+	protected String parentID;
+	protected boolean sync;
+	
 	UserData() {
-		date = new GregorianCalendar();
+		this(null);
 	}
 	
 	UserData(User user) {
 		this.user = user;
+		this.id = null;
+		this.sync = true;
+		
+		this.parentID = null;
+		
 		date = new GregorianCalendar();
+	}
+	
+	/**
+	 * Set the id of the task.
+	 * @param id
+	 */
+	public void setId(String id) {
+		this.id = id;
+	}
+	
+	/**
+	 * Gets the id of the task.
+	 * @return id
+	 */
+	public String getParentId() {
+		return this.parentID;
+	}
+	
+	/**
+	 * Set the id of the task.
+	 * @param id
+	 */
+	public void setParentId(String id) {
+		this.parentID = id;
+	}
+	
+	/**
+	 * Gets the id of the task.
+	 * @return id
+	 */
+	public String getId() {
+		return this.id;
 	}
 	
 	public void setUser(User user) {
@@ -53,6 +94,21 @@ public abstract class UserData implements Serializable {
 				this.date.get(Calendar.DAY_OF_MONTH));
 		
 		return strDate;
+	}
+	
+	/**
+	 * Check if the task needs to be synchronized with the database.
+	 * @return true if task needs to be synchronized with the database
+	 */
+	public boolean needsSync() {
+		return this.sync;
+	}
+	
+	/**
+	 * Call when finish synchronizing the task with the database.
+	 */
+	public void syncFinished() {
+		this.sync = false;
 	}
 	
 	abstract public String toJSON();

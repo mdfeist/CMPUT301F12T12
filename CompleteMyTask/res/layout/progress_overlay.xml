@@ -5,28 +5,28 @@
   	android:layout_height="fill_parent" >
   	
     <View
-        android:id="@+id/view1"
+        android:id="@+id/loadView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true" 
-        android:background="#a0ffffff"/>
+        android:background="#CC000000"/>
 
     <ProgressBar
-        android:id="@+id/progressBar1"
+        android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/loadingMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/progressBar1"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="36dp"
-        android:text="@string/SyncTaskLabel"
+        android:layout_marginTop="20dp"
+        android:text="@string/LoadingLabel"
+        android:textColor="#FFFFFF"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>

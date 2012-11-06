@@ -45,6 +45,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/SendBar"
         android:layout_above="@+id/Bar"
+        android:paddingTop="25dp"
+        android:paddingBottom="25dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true">
         

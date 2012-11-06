@@ -22,7 +22,7 @@
     <string name="title_activity_main_menu">Main Menu</string>
     <string name="MyTasksHeader">My Tasks</string>
     <string name="PublicTasksHeader">Public Tasks</string>
-    <string name="SyncTaskLabel">Syncing with Database</string>
+    <string name="LoadingLabel">Loading</string>
 
     <!-- Add Task -->
     <string name="title_activity_add_task">Add Task</string>
@@ -46,6 +46,7 @@
 	<string name="CommentButtonDescription">Comment Button</string>
 	<string name="PhotoButtonDescription">Photo Button</string>
 	<string name="AudioButtonDescription">Audio Button</string>
+	<string name="GalleryImageViewDescription">Selected Gallery Image</string>
 
     <!-- User Info -->
     <string name="title_activity_user_info">User Info</string>

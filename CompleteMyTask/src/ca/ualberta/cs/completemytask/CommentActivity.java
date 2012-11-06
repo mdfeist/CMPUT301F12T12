@@ -1,7 +1,6 @@
 package ca.ualberta.cs.completemytask;
 
-import java.io.File;
-
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.util.Log;
@@ -12,6 +11,15 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
+/**
+ * Handles the adding of a comment.  The user
+ * enters their comment into the EditText 
+ * "Comment" and it is added to the task with
+ * the button "SendButton".
+ * 
+ * @author 
+ *
+ */
 public class CommentActivity extends Activity {
 
 	private static final String TAG = "CommentActivity";
@@ -65,13 +73,15 @@ public class CommentActivity extends Activity {
 	
 	/**
 	 * Send a text to the current task.
-	 * 
 	 * @param A view
 	 */
 	public void send(View view) {
 		Log.v(TAG, "Sent Comment");
 		String commentString = commentEditText.getText().toString();
 		commentEditText.setText("");
+		
+		if (task == null)
+			return;
 		
 		if (commentString.length() > 0) {
 			Comment comment = new Comment(commentString);
@@ -85,18 +95,49 @@ public class CommentActivity extends Activity {
 			}
 			
 			comment.setUser(user);
-			task.addComment(comment);
-			
-			if (task.isLocal()) {
-				File localDataFile = new File(getFilesDir(), Settings.DATA_NAME);
-				TaskManager.getInstance().saveLocalData(localDataFile);
-			}
+			comment.setParentId(task.getId());
+			sync(comment);
 			
 			String commentsString = commentsTextView.getText().toString();
 			commentsString +=  user.getUserName() + "\n\n\t" + comment.getContent() + "\n\n\n";
 			commentsTextView.setText(commentsString);
 		}
 	}
+	
+	public void sync(final Comment comment) {
+    	class SyncTaskAsyncTask extends AsyncTask<String, Void, Long>{
+    		
+    		@Override
+    		protected void onPreExecute() {
+    		}
+    		
+	        @Override
+	        protected Long doInBackground(String... params) {
+	        	
+	        	DatabaseManager.getInstance().syncData(comment);
+				task.addComment(comment);
+				
+				if (task.isLocal()) {
+					TaskManager.getInstance().saveLocalData();
+				}
+	        	
+				return (long) 1;
+			}
+	        
+	        @Override
+	        protected void onProgressUpdate(Void... voids) {
+	        	
+	        }
+	        
+	        @Override
+	        protected void onPostExecute(Long result) {
+	            super.onPostExecute(null);
+	        }        
+		}
+		
+    	SyncTaskAsyncTask syncTask = new SyncTaskAsyncTask();
+    	syncTask.execute(); 
+    }
 
 	/**
 	 * Close activity.

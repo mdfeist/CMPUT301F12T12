@@ -107,4 +107,49 @@ public class WebService {
 		
 	}
 	
+	/**
+	 * Adds a new entry to the database.
+	 * @param summary of entry
+	 * @param description of entry
+	 * @param content that you want submitted
+	 * @return {"summary":"example summary","content":{},"id":"9b42669cb3ba373ff7877ab826984bde4859ccf0","description":"example description"}
+	 */
+	public String insertEntry(String summary, String description, String content) {
+		String params = String.format("action=post&summary=%s&description=%s&content=%s",
+				summary, description, content);
+		return httpRequest(params);
+	}
+	
+	/**
+	 * Replaces the entry with the given id with the given entry.
+	 * @param id of the entry you want replaced
+	 * @param summary of new entry
+	 * @param description of new entry
+	 * @param content that you want submitted
+	 * @return {"summary":"updated summary","content":{},"id":"faccfa7b932f56fc8bcda5bb279cdeee49ef35a7","description":"updated description"}
+	 */
+	public String replaceEntry(String id, String summary, String description, String content) {
+		String params = String.format("action=update&id=%s&summary=%s&description=%s&content=%s",
+				id, summary, description, content);
+		return httpRequest(params);
+	}
+	
+	/**
+	 * Removes an entry from the database with the given id.
+	 * @param id of entry
+	 * @return {"id":"faccfa7b932f56fc8bcda5bb279cdeee49ef35a7","message":"removed"}
+	 */
+	public String removeEntry(String id) {
+		String params = String.format("action=remove&id=%s", id);
+		return httpRequest(params);
+	}
+	
+	/**
+	 * Removes everything from the database.
+	 */
+	public void nukeDatabase() {
+		String params = String.format("action=nuke&key=judgedredd");
+		httpRequest(params);
+	}
+	
 }
