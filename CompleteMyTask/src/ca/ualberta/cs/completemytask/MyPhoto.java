@@ -64,7 +64,7 @@ public class MyPhoto extends UserData implements UserContent<Bitmap> {
 				byteArrayBitmapStream);
 		byte[] encodedByteArray = byteArrayBitmapStream.toByteArray();
 		
-		String encodedString = Base64.encodeToString(encodedByteArray, Base64.DEFAULT);
+		String encodedString = Base64.encodeToString(encodedByteArray, Base64.URL_SAFE);
 
 		return encodedString;
 	}
@@ -83,11 +83,12 @@ public class MyPhoto extends UserData implements UserContent<Bitmap> {
 		 * This Function converts the String back to Bitmap
 		 * */
 
-		byte[] decodedByteArray = Base64.decode(imageString, Base64.DEFAULT);
-		
+		byte[] decodedByteArray = Base64.decode(imageString, Base64.URL_SAFE);
+		Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedByteArray, 0, decodedByteArray.length);
+		/*
 		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(decodedByteArray);
 		Bitmap decodedBitmap = BitmapFactory.decodeStream(byteArrayInputStream);
-		
+		*/
 		return decodedBitmap;
 	}
 
