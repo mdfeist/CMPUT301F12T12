@@ -44,6 +44,7 @@
             android:layout_weight=".33"
             android:background="@drawable/button_selector"
             android:contentDescription="@string/AudioButtonDescription"
+            android:onClick="viewAudio"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:src="@drawable/device_access_mic" />

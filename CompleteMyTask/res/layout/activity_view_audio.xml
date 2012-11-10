@@ -1,0 +1,48 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+<!-- A ListView to link to each attached audio file?  Record on a separate Activity? -->
+    
+    <LinearLayout
+        android:id="@+id/Bar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/tab_bar_background"
+        android:weightSum="1.0" >
+
+        <Button
+            android:id="@+id/TakeAudioButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_weight=".33"
+            android:background="@drawable/button_selector"
+            android:onClick="takePhoto"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="@string/TakeAudioButtonLabel"
+            android:textColor="#ffffffff" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".33" />
+
+        <Button
+            android:id="@+id/CloseButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_weight=".33"
+            android:background="@drawable/button_selector"
+            android:onClick="close"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="@string/CloseButtonLabel"
+            android:textColor="#ffffffff" />
+    </LinearLayout>
+
+</RelativeLayout>

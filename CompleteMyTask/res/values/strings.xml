@@ -40,13 +40,13 @@
     <string name="PhotoGalleryHeaderLabel">Photos:</string>
     <string name="AudioGalleryHeaderLabel">Audio:</string>
     <string name="TextHeaderLabel">Text:</string>
-    
+
     <!-- View Image -->
     <string name="TaskImageDescription">Task Image</string>
-	<string name="CommentButtonDescription">Comment Button</string>
-	<string name="PhotoButtonDescription">Photo Button</string>
-	<string name="AudioButtonDescription">Audio Button</string>
-	<string name="GalleryImageViewDescription">Selected Gallery Image</string>
+    <string name="CommentButtonDescription">Comment Button</string>
+    <string name="PhotoButtonDescription">Photo Button</string>
+    <string name="AudioButtonDescription">Audio Button</string>
+    <string name="GalleryImageViewDescription">Selected Gallery Image</string>
 
     <!-- User Info -->
     <string name="title_activity_user_info">User Info</string>
@@ -60,5 +60,7 @@
     <string name="title_activity_comment">Comments</string>
     <string name="CommentHint">Comment</string>
     <string name="title_activity_view_image">View Image</string>
+    <string name="title_activity_view_audio">ViewAudioActivity</string>
+    <string name="TakeAudioButtonLabel">Add Audio</string>
 
 </resources>

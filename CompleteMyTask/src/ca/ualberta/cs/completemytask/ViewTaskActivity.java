@@ -15,7 +15,7 @@ import android.widget.TextView;
 /**
  * This class handles the ViewTask activity
  * 
- * @author Devon Waldon and Michael Feist
+ * @author Devon Waldon, Michael Feist and Ian Watts
  *
  */
 
@@ -32,6 +32,7 @@ public class ViewTaskActivity extends Activity {
 	private static final int EDIT_TASK = 1;
 	private static final int VIEW_IMAGE = 2;
 	private static final int VIEW_COMMENTS = 3;
+	private static final int VIEW_AUDIO = 4;
 	
 	/**
 	 * Sets up the task view by populating text fields with relevant data and
@@ -143,6 +144,15 @@ public class ViewTaskActivity extends Activity {
     public void viewImage(View view){
     	Intent intent = new Intent(this, ViewImageActivity.class);
     	startActivityForResult(intent, VIEW_IMAGE);
+    }
+    
+    /**
+     * Called to view the audio for a particular task
+     * @param A view
+     */
+    public void viewAudio(View view){
+    	Intent intent = new Intent(this, ViewAudioActivity.class);
+    	startActivityForResult(intent, VIEW_AUDIO);
     }
 
     @Override
