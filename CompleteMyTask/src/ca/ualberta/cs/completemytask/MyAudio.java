@@ -2,12 +2,17 @@ package ca.ualberta.cs.completemytask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 //import android.content.Context;
 import android.util.Base64;
+import android.util.Log;
 
 /**
  * A audio file.
@@ -16,8 +21,9 @@ import android.util.Base64;
  *
  */
 @SuppressWarnings("serial")
-public class MyAudio extends UserData implements UserContent<File> {
-
+public class MyAudio extends ChildUserData implements UserContent<File> {
+	protected final String TAG = "MyAudio";
+	
 	File audio;
 	
 	public MyAudio() {
@@ -38,28 +44,35 @@ public class MyAudio extends UserData implements UserContent<File> {
 		 * JSONified.
 		 */
 		
-		//audioFile.compress(Bitmap.CompressFormat.PNG, COMPRESSION_QUALITY,
-		//		byteArrayBitmapStream);
+		// Ian try this code
+		// Mike
+		byte []buffer = new byte[(int) audioFile.length()];
+		InputStream ios = null;
 		
-		//Something to compress the audio?
-		ByteArrayOutputStream byteArrayAudioStream = new ByteArrayOutputStream();
+		try {
+			ios = new FileInputStream(audioFile);
+			if (ios.read(buffer) == -1) {
+				throw new IOException("EOF reached while trying to read the whole file");
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			Log.w(TAG, e.getStackTrace().toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			Log.w(TAG, e.getStackTrace().toString());
+		} finally {
+			try {
+				if (ios != null)
+					ios.close();
+			} catch (IOException e) {
+				Log.w(TAG, e.getStackTrace().toString());
+			}
+		}
 		
-		//The Broken stuff.  Needs to change the File into a ByteArray/String
-		//Some example code I was looking at.
-//		InputStream is = Context.openInputStream(audioFile);
-//		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-//		byte[] b = new byte[1024];
-//		int bytesRead;
-//		while ((bytesRead = is.read(b)) != -1) {
-//			byteArrayAudioStream.write(b, 0, bytesRead);
-//		}
-//		byte[] bytes = byteArrayAudioStream.toByteArray();
+		String encodedString = Base64.encodeToString(buffer, Base64.URL_SAFE);
 		
+		Log.v(TAG, encodedString);
 		
-		byte[] encodedByteArray = byteArrayAudioStream.toByteArray();
-		
-		String encodedString = Base64.encodeToString(encodedByteArray, Base64.URL_SAFE);
-
 		return encodedString;
 	}
 	
