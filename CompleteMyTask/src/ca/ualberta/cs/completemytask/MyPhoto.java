@@ -1,6 +1,5 @@
 package ca.ualberta.cs.completemytask;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
 import org.json.JSONException;
@@ -10,6 +9,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
+import android.util.Log;
 
 /**
  * A photo.
@@ -18,7 +18,7 @@ import android.util.Base64;
  *
  */
 @SuppressWarnings("serial")
-public class MyPhoto extends UserData implements UserContent<Bitmap> {
+public class MyPhoto extends ChildUserData implements UserContent<Bitmap> {
 	protected final String TAG = "MyPhoto";
 
 	Bitmap image;
@@ -124,6 +124,50 @@ public class MyPhoto extends UserData implements UserContent<Bitmap> {
 		}
 
 		return json.toString();
+	}
+	
+	/**
+	 * From the given JSONObject retrieve the needed
+	 * info for the photo
+	 * @param A JSONObject of the photo
+	 * @return A photo
+	 */
+	public void decodePhoto(JSONObject data) {
+		
+		Log.v(TAG, "Decoding Image Data");
+		
+		String userName = "Unknown";
+		String imageString = "";
+		String parentID = "";
+		
+		try {
+			userName = data.getString("user");
+		} catch (JSONException e) {
+			Log.w(TAG, "Failed to get user.");
+			userName = "Unknown";
+		}
+		
+		try {
+			imageString = data.getString("image");
+			imageString = imageString.substring(1, imageString.length() - 1);
+		} catch (JSONException e) {
+			Log.w(TAG, "Failed to get image.");
+			imageString = "";
+		}
+		
+		try {
+			parentID = data.getString("parentID");
+		} catch (JSONException e) {
+			Log.w(TAG, "Failed to get parentID.");
+			parentID = "";
+		}
+		
+		Log.v(TAG, imageString);
+		
+		User user = new User(userName);
+		this.setUser(user);
+		this.setImageFromString(imageString);
+		this.setParentId(parentID);
 	}
 
 	public void createFake(Context context){

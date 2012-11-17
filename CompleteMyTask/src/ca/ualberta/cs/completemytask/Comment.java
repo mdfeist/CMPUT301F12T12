@@ -3,6 +3,8 @@ package ca.ualberta.cs.completemytask;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.util.Log;
+
 /**
  * A text comment.
  * 
@@ -10,8 +12,9 @@ import org.json.JSONObject;
  *
  */
 @SuppressWarnings("serial")
-public class Comment extends UserData implements UserContent<String> {
-
+public class Comment extends ChildUserData implements UserContent<String> {
+	protected final String TAG = "Comment";
+	
 	String comment;
 	
 	public Comment() {
@@ -58,6 +61,44 @@ public class Comment extends UserData implements UserContent<String> {
 		}
         
 		return json.toString();
+	}
+	
+	/**
+	 * From the given JSONObject retrieve the needed
+	 * info for the task
+	 * @param A JSONObject of the comment
+	 * @return A comment
+	 */
+	public void decodeComment(JSONObject data) {
+		String userName = "Unknown";
+		String commentString = "";
+		String parentID = "";
+		
+		try {
+			userName = data.getString("user");
+		} catch (JSONException e) {
+			Log.w(TAG, "Failed to get user.");
+			userName = "Unknown";
+		}
+		
+		try {
+			commentString = data.getString("comment");
+		} catch (JSONException e) {
+			Log.w(TAG, "Failed to get comment.");
+			commentString = "";
+		}
+		
+		try {
+			parentID = data.getString("parentID");
+		} catch (JSONException e) {
+			Log.w(TAG, "Failed to get parentID.");
+			parentID = "";
+		}
+		
+		User user = new User(userName);
+		this.setUser(user);
+		this.setContent(commentString);
+		this.setParentId(parentID);
 	}
 
 }

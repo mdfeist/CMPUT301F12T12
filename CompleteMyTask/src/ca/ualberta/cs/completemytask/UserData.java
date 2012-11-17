@@ -18,7 +18,6 @@ public abstract class UserData implements Serializable {
 	GregorianCalendar date;
 	
 	protected String id;
-	protected String parentID;
 	protected boolean sync;
 	
 	UserData() {
@@ -30,8 +29,6 @@ public abstract class UserData implements Serializable {
 		this.id = null;
 		this.sync = true;
 		
-		this.parentID = null;
-		
 		date = new GregorianCalendar();
 	}
 	
@@ -41,22 +38,6 @@ public abstract class UserData implements Serializable {
 	 */
 	public void setId(String id) {
 		this.id = id;
-	}
-	
-	/**
-	 * Gets the id of the task.
-	 * @return id
-	 */
-	public String getParentId() {
-		return this.parentID;
-	}
-	
-	/**
-	 * Set the id of the task.
-	 * @param id
-	 */
-	public void setParentId(String id) {
-		this.parentID = id;
 	}
 	
 	/**

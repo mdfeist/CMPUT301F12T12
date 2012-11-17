@@ -144,188 +144,23 @@ public class DatabaseManager {
 				}
 				
 				if (type.equals("Task")) {
-					Task task = decodeTask(data);
+					Task task = new Task();
+					task.decodeTask(data);
 					task.setId(id);
 					this.foundTasks.put(id, task);
 				} else if (type.equals("Comment")) {
-					Comment comment = decodeComment(data);
+					Comment comment = new Comment();
+					comment.decodeComment(data);
 					comment.setId(id);
 					this.foundComments.put(id, comment);
 				}  else if (type.equals("Photo")) {
-					MyPhoto photo = decodePhoto(data);
+					MyPhoto photo = new MyPhoto();
+					photo.decodePhoto(data);
 					photo.setId(id);
 					this.foundPhotos.put(id, photo);
 				}
 			}
 		}
-	}
-	
-	/**
-	 * From the given JSONObject retrieve the needed
-	 * info for the task
-	 * @param A JSONObject of the comment
-	 * @return A comment
-	 */
-	private Comment decodeComment(JSONObject data) {
-		String userName = "Unknown";
-		String commentString = "";
-		String parentID = "";
-		
-		try {
-			userName = data.getString("user");
-		} catch (JSONException e) {
-			Log.w(TAG, "Failed to get user.");
-			userName = "Unknown";
-		}
-		
-		try {
-			commentString = data.getString("comment");
-		} catch (JSONException e) {
-			Log.w(TAG, "Failed to get comment.");
-			commentString = "";
-		}
-		
-		try {
-			parentID = data.getString("parentID");
-		} catch (JSONException e) {
-			Log.w(TAG, "Failed to get parentID.");
-			parentID = "";
-		}
-		
-		User user = new User(userName);
-		Comment comment = new Comment();
-		comment.setUser(user);
-		comment.setContent(commentString);
-		comment.setParentId(parentID);
-		
-		return comment;
-	}
-	
-	/**
-	 * From the given JSONObject retrieve the needed
-	 * info for the photo
-	 * @param A JSONObject of the photo
-	 * @return A photo
-	 */
-	private MyPhoto decodePhoto(JSONObject data) {
-		
-		Log.v(TAG, "Decoding Image Data");
-		
-		String userName = "Unknown";
-		String imageString = "";
-		String parentID = "";
-		
-		try {
-			userName = data.getString("user");
-		} catch (JSONException e) {
-			Log.w(TAG, "Failed to get user.");
-			userName = "Unknown";
-		}
-		
-		try {
-			imageString = data.getString("image");
-			imageString = imageString.substring(1, imageString.length() - 1);
-		} catch (JSONException e) {
-			Log.w(TAG, "Failed to get image.");
-			imageString = "";
-		}
-		
-		try {
-			parentID = data.getString("parentID");
-		} catch (JSONException e) {
-			Log.w(TAG, "Failed to get parentID.");
-			parentID = "";
-		}
-		
-		Log.v(TAG, imageString);
-		
-		User user = new User(userName);
-		MyPhoto photo = new MyPhoto();
-		photo.setUser(user);
-		photo.setImageFromString(imageString);
-		photo.setParentId(parentID);
-		
-		return photo;
-	}
-	
-	
-	/**
-	 * From the given JSONObject retrive the needed
-	 * info for the task.
-	 * @param JSON data
-	 * @return A task
-	 */
-	private Task decodeTask(JSONObject data) {
-		String userName = "Unknown";
-		String name = "Unknown";
-		String description = "Unknown";
-		
-		boolean needsComment = false;
-		boolean needsPhoto = false;
-		boolean needsAudio = false;
-		
-		boolean complete = false;
-		
-		try {
-			name = data.getString("name");
-		} catch (JSONException e) {
-			Log.w(TAG, "Failed to get task name.");
-			name = "Unknown";
-		}
-		
-		try {
-			description = data.getString("description");
-		} catch (JSONException e) {
-			Log.w(TAG, "Failed to get task description.");
-			description = "Unknown";
-		}		
-		
-		try {
-			userName = data.getString("user");
-		} catch (JSONException e) {
-			Log.w(TAG, "Failed to get user.");
-			userName = "Unknown";
-		} 
-		
-		try {
-			needsComment = data.getBoolean("needsComment");
-		} catch (JSONException e) {
-			Log.w(TAG, "Failed to get needsComment.");
-			needsComment = false;
-		} 
-		
-		try {
-			needsPhoto = data.getBoolean("needsPhoto");
-		} catch (JSONException e) {
-			Log.w(TAG, "Failed to get needsPhoto.");
-			needsPhoto = false;
-		} 
-		
-		try {
-			needsAudio = data.getBoolean("needsAudio");
-		} catch (JSONException e) {
-			Log.w(TAG, "Failed to get needsAudio.");
-			needsAudio = false;
-		} 
-		
-		try {
-			complete = data.getBoolean("isComplete");
-		} catch (JSONException e) {
-			Log.w(TAG, "Failed to get completion.");
-			complete = false;
-		} 
-		
-		User user = new User(userName);
-		
-		Task task = new Task(name, description);
-		task.setUser(user);
-		task.setRequirements(needsComment, needsPhoto, needsAudio);
-		task.setPublic(true);
-		task.setComplete(complete);
-		task.setLocal(false);
-		task.syncFinished();
-		
-		return task;
 	}
 	
 	public void syncData(UserData data) {

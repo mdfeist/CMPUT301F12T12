@@ -375,4 +375,71 @@ public class Task extends UserData {
         
 		return json.toString();
 	}
+	
+	/**
+	 * From the given JSONObject retrive the needed
+	 * info for the task.
+	 * @param JSON data
+	 * @return A task
+	 */
+	public void decodeTask(JSONObject data) {
+		String userName = "Unknown";
+		
+		try {
+			this.name = data.getString("name");
+		} catch (JSONException e) {
+			Log.w(TAG, "Failed to get task name.");
+			this.name = "Unknown";
+		}
+		
+		try {
+			this.description = data.getString("description");
+		} catch (JSONException e) {
+			Log.w(TAG, "Failed to get task description.");
+			this.description = "Unknown";
+		}		
+		
+		try {
+			userName = data.getString("user");
+		} catch (JSONException e) {
+			Log.w(TAG, "Failed to get user.");
+			userName = "Unknown";
+		} 
+		
+		try {
+			this.needsComment = data.getBoolean("needsComment");
+		} catch (JSONException e) {
+			Log.w(TAG, "Failed to get needsComment.");
+			this.needsComment = false;
+		} 
+		
+		try {
+			this.needsPhoto = data.getBoolean("needsPhoto");
+		} catch (JSONException e) {
+			Log.w(TAG, "Failed to get needsPhoto.");
+			this.needsPhoto = false;
+		} 
+		
+		try {
+			this.needsAudio = data.getBoolean("needsAudio");
+		} catch (JSONException e) {
+			Log.w(TAG, "Failed to get needsAudio.");
+			this.needsAudio = false;
+		} 
+		
+		try {
+			this.complete = data.getBoolean("isComplete");
+		} catch (JSONException e) {
+			Log.w(TAG, "Failed to get completion.");
+			this.complete = false;
+		} 
+		
+		User user = new User(userName);
+		this.setUser(user);
+		
+		this.setPublic(true);
+		this.setLocal(false);
+		this.syncFinished();
+		
+	}
 }
