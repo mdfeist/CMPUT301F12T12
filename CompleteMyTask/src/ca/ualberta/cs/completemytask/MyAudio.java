@@ -1,16 +1,15 @@
 package ca.ualberta.cs.completemytask;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-//import android.content.Context;
 import android.util.Base64;
 import android.util.Log;
 
@@ -77,6 +76,53 @@ public class MyAudio extends ChildUserData implements UserContent<File> {
 	}
 	
 	
+	/**
+	 * Takes a string, decodes it and then writes it as
+	 * a file to the SD card
+	 * 
+	 * @param audioString
+	 * @return Audio File
+	 */
+	public File getAudioFromString(String audioString) {
+		/*
+		 * This Function converts the String back to Bitmap
+		 * */
+
+		byte[] decodedByteArray = Base64.decode(audioString, Base64.URL_SAFE);
+		
+		//This line needs replacing --> Outputstream?
+		//File decodedAudio = BitmapFactory.decodeByteArray(decodedByteArray, 0, decodedByteArray.length);
+		//Will clean up tomorrow
+		File decodedAudio = new File("temp");
+		try {
+			FileOutputStream fos = new FileOutputStream(decodedAudio);
+			fos.write(decodedByteArray);
+			fos.flush();
+			fos.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		/* 
+		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(decodedByteArray);
+		Bitmap decodedBitmap = BitmapFactory.decodeStream(byteArrayInputStream);
+		*/
+		return decodedAudio;
+	}
+	
+	/**
+	 * Decodes a string into an audio file and then
+	 * sets "audio" in my MyAudio to the decoded bitmap.
+	 * @param audioString
+	 */
+	public void setImageFromString(String audioString) {
+		this.audio = getAudioFromString(audioString);
+	}
+	
 	@Override
 	public String toJSON() {
 		// TODO Auto-generated method stub
@@ -100,4 +146,53 @@ public class MyAudio extends ChildUserData implements UserContent<File> {
 		return json.toString();
 	}
 	
+	/**
+	 * From the given JSONObject retrieve the needed
+	 * info for the audio File
+	 * @param A JSONObject of the audio File
+	 * @return A File
+	 */
+	public void decodeAudio(JSONObject data) {
+		
+		Log.v(TAG, "Decoding Audio Data");
+		
+		String userName = "Unknown";
+		String audioString = "";
+		String parentID = "";
+		
+		try {
+			userName = data.getString("user");
+		} catch (JSONException e) {
+			Log.w(TAG, "Failed to get user.");
+			userName = "Unknown";
+		}
+		
+		try {
+			audioString = data.getString("audio");
+			audioString = audioString.substring(1, audioString.length() - 1);
+		} catch (JSONException e) {
+			Log.w(TAG, "Failed to get image.");
+			audioString = "";
+		}
+		
+		try {
+			parentID = data.getString("parentID");
+		} catch (JSONException e) {
+			Log.w(TAG, "Failed to get parentID.");
+			parentID = "";
+		}
+		
+		Log.v(TAG, audioString);
+		
+		User user = new User(userName);
+		this.setUser(user);
+		this.setImageFromString(audioString);
+		this.setParentId(parentID);
+	}
+
+/*Will this work with a file?  Not able to toss it in Drawable... Make one in 
+	public void createFake(Context context){
+		BitmapFactory.decodeResource(context.getResources(),R.drawable.img1);
+	}
+*/
 }
