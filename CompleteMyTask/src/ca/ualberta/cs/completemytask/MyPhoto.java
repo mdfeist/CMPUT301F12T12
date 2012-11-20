@@ -100,6 +100,10 @@ public class MyPhoto extends ChildUserData implements UserContent<Bitmap> {
 	public void setImageFromString(String imageString) {
 		this.image = getBitmapFromString(imageString);
 	}
+	
+	public String getImageAsString() {
+		return getStringFromBitmap(this.image);
+	}
 
 	/**
 	 * Returns a string of the photo in JSON form.

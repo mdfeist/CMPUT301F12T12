@@ -32,11 +32,14 @@ public class ViewImageActivity extends Activity {
 	Uri imageFileUri;
 	
 	private LoadingView loadingView;
+	public LocalSaving saver;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_view_image);
+		
+		saver = new LocalSaving(this);
 		
 		this.loadingView = new LoadingView(this, R.id.ViewImageMain,
         		"Getting Image ...");
@@ -124,41 +127,30 @@ public class ViewImageActivity extends Activity {
 	 * @param image
 	 */
 	public void sync(final MyPhoto image) {
-		class SyncTaskAsyncTask extends AsyncTask<String, Void, Long>{
-
-			@Override
-			protected void onPreExecute() {
-				loadingView.showLoadView(true);
-			}
-
-			@Override
-			protected Long doInBackground(String... params) {
-
-				DatabaseManager.getInstance().syncData(image);
-				task.addPhoto(image);
-
-				if (task.isLocal()) {
-					TaskManager.getInstance().saveLocalData();
-				}
-
-				return (long) 1;
-			}
-
-			@Override
-			protected void onProgressUpdate(Void... voids) {
-				
-			}
-
-			@Override
-			protected void onPostExecute(Long result) {
-				super.onPostExecute(null);
-				loadingView.showLoadView(false);
+		BackgroundTask bg = new BackgroundTask();
+    	bg.runInBackGround(new HandleInBackground() {
+    		public void onPreExecute() {
+    			loadingView.showLoadView(true);
+    		}
+    		
+    		public void onPostExecute() {
+    			loadingView.showLoadView(false);
 				adapter.notifyDataSetChanged();
-			}        
-		}
+    		}
+    		
+    		public int handleInBackground(Object o) {
+    			DatabaseManager.getInstance().syncData(image);
+				task.addPhoto(image);
+				
+				if (task.isLocal()) {
+					saver.open();
+					saver.savePhoto(image);
+					saver.close();
 
-		SyncTaskAsyncTask syncTask = new SyncTaskAsyncTask();
-		syncTask.execute(); 
+				}
+				return 0;
+    		}
+    	});
 	}
 
 	/**

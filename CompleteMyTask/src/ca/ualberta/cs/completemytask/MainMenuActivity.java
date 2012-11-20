@@ -1,8 +1,5 @@
 package ca.ualberta.cs.completemytask;
 
-
-import java.io.File;
-
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -23,9 +20,9 @@ public class MainMenuActivity extends Activity{
 
 	private static final String TAG = "MainMenuActivity";
 	private TaskAdapter adapter;
-	private File localDataFile;
 	
 	private LoadingView loadingView;
+	public LocalSaving saver;
 	
 	// View id's
 	//private int ADD_TASK_BUTTON = R.id.AddTaskButton;
@@ -69,11 +66,20 @@ public class MainMenuActivity extends Activity{
         setupSettings();
         setupList();
         
-        localDataFile = new File(getFilesDir(), Settings.DATA_NAME);
-        TaskManager.getInstance().setLocalDataFile(localDataFile);
-        TaskManager.getInstance().loadLocalData(localDataFile);
+        saver = new LocalSaving(this);
+        saver.open();
+        saver.loadAllTasks();
+        saver.close();
+        
         adapter.notifyDataSetChanged();
         
+    }
+    
+    @Override
+    public void onResume() {
+    	super.onResume();
+    	
+    	adapter.notifyDataSetChanged();
     }
     
     @Override
@@ -94,7 +100,10 @@ public class MainMenuActivity extends Activity{
         super.onDestroy();
         // The activity is about to be destroyed.
         Log.v(TAG, "Finishing");
-        TaskManager.getInstance().saveLocalData();
+        
+        saver.open();
+        saver.saveAllTasks();
+        saver.close();
     }
     
     /**
@@ -143,15 +152,19 @@ public class MainMenuActivity extends Activity{
             if(resultCode == RESULT_OK && intent != null) {
             	Log.v(TAG, "Task added");
             	
-            	// If task is public then sync with database
-            	if (intent.getBooleanExtra("Public", false)) {
-            		int position = intent.getIntExtra("Task Position", -1);
-            		if (position >= 0) {
-            			syncTask(position);
-            		}
-            	}
+            	int position = intent.getIntExtra("Task Position", -1);
             	
-            	TaskManager.getInstance().saveLocalData();
+            	if (position >= 0) {
+					// If task is public then sync with database
+					if (intent.getBooleanExtra("Public", false)) {
+						syncTask(position);
+					}
+					
+					Log.v(TAG, "Saving");
+					saver.open();
+					saver.saveTask(TaskManager.getInstance().getTaskAt(position));
+					saver.close();
+            	}
             	
             	TaskManager.getInstance().sort();
             	adapter.notifyDataSetChanged();

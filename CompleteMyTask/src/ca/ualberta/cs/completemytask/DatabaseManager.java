@@ -166,7 +166,11 @@ public class DatabaseManager {
 	public void syncData(UserData data) {
 		if (data.needsSync()) {
 			
+			Log.v(TAG, "Need Sync: " + data.toJSON());
+			
 			String response = null;
+			
+			Log.v(TAG, "My Id: " + data.getId());
 			
 			if (data.getId() == null) {
 				response = this.webService.insertEntry("Data", "New Data", data.toJSON());
@@ -183,6 +187,7 @@ public class DatabaseManager {
 			try {
 				json = new JSONObject(response);
 				data.setId(json.getString("id"));
+				Log.v(TAG, "Id: " + data.getId());
 			} catch (JSONException e) {
 				Log.w(TAG, "Failed to get id.");
 			}
@@ -206,15 +211,25 @@ public class DatabaseManager {
 	 */
 	public void syncTaskToDatabase(Task task) {
 		
-		if (task.needsSync()) {
-			syncData(task);
-		}
+		Log.v(TAG, "Syncing: " + task.getName());
+		
+		syncData(task);
+		
+		Log.v(TAG, "Comments: " + task.getNumberOfComments());
 		
 		// Sync Comments
 		for (int i = 0; i < task.getNumberOfComments(); i++) {
 			Comment comment = task.getCommentAt(i);
 			comment.setParentId(task.getId());
 			syncData(comment);
+		}
+		
+		Log.v(TAG, "Photos: " + task.getNumberOfPhotos());
+		// Sync Photos
+		for (int i = 0; i < task.getNumberOfPhotos(); i++) {
+			MyPhoto photo = task.getPhotoAt(i);
+			photo.setParentId(task.getId());
+			syncData(photo);
 		}
 	}
 	
@@ -223,23 +238,26 @@ public class DatabaseManager {
 	 */
 	public void syncDatabase() {
 		testSyncComplete = false;
-		
+		/*
 		// At start get all tasks from database
     	if (!hasSynced) {
     		for (Task t : TaskManager.getInstance().getTaskArray()) {
     			if (t.getId() != null) {
+    				this.syncTaskToDatabase(t);
     				this.foundTasks.put(t.getId(), t);
     			}
     		}
-    		
     		hasSynced = true;
 		}
-    	
-    	// Sync all tasks
+		*/
+		// Sync all tasks
     	for(Task t : TaskManager.getInstance().getTaskArray()) {
     		Log.v(TAG, "Syncing Task: " + t.getName());
-			this.syncTaskToDatabase(t);
-		}	
+    		if (t.isPublic()) {
+    			this.syncTaskToDatabase(t);
+    			this.foundTasks.put(t.getId(), t);
+    		}
+    	}
     	
     	getData();
     	
@@ -257,7 +275,6 @@ public class DatabaseManager {
     		Task task = this.foundTasks.get(parentID);
     		
     		if (task != null) {
-    			Log.v(TAG, "Adding photo");
     			task.addPhoto(photo);
     		}
     	}

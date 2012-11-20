@@ -85,6 +85,8 @@ public class Task extends UserData {
 			return;
 		}
 		
+		comment.setLocalParentId(this.getLocalId());
+		
 		this.ids.add(id);
 		this.comments.add(comment);
 	}
@@ -117,8 +119,9 @@ public class Task extends UserData {
 			return;
 		}
 		
-		this.ids.add(id);
+		photo.setLocalParentId(this.getLocalId());
 		
+		this.ids.add(id);
 		this.photos.add(photo);
 	}
 	
@@ -149,6 +152,8 @@ public class Task extends UserData {
 		if (this.ids.contains(id)) {
 			return;
 		}
+		
+		audio.setLocalParentId(this.getLocalId());
 		
 		this.ids.add(id);
 		this.audios.add(audio);

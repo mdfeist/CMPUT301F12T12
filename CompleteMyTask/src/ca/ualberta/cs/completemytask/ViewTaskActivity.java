@@ -34,6 +34,8 @@ public class ViewTaskActivity extends Activity {
 	private static final int VIEW_COMMENTS = 3;
 	private static final int VIEW_AUDIO = 4;
 	
+	public LocalSaving saver;
+	
 	/**
 	 * Sets up the task view by populating text fields with relevant data and
 	 * adding images and audio to the respective galleries
@@ -43,6 +45,8 @@ public class ViewTaskActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_task);
+        
+        saver = new LocalSaving(this);
         
         position = TaskManager.getInstance().getCurrentTaskPosition();
     	
@@ -170,15 +174,18 @@ public class ViewTaskActivity extends Activity {
         if(requestCode == EDIT_TASK) {
             if(resultCode == RESULT_OK && intent != null) {
             	
-            	// If task is public then sync with database
-            	if (intent.getBooleanExtra("Public", false)) {
-            		int position = intent.getIntExtra("Task Position", -1);
-            		if (position >= 0) {
-            			syncTask(position);
-            		}
-            	}
+            	int position = intent.getIntExtra("Task Position", -1);
             	
-            	TaskManager.getInstance().saveLocalData();
+            	if (position >= 0) {
+					// If task is public then sync with database
+					if (intent.getBooleanExtra("Public", false)) {
+						syncTask(position);
+					}
+					
+					saver.open();
+					saver.saveTask(TaskManager.getInstance().getTaskAt(position));
+					saver.close();
+            	}
             }
         }
     }

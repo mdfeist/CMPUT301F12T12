@@ -18,7 +18,7 @@ public abstract class UserData implements Serializable {
 	GregorianCalendar date;
 	
 	protected String id;
-	protected int localid;
+	protected long localid;
 	protected boolean sync;
 	
 	UserData() {
@@ -49,11 +49,11 @@ public abstract class UserData implements Serializable {
 		return this.id;
 	}
 	
-	public void setLocalId(int id) {
+	public void setLocalId(long id) {
 		this.localid = id;
 	}
 	
-	public int getLocalId() {
+	public long getLocalId() {
 		return this.localid;
 	}
 	
