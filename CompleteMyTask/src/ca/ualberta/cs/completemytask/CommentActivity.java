@@ -1,6 +1,5 @@
 package ca.ualberta.cs.completemytask;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.util.Log;
@@ -26,11 +25,15 @@ public class CommentActivity extends Activity {
 	private EditText commentEditText;
 	private TextView commentsTextView;
 	private Task task;
+	
+	public LocalSaving saver;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_comment);
+		
+		saver = new LocalSaving(this);
 		
 		int position = TaskManager.getInstance().getCurrentTaskPosition();
 		task = TaskManager.getInstance().getTaskAt(position);
@@ -105,38 +108,27 @@ public class CommentActivity extends Activity {
 	}
 	
 	public void sync(final Comment comment) {
-    	class SyncTaskAsyncTask extends AsyncTask<String, Void, Long>{
-    		
-    		@Override
-    		protected void onPreExecute() {
+		BackgroundTask bg = new BackgroundTask();
+    	bg.runInBackGround(new HandleInBackground() {
+    		public void onPreExecute() {
     		}
     		
-	        @Override
-	        protected Long doInBackground(String... params) {
-	        	
-	        	DatabaseManager.getInstance().syncData(comment);
+    		public void onPostExecute() {
+    		}
+    		
+    		public int handleInBackground(Object o) {
+    			DatabaseManager.getInstance().syncData(comment);
 				task.addComment(comment);
 				
 				if (task.isLocal()) {
-					TaskManager.getInstance().saveLocalData();
+					saver.open();
+					saver.saveComment(comment);
+					saver.close();
+
 				}
-	        	
-				return (long) 1;
-			}
-	        
-	        @Override
-	        protected void onProgressUpdate(Void... voids) {
-	        	
-	        }
-	        
-	        @Override
-	        protected void onPostExecute(Long result) {
-	            super.onPostExecute(null);
-	        }        
-		}
-		
-    	SyncTaskAsyncTask syncTask = new SyncTaskAsyncTask();
-    	syncTask.execute(); 
+				return 0;
+    		}
+    	});
     }
 
 	/**

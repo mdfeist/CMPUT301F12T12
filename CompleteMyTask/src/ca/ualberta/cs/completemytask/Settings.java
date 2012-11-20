@@ -66,24 +66,6 @@ public class Settings {
 		}
 	}
 	
-	public int getLocalId(Activity activity) {
-		int id = 0;
-		
-		SharedPreferences settings = activity.getSharedPreferences(PREFS_NAME, 0);
-		id = settings.getInt("localId", 0);
-		id++;
-		
-		// We need an Editor object to make preference changes.
-		// All objects are from android.context.Context
-		SharedPreferences.Editor editor = settings.edit();
-		editor.putInt("localId", id);
-		
-		// Commit the edits!
-		editor.commit();
-		
-		return id;
-	}
-	
 	/**
 	 * Checks to see if there is a user.
 	 * @return true if user is not null

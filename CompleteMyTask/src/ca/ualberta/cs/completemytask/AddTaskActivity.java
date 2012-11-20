@@ -132,7 +132,7 @@ public class AddTaskActivity extends Activity {
     	
     	if (newTask) {
     		task = new Task(taskName, taskDescription);
-    		TaskManager.getInstance().addTask(task);
+    		position = TaskManager.getInstance().addTask(task);
     	} else {
     		task = TaskManager.getInstance().getTaskAt(position);
     		task.setName(taskName);
@@ -153,8 +153,9 @@ public class AddTaskActivity extends Activity {
     	
     	if (task.isPublic()) {
     		intent.putExtra("Public", true);
-    		intent.putExtra("Task Position", position);
     	}
+    	
+    	intent.putExtra("Task Position", position);
     	
     	setResult(RESULT_OK, intent);
     	this.finish();

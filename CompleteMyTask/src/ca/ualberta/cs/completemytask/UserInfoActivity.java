@@ -1,13 +1,8 @@
 package ca.ualberta.cs.completemytask;
 
-import java.io.File;
-
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
@@ -21,7 +16,7 @@ import android.widget.TextView;
  */
 public class UserInfoActivity extends Activity {
 
-	private static final String TAG = "UserInfoActivity";
+	//private static final String TAG = "UserInfoActivity";
 	private boolean newUser;
 	private boolean dataCleared;
 	
@@ -53,38 +48,6 @@ public class UserInfoActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_user_info, menu);
         return true;
-    }
-    
-    /**
-     * Used to delete all local tasks.  Use carefully!
-     */
-    public void deleteLocalData(View view) {
-    	
-    	AlertDialog.Builder builder = new AlertDialog.Builder(this);
-    	builder.setMessage("This will delete all tasks stored on the local drive.");
-        builder.setCancelable(true);
-    	// Add the buttons
-    	builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-    	           public void onClick(DialogInterface dialog, int id) {
-    	               // User clicked OK button
-    	        	   // Clear local data
-    	        	   Log.v(TAG, "Deleting local data file.");
-    	        	   File localDataFile = new File(getFilesDir(), Settings.DATA_NAME);
-    	        	   TaskManager.getInstance().deleteLocalData(localDataFile);
-    	        	   
-    	        	   dataCleared = true;
-    	           }
-    	       });
-    	builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-    	           public void onClick(DialogInterface dialog, int id) {
-    	               // User cancelled the dialog
-    	           }
-    	       });
-
-    	// Create the AlertDialog
-    	AlertDialog dialog = builder.create();
-        dialog.show();
-    	
     }
     
     /**
