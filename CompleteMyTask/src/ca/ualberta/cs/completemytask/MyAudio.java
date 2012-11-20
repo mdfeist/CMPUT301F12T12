@@ -20,20 +20,20 @@ import android.util.Log;
  *
  */
 @SuppressWarnings("serial")
-public class MyAudio extends ChildUserData implements UserContent<File> {
+public class MyAudio extends ChildUserData implements UserContent<byte[]> {
 	protected final String TAG = "MyAudio";
 	
-	File audio;
+	byte[] audio;
 	
 	public MyAudio() {
 		this.audio = null;
 	}
 
-	public File getContent() {
+	public byte[] getContent() {
 		return this.audio;
 	}
 
-	public void setContent(File content) {
+	public void setContent(byte[] content) {
 		this.audio = content;
 	}
 
@@ -43,8 +43,6 @@ public class MyAudio extends ChildUserData implements UserContent<File> {
 		 * JSONified.
 		 */
 		
-		// Ian try this code
-		// Mike
 		byte []buffer = new byte[(int) audioFile.length()];
 		InputStream ios = null;
 		
@@ -77,6 +75,18 @@ public class MyAudio extends ChildUserData implements UserContent<File> {
 	
 	
 	/**
+	 * Takes a byte array (our representation of audio file) and return
+	 * a string that can be used for JSON
+	 * @param audioByte
+	 * @return String
+	 */
+	public String getStringFromByte(byte[] audioByte) {
+		String encodedString = Base64.encodeToString(audioByte, Base64.URL_SAFE);
+		return encodedString;
+	}
+	
+	
+	/**
 	 * Takes a string, decodes it and then writes it as
 	 * a file to the SD card
 	 * 
@@ -90,10 +100,8 @@ public class MyAudio extends ChildUserData implements UserContent<File> {
 
 		byte[] decodedByteArray = Base64.decode(audioString, Base64.URL_SAFE);
 		
-		//This line needs replacing --> Outputstream?
-		//File decodedAudio = BitmapFactory.decodeByteArray(decodedByteArray, 0, decodedByteArray.length);
-		//Will clean up tomorrow
-		File decodedAudio = new File("temp");
+		//This will be split into a new part
+		File decodedAudio = new File(android.os.Environment.getExternalStorageDirectory()+"/Record/test.3gp");
 		try {
 			FileOutputStream fos = new FileOutputStream(decodedAudio);
 			fos.write(decodedByteArray);
@@ -114,14 +122,28 @@ public class MyAudio extends ChildUserData implements UserContent<File> {
 		return decodedAudio;
 	}
 	
+
+	/**
+	 * Takes a String (used in the JSON object) and returns
+	 * a byte array that we use to represent audio
+	 * @param audioByte
+	 * @return String
+	 */
+	public byte[] getByteFromString(String audioString) {
+		byte[] decodedByteArray = Base64.decode(audioString, Base64.URL_SAFE);
+		return decodedByteArray;
+	}
+	
+	/*  This part of the code might be unnecessary
 	/**
 	 * Decodes a string into an audio file and then
 	 * sets "audio" in my MyAudio to the decoded bitmap.
 	 * @param audioString
-	 */
-	public void setImageFromString(String audioString) {
+	 
+	public void setAudioFromString(String audioString) {
 		this.audio = getAudioFromString(audioString);
 	}
+	*/
 	
 	@Override
 	public String toJSON() {
@@ -137,7 +159,8 @@ public class MyAudio extends ChildUserData implements UserContent<File> {
 		try {
 			json.put( "type", "Audio");
 			json.put( "user", userName);
-			json.put( "audio", "'" + getStringFromFile(this.audio) + "'");
+			//json.put( "audio", "'" + getStringFromFile(this.audio) + "'");
+			json.put( "audio", "'" + this.audio + "'");
 			json.put( "parentID", this.parentID);
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -186,13 +209,9 @@ public class MyAudio extends ChildUserData implements UserContent<File> {
 		
 		User user = new User(userName);
 		this.setUser(user);
-		this.setImageFromString(audioString);
+		//this.setAudioFromString(audioString);
+		this.audio = getByteFromString(audioString);
 		this.setParentId(parentID);
 	}
 
-/*Will this work with a file?  Not able to toss it in Drawable... Make one in 
-	public void createFake(Context context){
-		BitmapFactory.decodeResource(context.getResources(),R.drawable.img1);
-	}
-*/
 }

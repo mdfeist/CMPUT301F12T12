@@ -2,8 +2,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
-
+    
 <!-- A ListView to link to each attached audio file?  Record on a separate Activity? -->
+    
+	<ListView
+        android:id="@+id/AudioList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" >
+    </ListView>    
     
     <LinearLayout
         android:id="@+id/Bar"
@@ -44,5 +52,7 @@
             android:text="@string/CloseButtonLabel"
             android:textColor="#ffffffff" />
     </LinearLayout>
+
+
 
 </RelativeLayout>
