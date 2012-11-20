@@ -34,9 +34,13 @@ public class UserInfoActivity extends Activity {
         
         if(Settings.getInstance().hasUser()) {
         	newUser = false;
-        	String userName = Settings.getInstance().getUserName();
+        	User user = Settings.getInstance().getUser();
+        	String userName = user.getUserName();
+        	String email = user.getEmail();
         	EditText editUserNameEditText = (EditText) findViewById(R.id.EditUserName);
+        	EditText editEmailEditText = (EditText) findViewById(R.id.EditEmail);
         	editUserNameEditText.setText(userName);
+        	editEmailEditText.setText(email);
     	} else {
     		newUser = true;
     	}
@@ -90,8 +94,10 @@ public class UserInfoActivity extends Activity {
     public void newUser(View view) {
     	
     	EditText editUserNameEditText = (EditText) findViewById(R.id.EditUserName);
+    	EditText editEmailEditText = (EditText) findViewById(R.id.EditEmail);
     	
     	String userName = editUserNameEditText.getText().toString();
+    	String email = editEmailEditText.getText().toString();
     	
     	boolean needsUpdate = true;
     	Intent intent = new Intent();
@@ -101,8 +107,12 @@ public class UserInfoActivity extends Activity {
     	}
     	
     	if (!newUser) {
-    		if(Settings.getInstance().getUserName().equals(userName)) {
-    			needsUpdate = false;
+    		User user = Settings.getInstance().getUser();
+    		if (user != null) {
+	    		if(user.getUserName().equals(userName) &&
+	    				user.getEmail().equals(email)) {
+	    			needsUpdate = false;
+	    		}
     		}
     	}
     	
@@ -116,7 +126,7 @@ public class UserInfoActivity extends Activity {
 	    	}
 	    	
 	    	// Create new User
-	    	User user = new User(userName);
+	    	User user = new User(userName, email);
 	    	Settings.getInstance().setUser(user);
 	    	
 	    	intent.putExtra("User", true);

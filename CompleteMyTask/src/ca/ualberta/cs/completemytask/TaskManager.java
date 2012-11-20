@@ -135,7 +135,7 @@ public class TaskManager {
 	public void loadLocalData(File file) {
 		if (!loadedData) {
 			Log.v(TAG, "Loading local data");
-			
+			/*
 			if (file.exists()) {
 				try {
 					// use buffering
@@ -157,7 +157,7 @@ public class TaskManager {
 					Log.w("ExternalStorage", "Cannot perform input: " + file, e);
 				}
 			}
-
+			*/
 			this.loadedData = true;
 		}
 	}
@@ -171,6 +171,7 @@ public class TaskManager {
 	 * @param A local file
 	 */
 	public void saveLocalData(File file) {
+		/*
 		List<Task> saveTasks = new ArrayList<Task>();
 		
 		for (Task t : tasks) {
@@ -193,6 +194,7 @@ public class TaskManager {
 			// Unable to create file
 	        Log.w("ExternalStorage", "Error writing " + file, e);
 		}
+		*/
 	}
 	
 	/**
@@ -200,6 +202,7 @@ public class TaskManager {
 	 * @param A local file
 	 */
 	public void deleteLocalData(File file) {
+		/*
 		// Delete file
 		file.delete();
 		
@@ -209,6 +212,7 @@ public class TaskManager {
 				tasks.remove(i);
 			}
 		}
+		*/
 	}
 	
 	public void createFakeTable(int local, int global) {

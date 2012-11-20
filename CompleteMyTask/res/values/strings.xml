@@ -51,10 +51,17 @@
     <!-- User Info -->
     <string name="title_activity_user_info">User Info</string>
     <string name="UserNameHeaderLabel">User Name:</string>
+    <string name="UserEmailHeaderLabel">Email:</string>
     <string name="EditUserNameHint">What name do you want displayed?</string>
-    <string name="UserInfoDetials">        Details: \n\nTo use this app you will need to have a user name.
-        This will allow other users to know who you are when
-        you post.</string>
+    <string name="EditUserEmailHint">Your Email address</string>
+    <string name="UserInfoDetials">Details: \n\n \
+        To use this app you will need to have a user name. \
+        This will allow other users to know who you are when you post. \
+        Also if you wish to be notified when one of your tasks are \
+        completed, then please enter an email address in the email \
+        field and an email will be sent to you upon task completion. \ 
+        Leave it blank if you don\'t want to be notified.
+        </string>
 
     <!-- Comment View -->
     <string name="title_activity_comment">Comments</string>

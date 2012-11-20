@@ -353,9 +353,11 @@ public class Task extends UserData {
 		JSONObject json = new JSONObject();
 		
 		String userName = "Unknown";
+		String email = "";
 		
 		if (hasUser()) {
-			userName = getUser().getUserName();
+			userName = this.user.getUserName();
+			email = this.user.getEmail();
 		}
 		
         try {
@@ -363,6 +365,7 @@ public class Task extends UserData {
 			json.put( "name", this.name);
 			json.put( "description", this.description);
 			json.put( "user", userName);
+			json.put( "email", email);
 			json.put( "needsComment", this.needsComment);
 			json.put( "needsPhoto", this.needsPhoto);
 			json.put( "needsAudio", this.needsAudio);
@@ -384,6 +387,7 @@ public class Task extends UserData {
 	 */
 	public void decodeTask(JSONObject data) {
 		String userName = "Unknown";
+		String email = "";
 		
 		try {
 			this.name = data.getString("name");
@@ -405,6 +409,13 @@ public class Task extends UserData {
 			Log.w(TAG, "Failed to get user.");
 			userName = "Unknown";
 		} 
+		
+		try {
+			email = data.getString("email");
+		} catch (JSONException e) {
+			Log.w(TAG, "Failed to get user email.");
+			email = "";
+		}
 		
 		try {
 			this.needsComment = data.getBoolean("needsComment");
@@ -434,7 +445,7 @@ public class Task extends UserData {
 			this.complete = false;
 		} 
 		
-		User user = new User(userName);
+		User user = new User(userName, email);
 		this.setUser(user);
 		
 		this.setPublic(true);

@@ -5,6 +5,7 @@ import java.io.Serializable;
 @SuppressWarnings("serial")
 public class User implements Serializable {
 	private String userName = null;
+	private String email = "";
 	
 	public User() {
 	}
@@ -13,11 +14,24 @@ public class User implements Serializable {
 		this.userName = name;
 	}
 	
+	public User(String name, String email) {
+		this.userName = name;
+		this.email = email;
+	}
+	
 	public void setUserName(String name) {
 		this.userName = name;
 	}
 	
 	public String getUserName() {
 		return this.userName;
+	}
+	
+	public void setEmail(String email) {
+		this.email= email;
+	}
+	
+	public String getEmail() {
+		return this.email;
 	}
 }

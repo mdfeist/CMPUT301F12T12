@@ -36,22 +36,21 @@ public class Settings {
 	
 	/**
 	 * Loads the application settings.
-	 * 
 	 * @param activity
 	 */
 	public void load(Activity activity) {
 		// Restore preferences
 		SharedPreferences settings = activity.getSharedPreferences(PREFS_NAME, 0);
-		String userName = settings.getString("username", "Unknown");
+		String userName = settings.getString("username", "");
+		String email = settings.getString("email", "");
 		
-		if (!userName.equals("Unknown")) {
-			this.user = new User(userName);
+		if (!userName.equals("")) {
+			this.user = new User(userName, email);
 		}
 	}
 	
 	/**
 	 * Saves the application settings.
-	 * 
 	 * @param activity
 	 */
 	public void save(Activity activity) {
@@ -67,9 +66,26 @@ public class Settings {
 		}
 	}
 	
+	public int getLocalId(Activity activity) {
+		int id = 0;
+		
+		SharedPreferences settings = activity.getSharedPreferences(PREFS_NAME, 0);
+		id = settings.getInt("localId", 0);
+		id++;
+		
+		// We need an Editor object to make preference changes.
+		// All objects are from android.context.Context
+		SharedPreferences.Editor editor = settings.edit();
+		editor.putInt("localId", id);
+		
+		// Commit the edits!
+		editor.commit();
+		
+		return id;
+	}
+	
 	/**
 	 * Checks to see if there is a user.
-	 * 
 	 * @return true if user is not null
 	 */
 	public boolean hasUser() {
@@ -82,7 +98,6 @@ public class Settings {
 	
 	/**
 	 * Gives the settings a user.
-	 * 
 	 * @param user
 	 */
 	public void setUser(User user) {
@@ -91,7 +106,6 @@ public class Settings {
 	
 	/**
 	 * Returns the user.
-	 * 
 	 * @return user
 	 */
 	public User getUser() {
@@ -100,7 +114,6 @@ public class Settings {
 	
 	/**
 	 * Set the user's name to the given string.
-	 * 
 	 * @param name
 	 * @return true if there is a user
 	 */
@@ -116,7 +129,6 @@ public class Settings {
 	
 	/**
 	 * Gives the user's name.
-	 * 
 	 * @return user's name
 	 */
 	public String getUserName() {
