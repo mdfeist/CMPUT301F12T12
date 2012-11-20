@@ -3,10 +3,12 @@ package ca.ualberta.cs.completemytask;
 @SuppressWarnings("serial")
 public class ChildUserData extends UserData {
 	protected String parentID;
+	protected int localParentId;
 	
 	ChildUserData() {
 		super();
 		this.parentID = null;
+		this.localParentId = 0;
 	}
 	
 	/**
@@ -23,6 +25,14 @@ public class ChildUserData extends UserData {
 	 */
 	public void setParentId(String id) {
 		this.parentID = id;
+	}
+	
+	public int getLocalParentId() {
+		return this.localParentId;
+	}
+	
+	public void setLocalParentId(int id) {
+		this.localParentId = id;
 	}
 
 	@Override
