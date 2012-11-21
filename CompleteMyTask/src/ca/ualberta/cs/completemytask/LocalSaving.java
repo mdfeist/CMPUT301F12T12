@@ -241,7 +241,7 @@ public class LocalSaving {
 		Task task = new Task();
 
 		task.setLocalId(cursor.getLong(0));
-		task.setId(cursor.getString(1));
+		task.setId(cursor.getLong(1));
 
 		task.setName(cursor.getString(2));
 		task.setDescription(cursor.getString(3));
@@ -268,8 +268,8 @@ public class LocalSaving {
 		comment.setLocalId(cursor.getLong(0));
 		comment.setLocalParentId(cursor.getLong(1));
 
-		comment.setId(cursor.getString(2));
-		comment.setParentId(cursor.getString(3));
+		comment.setId(cursor.getLong(2));
+		comment.setParentId(cursor.getLong(3));
 
 		comment.setContent(cursor.getString(4));
 
@@ -287,8 +287,8 @@ public class LocalSaving {
 		photo.setLocalId(cursor.getLong(0));
 		photo.setLocalParentId(cursor.getLong(1));
 
-		photo.setId(cursor.getString(2));
-		photo.setParentId(cursor.getString(3));
+		photo.setId(cursor.getLong(2));
+		photo.setParentId(cursor.getLong(3));
 
 		photo.setImageFromString(cursor.getString(4));
 

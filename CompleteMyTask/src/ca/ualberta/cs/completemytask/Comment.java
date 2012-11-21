@@ -11,7 +11,6 @@ import android.util.Log;
  * @author Michael Feist
  *
  */
-@SuppressWarnings("serial")
 public class Comment extends ChildUserData implements UserContent<String> {
 	protected final String TAG = "Comment";
 	
@@ -41,7 +40,6 @@ public class Comment extends ChildUserData implements UserContent<String> {
 		this.comment = comment;
 	}
 
-	@Override
 	public String toJSON() {
 		JSONObject json = new JSONObject();
 		
@@ -72,7 +70,7 @@ public class Comment extends ChildUserData implements UserContent<String> {
 	public void decodeComment(JSONObject data) {
 		String userName = "Unknown";
 		String commentString = "";
-		String parentID = "";
+		long parentID = 0;
 		
 		try {
 			userName = data.getString("user");
@@ -89,10 +87,10 @@ public class Comment extends ChildUserData implements UserContent<String> {
 		}
 		
 		try {
-			parentID = data.getString("parentID");
+			parentID = data.getLong("parentID");
 		} catch (JSONException e) {
 			Log.w(TAG, "Failed to get parentID.");
-			parentID = "";
+			parentID = 0;
 		}
 		
 		User user = new User(userName);

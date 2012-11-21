@@ -139,7 +139,7 @@ public class ViewImageActivity extends Activity {
     		}
     		
     		public int handleInBackground(Object o) {
-    			DatabaseManager.getInstance().syncData(image);
+    			//DatabaseManager.getInstance().syncData(image);
 				task.addPhoto(image);
 				
 				if (task.isLocal()) {

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-   <TextView
+    <TextView
         android:id="@+id/UserNameErrorMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -77,7 +77,27 @@
         android:hint="@string/EditPasswordHint"
         android:inputType="textPassword"
         android:maxLines="1" />
-  
+     
+     <TextView
+        android:id="@+id/RePasswordHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/EditPassword"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/RePasswordHeaderLabel" />
+    
+    <EditText
+        android:id="@+id/EditRePassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/RePasswordHeader"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:hint="@string/EditRePasswordHint"
+        android:inputType="textPassword"
+        android:maxLines="1" />
     
     <LinearLayout
          android:id="@+id/Bar"
@@ -87,18 +107,10 @@
          android:background="@drawable/tab_bar_background"
          android:weightSum="1.0" >
         
-        <Button
-            android:id="@+id/CreateButton"
+        <Space
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_weight=".33"
-            android:background="@drawable/button_selector"
-            android:onClick="newUser"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:text="@string/CreateButtonLabel"
-            android:textColor="#ffffffff" />
+            android:layout_height="match_parent"
+            android:layout_weight=".33" />
 
         <Space
             android:layout_width="0dp"
@@ -106,17 +118,16 @@
             android:layout_weight=".33" />
 
         <Button
-            android:id="@+id/LoginButton"
+            android:id="@+id/CreateButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             android:layout_weight=".33"
             android:background="@drawable/button_selector"
-            android:onClick="login"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:text="@string/LoginButtonLabel"
+            android:text="@string/CreateButtonLabel"
             android:textColor="#ffffffff" />
     </LinearLayout>
-
+    
 </RelativeLayout>

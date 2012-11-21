@@ -174,14 +174,7 @@ public class MainMenuActivity extends Activity{
         // Save user updated
         if(requestCode == Display.EDIT_USER.getValue()) {
             if(resultCode == RESULT_OK && intent != null) {
-            	if (intent.getBooleanExtra("User", false)) {
-            		Log.v(TAG, "User added: \n" + Settings.getInstance().getUserName());
-            		Settings.getInstance().save(this);
-            	}
             	
-            	if (intent.getBooleanExtra("Data", false)) {
-            		adapter.notifyDataSetChanged();
-            	}
             }
         }
         

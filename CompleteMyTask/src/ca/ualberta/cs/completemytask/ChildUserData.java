@@ -1,13 +1,11 @@
 package ca.ualberta.cs.completemytask;
 
-@SuppressWarnings("serial")
 public class ChildUserData extends UserData {
-	protected String parentID;
+	protected long parentID;
 	protected long localParentId;
 	
 	ChildUserData() {
 		super();
-		this.parentID = null;
 		this.localParentId = 0;
 	}
 	
@@ -15,7 +13,7 @@ public class ChildUserData extends UserData {
 	 * Gets the id of the task.
 	 * @return id
 	 */
-	public String getParentId() {
+	public long getParentId() {
 		return this.parentID;
 	}
 	
@@ -23,7 +21,7 @@ public class ChildUserData extends UserData {
 	 * Set the id of the task.
 	 * @param id
 	 */
-	public void setParentId(String id) {
+	public void setParentId(long id) {
 		this.parentID = id;
 	}
 	
@@ -35,8 +33,4 @@ public class ChildUserData extends UserData {
 		this.localParentId = id;
 	}
 
-	@Override
-	public String toJSON() {
-		return null;
-	}
 }

@@ -1,6 +1,7 @@
 package ca.ualberta.cs.completemytask;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 
 /**
@@ -38,28 +39,32 @@ public class Settings {
 	 * Loads the application settings.
 	 * @param activity
 	 */
-	public void load(Activity activity) {
+	public void load(Context context) {
 		// Restore preferences
-		SharedPreferences settings = activity.getSharedPreferences(PREFS_NAME, 0);
+		SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, 0);
 		String userName = settings.getString("username", "");
 		String email = settings.getString("email", "");
+		String password = settings.getString("password", "");
 		
 		if (!userName.equals("")) {
 			this.user = new User(userName, email);
+			this.user.setPassword(password);
 		}
 	}
 	
 	/**
 	 * Saves the application settings.
-	 * @param activity
+	 * @param context
 	 */
-	public void save(Activity activity) {
+	public void save(Context context) {
 		if (hasUser()) {
 			// We need an Editor object to make preference changes.
 			// All objects are from android.context.Context
-			SharedPreferences settings = activity.getSharedPreferences(PREFS_NAME, 0);
+			SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, 0);
 			SharedPreferences.Editor editor = settings.edit();
 			editor.putString("username", user.getUserName());
+			editor.putString("email", user.getEmail());
+			editor.putString("password", user.getPassword());
 
 			// Commit the edits!
 			editor.commit();

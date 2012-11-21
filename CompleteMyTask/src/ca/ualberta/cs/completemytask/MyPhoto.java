@@ -142,7 +142,7 @@ public class MyPhoto extends ChildUserData implements UserContent<Bitmap> {
 		
 		String userName = "Unknown";
 		String imageString = "";
-		String parentID = "";
+		long parentID = 0;
 		
 		try {
 			userName = data.getString("user");
@@ -160,10 +160,10 @@ public class MyPhoto extends ChildUserData implements UserContent<Bitmap> {
 		}
 		
 		try {
-			parentID = data.getString("parentID");
+			parentID = data.getLong("parentID");
 		} catch (JSONException e) {
 			Log.w(TAG, "Failed to get parentID.");
-			parentID = "";
+			parentID = 0;
 		}
 		
 		Log.v(TAG, imageString);

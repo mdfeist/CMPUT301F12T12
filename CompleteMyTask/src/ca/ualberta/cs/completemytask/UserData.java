@@ -1,6 +1,5 @@
 package ca.ualberta.cs.completemytask;
 
-import java.io.Serializable;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -11,13 +10,12 @@ import java.util.GregorianCalendar;
  * @author Michael Feist
  *
  */
-@SuppressWarnings("serial")
-public abstract class UserData implements Serializable {
+public abstract class UserData {
 	
 	User user;
 	GregorianCalendar date;
 	
-	protected String id;
+	protected long id;
 	protected long localid;
 	protected boolean sync;
 	
@@ -27,7 +25,6 @@ public abstract class UserData implements Serializable {
 	
 	UserData(User user) {
 		this.user = user;
-		this.id = null;
 		this.sync = true;
 		
 		date = new GregorianCalendar();
@@ -37,7 +34,7 @@ public abstract class UserData implements Serializable {
 	 * Set the id of the task.
 	 * @param id
 	 */
-	public void setId(String id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	
@@ -45,7 +42,7 @@ public abstract class UserData implements Serializable {
 	 * Gets the id of the task.
 	 * @return id
 	 */
-	public String getId() {
+	public long getId() {
 		return this.id;
 	}
 	
@@ -101,5 +98,4 @@ public abstract class UserData implements Serializable {
 		this.sync = false;
 	}
 	
-	abstract public String toJSON();
 }

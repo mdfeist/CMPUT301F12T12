@@ -117,7 +117,7 @@ public class CommentActivity extends Activity {
     		}
     		
     		public int handleInBackground(Object o) {
-    			DatabaseManager.getInstance().syncData(comment);
+    			//DatabaseManager.getInstance().syncData(comment);
 				task.addComment(comment);
 				
 				if (task.isLocal()) {

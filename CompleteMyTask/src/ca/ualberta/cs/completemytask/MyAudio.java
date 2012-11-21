@@ -145,7 +145,6 @@ public class MyAudio extends ChildUserData implements UserContent<byte[]> {
 	}
 	*/
 	
-	@Override
 	public String toJSON() {
 		// TODO Auto-generated method stub
 		JSONObject json = new JSONObject();
@@ -181,7 +180,7 @@ public class MyAudio extends ChildUserData implements UserContent<byte[]> {
 		
 		String userName = "Unknown";
 		String audioString = "";
-		String parentID = "";
+		long parentID = 0;
 		
 		try {
 			userName = data.getString("user");
@@ -199,10 +198,10 @@ public class MyAudio extends ChildUserData implements UserContent<byte[]> {
 		}
 		
 		try {
-			parentID = data.getString("parentID");
+			parentID = data.getLong("parentID");
 		} catch (JSONException e) {
 			Log.w(TAG, "Failed to get parentID.");
-			parentID = "";
+			parentID = 0;
 		}
 		
 		Log.v(TAG, audioString);
