@@ -47,20 +47,18 @@
         <activity
             android:name=".ViewAudioActivity"
             android:label="@string/title_activity_view_audio" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".CreateUserActivity"
             android:label="@string/title_activity_create_user" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        </activity>
+        <activity
+            android:name=".NewUserActivity"
+            android:label="@string/title_activity_new_user" >
+        </activity>
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/title_activity_login" >
         </activity>
     </application>
 

@@ -7,6 +7,7 @@
 
     <!-- Buttons -->
     <string name="AddTaskButtonLabel">Add Task</string>
+     <string name="NewUserButtonLabel">New User</string>
     <string name="ShareTaskButtonLabel">Share</string>
     <string name="NextButtonLabel">Next</string>
     <string name="CancelButtonLabel">Cancel</string>
@@ -56,17 +57,18 @@
     <string name="UserEmailHeaderLabel">Email:</string>
     <string name="PasswordHeaderLabel">Password:</string>
     <string name="RePasswordHeaderLabel">Confirm Password:</string>
+    <string name="UserNameHint">Username</string>
     <string name="EditUserNameHint">What name do you want displayed?</string>
     <string name="EditUserEmailHint">Your Email address</string>
     <string name="EditPasswordHint">Password</string>
     <string name="EditRePasswordHint">Re-Type Password</string>
     <string name="UserInfoDetials">Details: \n\n \
-        To use this app you will need to have a user name. \
+        To use this app you will need to have a user account setup. \
         This will allow other users to know who you are when you post. \
-        Also if you wish to be notified when one of your tasks are \
-        completed, then please enter an email address in the email \
-        field and an email will be sent to you upon task completion. \ 
-        Leave it blank if you don\'t want to be notified.</string>
+        If you already have a user setup then you can click the \
+        \"Login\" button. If you don\'t have an account setup then \
+        you can create a new account by clicking the \"Create\" \
+        button.</string>
 
     <!-- Comment View -->
     <string name="title_activity_comment">Comments</string>
@@ -74,6 +76,9 @@
     <string name="title_activity_view_image">View Image</string>
     <string name="title_activity_view_audio">ViewAudioActivity</string>
     <string name="TakeAudioButtonLabel">Add Audio</string>
+    
     <string name="title_activity_create_user">Create New User</string>
+    <string name="title_activity_new_user">New User</string>
+    <string name="title_activity_login">Login</string>
 
 </resources>
