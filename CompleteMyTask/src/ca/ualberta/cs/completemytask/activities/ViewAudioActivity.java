@@ -1,7 +1,8 @@
-package ca.ualberta.cs.completemytask;
+package ca.ualberta.cs.completemytask.activities;
 
 //import java.io.File;
 
+import ca.ualberta.cs.completemytask.R;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;

@@ -1,5 +1,10 @@
-package ca.ualberta.cs.completemytask;
+package ca.ualberta.cs.completemytask.activities;
 
+import ca.ualberta.cs.completemytask.R;
+import ca.ualberta.cs.completemytask.database.DatabaseManager;
+import ca.ualberta.cs.completemytask.saving.LocalSaving;
+import ca.ualberta.cs.completemytask.userdata.Task;
+import ca.ualberta.cs.completemytask.userdata.TaskManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
@@ -46,7 +51,7 @@ public class ViewTaskActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_task);
         
-        saver = new LocalSaving(this);
+        saver = new LocalSaving();
         
         position = TaskManager.getInstance().getCurrentTaskPosition();
     	

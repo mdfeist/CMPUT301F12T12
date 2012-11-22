@@ -1,7 +1,12 @@
-package ca.ualberta.cs.completemytask;
+package ca.ualberta.cs.completemytask.saving;
 
+import ca.ualberta.cs.completemytask.CompleteMyTask;
+import ca.ualberta.cs.completemytask.userdata.Comment;
+import ca.ualberta.cs.completemytask.userdata.MyPhoto;
+import ca.ualberta.cs.completemytask.userdata.Task;
+import ca.ualberta.cs.completemytask.userdata.TaskManager;
+import ca.ualberta.cs.completemytask.userdata.User;
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -13,8 +18,8 @@ public class LocalSaving {
 	private SQLiteDatabase database;
 	private SQLiteHelper dbHelper;
 
-	public LocalSaving(Context context) {
-		dbHelper = new SQLiteHelper(context);
+	public LocalSaving() {
+		dbHelper = new SQLiteHelper(CompleteMyTask.getAppContext());
 	}
 
 	public void open() throws SQLException {
@@ -156,14 +161,16 @@ public class LocalSaving {
 
 	public void saveAllTasks() {
 		for (Task task : TaskManager.getInstance().getTaskArray()) {
-			saveTask(task);
-
-			for (int i = 0; i < task.getNumberOfComments(); i++) {
-				saveComment(task.getCommentAt(i));
-			}
-
-			for (int i = 0; i < task.getNumberOfPhotos(); i++) {
-				savePhoto(task.getPhotoAt(i));
+			if (task.isLocal()) {
+				saveTask(task);
+	
+				for (int i = 0; i < task.getNumberOfComments(); i++) {
+					saveComment(task.getCommentAt(i));
+				}
+	
+				for (int i = 0; i < task.getNumberOfPhotos(); i++) {
+					savePhoto(task.getPhotoAt(i));
+				}
 			}
 		}
 	}

@@ -1,9 +1,11 @@
-package ca.ualberta.cs.completemytask;
+package ca.ualberta.cs.completemytask.userdata;
 
 import java.io.ByteArrayOutputStream;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import ca.ualberta.cs.completemytask.R;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -17,7 +19,6 @@ import android.util.Log;
  * @author Michael Feist, Devon Waldon
  *
  */
-@SuppressWarnings("serial")
 public class MyPhoto extends ChildUserData implements UserContent<Bitmap> {
 	protected final String TAG = "MyPhoto";
 

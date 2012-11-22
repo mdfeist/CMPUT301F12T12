@@ -1,4 +1,4 @@
-package ca.ualberta.cs.completemytask;
+package ca.ualberta.cs.completemytask.background;
 
 public interface HandleInBackground {
 	public void onPreExecute();

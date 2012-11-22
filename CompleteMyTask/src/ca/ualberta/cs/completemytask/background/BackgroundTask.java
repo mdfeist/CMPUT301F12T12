@@ -1,4 +1,4 @@
-package ca.ualberta.cs.completemytask;
+package ca.ualberta.cs.completemytask.background;
 
 import android.os.AsyncTask;
 

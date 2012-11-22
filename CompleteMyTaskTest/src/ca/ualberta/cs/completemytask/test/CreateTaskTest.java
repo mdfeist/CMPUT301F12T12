@@ -3,10 +3,10 @@ package ca.ualberta.cs.completemytask.test;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import ca.ualberta.cs.completemytask.AddTaskActivity;
 import ca.ualberta.cs.completemytask.R;
-import ca.ualberta.cs.completemytask.Task;
-import ca.ualberta.cs.completemytask.TaskManager;
+import ca.ualberta.cs.completemytask.activities.AddTaskActivity;
+import ca.ualberta.cs.completemytask.userdata.Task;
+import ca.ualberta.cs.completemytask.userdata.TaskManager;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;
 import android.widget.Button;

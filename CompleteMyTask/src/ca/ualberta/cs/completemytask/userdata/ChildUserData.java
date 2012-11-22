@@ -1,4 +1,4 @@
-package ca.ualberta.cs.completemytask;
+package ca.ualberta.cs.completemytask.userdata;
 
 public class ChildUserData extends UserData {
 	protected long parentID;

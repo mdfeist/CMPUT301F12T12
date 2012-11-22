@@ -5,8 +5,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.util.Log;
-import ca.ualberta.cs.completemytask.DatabaseManager;
 import ca.ualberta.cs.completemytask.WebService;
+import ca.ualberta.cs.completemytask.database.DatabaseManager;
 import junit.framework.TestCase;
 
 public class WebServiceTest extends TestCase {

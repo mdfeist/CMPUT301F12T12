@@ -1,5 +1,6 @@
-package ca.ualberta.cs.completemytask;
+package ca.ualberta.cs.completemytask.userdata;
 
+import ca.ualberta.cs.completemytask.R;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
@@ -26,7 +27,7 @@ public class TaskAdapter extends BaseAdapter {
 	// private Activity activity;
 	private LayoutInflater inflater = null;
 
-	TaskAdapter(Activity activity) {
+	public TaskAdapter(Activity activity) {
 		// this.activity = activity;
 		this.inflater = (LayoutInflater) activity
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

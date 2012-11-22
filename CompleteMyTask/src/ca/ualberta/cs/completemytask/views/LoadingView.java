@@ -1,5 +1,6 @@
-package ca.ualberta.cs.completemytask;
+package ca.ualberta.cs.completemytask.views;
 
+import ca.ualberta.cs.completemytask.R;
 import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;

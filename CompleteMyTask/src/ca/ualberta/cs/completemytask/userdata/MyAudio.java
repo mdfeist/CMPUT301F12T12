@@ -1,4 +1,4 @@
-package ca.ualberta.cs.completemytask;
+package ca.ualberta.cs.completemytask.userdata;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,9 +22,15 @@ import android.util.Log;
 @SuppressWarnings("serial")
 public class MyAudio extends ChildUserData implements UserContent<byte[]> {
 	protected final String TAG = "MyAudio";
+<<<<<<< HEAD:CompleteMyTask/src/ca/ualberta/cs/completemytask/MyAudio.java
 	
 	byte[] audio;
 	
+=======
+
+	byte[] audio;
+
+>>>>>>> Database_SQL:CompleteMyTask/src/ca/ualberta/cs/completemytask/userdata/MyAudio.java
 	public MyAudio() {
 		this.audio = null;
 	}
@@ -42,10 +48,14 @@ public class MyAudio extends ChildUserData implements UserContent<byte[]> {
 		 * This functions converts audio file to a string which can be
 		 * JSONified.
 		 */
+<<<<<<< HEAD:CompleteMyTask/src/ca/ualberta/cs/completemytask/MyAudio.java
 		
+=======
+
+>>>>>>> Database_SQL:CompleteMyTask/src/ca/ualberta/cs/completemytask/userdata/MyAudio.java
 		byte []buffer = new byte[(int) audioFile.length()];
 		InputStream ios = null;
-		
+
 		try {
 			ios = new FileInputStream(audioFile);
 			if (ios.read(buffer) == -1) {
@@ -65,15 +75,27 @@ public class MyAudio extends ChildUserData implements UserContent<byte[]> {
 				Log.w(TAG, e.getStackTrace().toString());
 			}
 		}
-		
+
 		String encodedString = Base64.encodeToString(buffer, Base64.URL_SAFE);
-		
+
 		Log.v(TAG, encodedString);
-		
+
 		return encodedString;
 	}
-	
-	
+
+
+	/**
+	 * Takes a byte array (our representation of audio file) and return
+	 * a string that can be used for JSON
+	 * @param audioByte
+	 * @return String
+	 */
+	public String getStringFromByte(byte[] audioByte) {
+		String encodedString = Base64.encodeToString(audioByte, Base64.URL_SAFE);
+		return encodedString;
+	}
+
+
 	/**
 	 * Takes a byte array (our representation of audio file) and return
 	 * a string that can be used for JSON
@@ -99,7 +121,11 @@ public class MyAudio extends ChildUserData implements UserContent<byte[]> {
 		 * */
 
 		byte[] decodedByteArray = Base64.decode(audioString, Base64.URL_SAFE);
+<<<<<<< HEAD:CompleteMyTask/src/ca/ualberta/cs/completemytask/MyAudio.java
 		
+=======
+
+>>>>>>> Database_SQL:CompleteMyTask/src/ca/ualberta/cs/completemytask/userdata/MyAudio.java
 		//This will be split into a new part
 		File decodedAudio = new File(android.os.Environment.getExternalStorageDirectory()+"/Record/test.3gp");
 		try {
@@ -114,14 +140,18 @@ public class MyAudio extends ChildUserData implements UserContent<byte[]> {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		/* 
 		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(decodedByteArray);
 		Bitmap decodedBitmap = BitmapFactory.decodeStream(byteArrayInputStream);
 		*/
 		return decodedAudio;
 	}
+<<<<<<< HEAD:CompleteMyTask/src/ca/ualberta/cs/completemytask/MyAudio.java
 	
+=======
+
+>>>>>>> Database_SQL:CompleteMyTask/src/ca/ualberta/cs/completemytask/userdata/MyAudio.java
 
 	/**
 	 * Takes a String (used in the JSON object) and returns
@@ -133,7 +163,11 @@ public class MyAudio extends ChildUserData implements UserContent<byte[]> {
 		byte[] decodedByteArray = Base64.decode(audioString, Base64.URL_SAFE);
 		return decodedByteArray;
 	}
+<<<<<<< HEAD:CompleteMyTask/src/ca/ualberta/cs/completemytask/MyAudio.java
 	
+=======
+
+>>>>>>> Database_SQL:CompleteMyTask/src/ca/ualberta/cs/completemytask/userdata/MyAudio.java
 	/*  This part of the code might be unnecessary
 	/**
 	 * Decodes a string into an audio file and then
@@ -144,17 +178,22 @@ public class MyAudio extends ChildUserData implements UserContent<byte[]> {
 		this.audio = getAudioFromString(audioString);
 	}
 	*/
+<<<<<<< HEAD:CompleteMyTask/src/ca/ualberta/cs/completemytask/MyAudio.java
 	
+=======
+
+	@Override
+>>>>>>> Database_SQL:CompleteMyTask/src/ca/ualberta/cs/completemytask/userdata/MyAudio.java
 	public String toJSON() {
 		// TODO Auto-generated method stub
 		JSONObject json = new JSONObject();
 
 		String userName = "Unknown";
-		
+
 		if (hasUser()) {
 			userName = getUser().getUserName();
 		}
-	
+
 		try {
 			json.put( "type", "Audio");
 			json.put( "user", userName);
@@ -164,10 +203,10 @@ public class MyAudio extends ChildUserData implements UserContent<byte[]> {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		
+
 		return json.toString();
 	}
-	
+
 	/**
 	 * From the given JSONObject retrieve the needed
 	 * info for the audio File
@@ -175,20 +214,25 @@ public class MyAudio extends ChildUserData implements UserContent<byte[]> {
 	 * @return A File
 	 */
 	public void decodeAudio(JSONObject data) {
-		
+
 		Log.v(TAG, "Decoding Audio Data");
-		
+
 		String userName = "Unknown";
 		String audioString = "";
+<<<<<<< HEAD:CompleteMyTask/src/ca/ualberta/cs/completemytask/MyAudio.java
 		long parentID = 0;
 		
+=======
+		String parentID = "";
+
+>>>>>>> Database_SQL:CompleteMyTask/src/ca/ualberta/cs/completemytask/userdata/MyAudio.java
 		try {
 			userName = data.getString("user");
 		} catch (JSONException e) {
 			Log.w(TAG, "Failed to get user.");
 			userName = "Unknown";
 		}
-		
+
 		try {
 			audioString = data.getString("audio");
 			audioString = audioString.substring(1, audioString.length() - 1);
@@ -196,16 +240,16 @@ public class MyAudio extends ChildUserData implements UserContent<byte[]> {
 			Log.w(TAG, "Failed to get image.");
 			audioString = "";
 		}
-		
+
 		try {
 			parentID = data.getLong("parentID");
 		} catch (JSONException e) {
 			Log.w(TAG, "Failed to get parentID.");
 			parentID = 0;
 		}
-		
+
 		Log.v(TAG, audioString);
-		
+
 		User user = new User(userName);
 		this.setUser(user);
 		//this.setAudioFromString(audioString);
@@ -213,4 +257,8 @@ public class MyAudio extends ChildUserData implements UserContent<byte[]> {
 		this.setParentId(parentID);
 	}
 
+<<<<<<< HEAD:CompleteMyTask/src/ca/ualberta/cs/completemytask/MyAudio.java
 }
+=======
+}
+>>>>>>> Database_SQL:CompleteMyTask/src/ca/ualberta/cs/completemytask/userdata/MyAudio.java

@@ -1,9 +1,20 @@
-package ca.ualberta.cs.completemytask;
+package ca.ualberta.cs.completemytask.activities;
 
 import java.io.File;
 
+import ca.ualberta.cs.completemytask.R;
+import ca.ualberta.cs.completemytask.background.BackgroundTask;
+import ca.ualberta.cs.completemytask.background.HandleInBackground;
+import ca.ualberta.cs.completemytask.saving.LocalSaving;
+import ca.ualberta.cs.completemytask.settings.Settings;
+import ca.ualberta.cs.completemytask.userdata.ImageAdapter;
+import ca.ualberta.cs.completemytask.userdata.MyPhoto;
+import ca.ualberta.cs.completemytask.userdata.Task;
+import ca.ualberta.cs.completemytask.userdata.TaskManager;
+import ca.ualberta.cs.completemytask.userdata.User;
+import ca.ualberta.cs.completemytask.views.LoadingView;
+
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -39,7 +50,7 @@ public class ViewImageActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_view_image);
 		
-		saver = new LocalSaving(this);
+		saver = new LocalSaving();
 		
 		this.loadingView = new LoadingView(this, R.id.ViewImageMain,
         		"Getting Image ...");

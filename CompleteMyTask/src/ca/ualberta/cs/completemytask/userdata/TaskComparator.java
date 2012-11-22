@@ -1,6 +1,7 @@
-package ca.ualberta.cs.completemytask;
+package ca.ualberta.cs.completemytask.userdata;
 
 import java.util.Comparator;
+
 
 /**
  * Compares to tasks. This is used to sort

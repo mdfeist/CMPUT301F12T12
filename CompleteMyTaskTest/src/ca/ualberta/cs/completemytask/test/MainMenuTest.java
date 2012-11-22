@@ -14,15 +14,15 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;
-import ca.ualberta.cs.completemytask.Comment;
-import ca.ualberta.cs.completemytask.DatabaseManager;
-import ca.ualberta.cs.completemytask.MainMenuActivity;
-import ca.ualberta.cs.completemytask.MyAudio;
-import ca.ualberta.cs.completemytask.MyPhoto;
 import ca.ualberta.cs.completemytask.R;
-import ca.ualberta.cs.completemytask.Task;
-import ca.ualberta.cs.completemytask.TaskManager;
-import ca.ualberta.cs.completemytask.User;
+import ca.ualberta.cs.completemytask.activities.MainMenuActivity;
+import ca.ualberta.cs.completemytask.database.DatabaseManager;
+import ca.ualberta.cs.completemytask.userdata.Comment;
+import ca.ualberta.cs.completemytask.userdata.MyAudio;
+import ca.ualberta.cs.completemytask.userdata.MyPhoto;
+import ca.ualberta.cs.completemytask.userdata.Task;
+import ca.ualberta.cs.completemytask.userdata.TaskManager;
+import ca.ualberta.cs.completemytask.userdata.User;
 
 
 /**

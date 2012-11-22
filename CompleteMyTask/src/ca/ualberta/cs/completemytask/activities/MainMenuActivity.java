@@ -1,5 +1,16 @@
-package ca.ualberta.cs.completemytask;
+package ca.ualberta.cs.completemytask.activities;
 
+import ca.ualberta.cs.completemytask.R;
+import ca.ualberta.cs.completemytask.background.BackgroundTask;
+import ca.ualberta.cs.completemytask.background.HandleInBackground;
+import ca.ualberta.cs.completemytask.database.DatabaseManager;
+import ca.ualberta.cs.completemytask.saving.LocalSaving;
+import ca.ualberta.cs.completemytask.settings.Settings;
+import ca.ualberta.cs.completemytask.settings.SettingsActivity;
+import ca.ualberta.cs.completemytask.userdata.Task;
+import ca.ualberta.cs.completemytask.userdata.TaskAdapter;
+import ca.ualberta.cs.completemytask.userdata.TaskManager;
+import ca.ualberta.cs.completemytask.views.LoadingView;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -40,7 +51,8 @@ public class MainMenuActivity extends Activity{
 	enum Display {
 		ADD_TASK(1),
 		VIEW_TASK(2),
-		EDIT_USER(3);
+		SETTINGS(3),
+		NEW_USER(4);
 		
 		private final int value;
 	    private Display(int value) {
@@ -66,7 +78,7 @@ public class MainMenuActivity extends Activity{
         setupSettings();
         setupList();
         
-        saver = new LocalSaving(this);
+        saver = new LocalSaving();
         saver.open();
         saver.loadAllTasks();
         saver.close();
@@ -118,8 +130,8 @@ public class MainMenuActivity extends Activity{
     	boolean needsUser = !Settings.getInstance().hasUser();
     	
     	if (needsUser) {
-    		Intent intent = new Intent(this, UserInfoActivity.class);
-        	startActivityForResult(intent, Display.EDIT_USER.getValue());
+    		Intent intent = new Intent(this, NewUserActivity.class);
+        	startActivityForResult(intent, Display.NEW_USER.getValue());
     	}
     }
     
@@ -127,9 +139,9 @@ public class MainMenuActivity extends Activity{
      * Called when user wants to edit their information.
      * @param A view
      */
-    public void editUser(View view) {
-    	Intent intent = new Intent(this, UserInfoActivity.class);
-    	startActivityForResult(intent, Display.EDIT_USER.getValue());
+    public void settings(View view) {
+    	Intent intent = new Intent(this, SettingsActivity.class);
+    	startActivityForResult(intent, Display.SETTINGS.getValue());
     } 
     
     /**
@@ -172,7 +184,7 @@ public class MainMenuActivity extends Activity{
         }
         
         // Save user updated
-        if(requestCode == Display.EDIT_USER.getValue()) {
+        if(requestCode == Display.SETTINGS.getValue()) {
             if(resultCode == RESULT_OK && intent != null) {
             	
             }
