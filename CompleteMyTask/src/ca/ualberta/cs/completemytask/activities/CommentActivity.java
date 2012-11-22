@@ -122,10 +122,13 @@ public class CommentActivity extends Activity {
     		public void onPreExecute() {
     		}
     		
-    		public void onPostExecute() {
+    		public void onPostExecute(int response) {
     		}
     		
-    		public int handleInBackground(Object o) {
+    		public void onUpdate(int response) {
+    		}
+    		
+    		public boolean handleInBackground(Object o) {
     			//DatabaseManager.getInstance().syncData(comment);
 				task.addComment(comment);
 				
@@ -135,7 +138,7 @@ public class CommentActivity extends Activity {
 					saver.close();
 
 				}
-				return 0;
+				return true;
     		}
     	});
     }

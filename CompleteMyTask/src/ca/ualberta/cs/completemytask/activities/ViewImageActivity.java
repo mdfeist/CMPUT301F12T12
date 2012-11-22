@@ -144,12 +144,15 @@ public class ViewImageActivity extends Activity {
     			loadingView.showLoadView(true);
     		}
     		
-    		public void onPostExecute() {
+    		public void onPostExecute(int response) {
     			loadingView.showLoadView(false);
 				adapter.notifyDataSetChanged();
     		}
     		
-    		public int handleInBackground(Object o) {
+    		public void onUpdate(int response) {
+    		}
+    		
+    		public boolean handleInBackground(Object o) {
     			//DatabaseManager.getInstance().syncData(image);
 				task.addPhoto(image);
 				
@@ -159,7 +162,7 @@ public class ViewImageActivity extends Activity {
 					saver.close();
 
 				}
-				return 0;
+				return true;
     		}
     	});
 	}

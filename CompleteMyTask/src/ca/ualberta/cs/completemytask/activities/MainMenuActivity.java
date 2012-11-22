@@ -219,23 +219,27 @@ public class MainMenuActivity extends Activity{
      */
     public void sync(View view) {
     	BackgroundTask bg = new BackgroundTask();
-    	bg.runInBackGround(new HandleInBackground() {
-    		public void onPreExecute() {
-    			loadingView.showLoadView(true);	
-    		}
-    		
-    		public void onPostExecute() {
-    			TaskManager.getInstance().sort();
-    	 		adapter.notifyDataSetChanged();
-    	 		
-    			loadingView.showLoadView(false);
-    		}
-    		
-    		public int handleInBackground(Object o) {
-    			DatabaseManager.getInstance().syncDatabase();
-				return 0;
-    		}
-    	});
+    	
+    	
+	    	bg.runInBackGround(new HandleInBackground() {
+	    		public void onPreExecute() {
+	    		}
+	    		
+	    		public void onPostExecute(int response) {
+	    			TaskManager.getInstance().sort();
+	    	 		adapter.notifyDataSetChanged();
+	    		}
+	    		
+	    		public void onUpdate(int response) {
+	    			TaskManager.getInstance().sort();
+	    	 		adapter.notifyDataSetChanged();
+	    		}
+	    		
+	    		public boolean handleInBackground(Object o) {	
+					return DatabaseManager.getInstance().syncDatabase();
+	    		}
+	    	});
+
     }
     
     public void syncTask(final int position) {
@@ -245,16 +249,19 @@ public class MainMenuActivity extends Activity{
     			loadingView.showLoadView(true);	
     		}
     		
-    		public void onPostExecute() {
+    		public void onPostExecute(int response) {
     			TaskManager.getInstance().sort();
     	 		adapter.notifyDataSetChanged();
     	 		
     			loadingView.showLoadView(false);
     		}
     		
-    		public int handleInBackground(Object o) {
+    		public void onUpdate(int response) {
+    		}
+    		
+    		public boolean handleInBackground(Object o) {
     			DatabaseManager.getInstance().syncTaskToDatabase(position);
-				return 0;
+				return true;
     		}
     	});
     	

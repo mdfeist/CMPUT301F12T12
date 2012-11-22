@@ -45,6 +45,8 @@ public class DatabaseManager {
 	public static final String KEY_SUCCESS = "success";
 	public static final String KEY_ERROR = "error";
 	public static final String KEY_ERROR_MSG = "error_msg";
+	
+	private static String LAST_DATE = "";
 
 	private JSONParser jsonParser;
 	
@@ -103,12 +105,17 @@ public class DatabaseManager {
 		// Log.e("JSON", json.toString());
 	}
 	
-	public void getTasks() {
+	public boolean getTasks(int limit) {
+		
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("action", list_tasks_tag));
+		params.add(new BasicNameValuePair("limit", String.valueOf(limit)));
+		params.add(new BasicNameValuePair("date", LAST_DATE));
 		JSONObject json = jsonParser.getJSONFromUrl(URL, params);
 		
 		Log.v("JSON", json.toString());
+		
+		boolean finished = false;
 		
 		// check for login response
 		try {
@@ -116,6 +123,10 @@ public class DatabaseManager {
 				String res = json.getString(DatabaseManager.KEY_SUCCESS);
 				if (Integer.parseInt(res) == 1) {
 					JSONArray tasksArray = json.getJSONArray("tasks"); 
+					
+					if (tasksArray.length() < limit) {
+						finished = true;
+					}
 					
 					for (int i = 0; i < tasksArray.length(); i++) {
 						JSONObject task = tasksArray.getJSONObject(i);
@@ -134,6 +145,10 @@ public class DatabaseManager {
 							
 							String date_created = task.getString("date_created");
 							String date_completed = task.getString("date_completed");
+							
+							if (date_created.compareTo(LAST_DATE) > 0) {
+								LAST_DATE = date_created;
+							}
 							
 							User user = new User(username);
 							
@@ -164,6 +179,8 @@ public class DatabaseManager {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
+		
+		return finished;
 	}
 
 	public void syncTask(Task task) {
@@ -276,10 +293,10 @@ public class DatabaseManager {
 	/**
 	 * Sync all tasks with the database.
 	 */
-	public void syncDatabase() {
+	public boolean syncDatabase() {
 		testSyncComplete = false;
 
-		this.getTasks();
+		boolean finished = this.getTasks(1);
 		
 		for (Task t : TaskManager.getInstance().getTaskArray()) {
 			if (t.isPublic()) {
@@ -293,5 +310,7 @@ public class DatabaseManager {
 		}
 		
 		testSyncComplete = true;
+		
+		return finished;
 	}
 }

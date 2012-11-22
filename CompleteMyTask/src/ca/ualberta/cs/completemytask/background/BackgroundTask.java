@@ -9,7 +9,7 @@ public class BackgroundTask {
 	}
 	
 	public void runInBackGround(final HandleInBackground data) {
-		class BackgroundAsyncTask extends AsyncTask<String, Void, Long>{
+		class BackgroundAsyncTask extends AsyncTask<String, Long, Long>{
     		
     		@Override
     		protected void onPreExecute() {
@@ -18,19 +18,27 @@ public class BackgroundTask {
     		
 	        @Override
 	        protected Long doInBackground(String... params) {
-	        	return (long) data.handleInBackground(null);
+	        	while (!data.handleInBackground(null)) {
+	        		 publishProgress();
+	        	}
+	        	return (long) 0;
 			}
 	        
 	        @Override
-	        protected void onProgressUpdate(Void... voids) {
+	        protected void onProgressUpdate(Long ...longs) {
+	        	int result = 0;
+	        	if (longs.length > 0) {
+	        		result = longs[0].intValue();
+	        	}
 	        	
+	        	data.onUpdate(result);
 	        }
 	        
 	        @Override
 	        protected void onPostExecute(Long result) {
 	            super.onPostExecute(null);
 	            
-	            data.onPostExecute();
+	            data.onPostExecute(result.intValue());
 	        }        
 		}
 		

@@ -185,12 +185,15 @@ public class AddTaskActivity extends Activity {
         		public void onPreExecute() {
         		}
         		
-        		public void onPostExecute() {
+        		public void onPostExecute(int response) {
         		}
         		
-        		public int handleInBackground(Object o) {
+        		public void onUpdate(int response) {
+        		}
+        		
+        		public boolean handleInBackground(Object o) {
         			DatabaseManager.getInstance().syncTaskToDatabase(position);
-    				return 0;
+    				return true;
         		}
         	});
     	}
