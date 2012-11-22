@@ -30,7 +30,7 @@
                 // user not found
                 // echo json with error = 1
                 $response["error"] = 1;
-                $response["error_msg"] = "Incorrect email or password!";
+                $response["error_msg"] = "Incorrect username or password";
                 echo json_encode($response);
             }
         } else if ($action == 'register') {
@@ -64,8 +64,49 @@
                 }
             }
             
-        } else if ($action == 'checkUser') {
+        } else if ($action == 'update_email') {
+            // Request type is Register new user
+            $username = $_POST['username'];
+            $email = $_POST['email'];
             
+            updateEmail($username, $email);
+            
+        } else if ($action == 'list_tasks') {
+            $limit = $_POST['limit'];
+            $last_date = $_POST['date'];
+            
+            $tasks = listTasks($limit, $last_date);
+            
+            $response["success"] = 1;
+            $response["tasks"] = $tasks;
+            echo json_encode($response);
+            
+        } else if ($action == 'sync_task') {
+            
+            $u_id = $_POST['id'];
+            $username = $_POST['username'];
+            $name = $_POST['name'];
+            $description = $_POST['description'];
+            $complete = $_POST['complete'];
+            $comment = $_POST['comment'];
+            $photo = $_POST['photo'];
+            $audio = $_POST['audio'];
+            $date_created = $_POST['date_created'];
+            $date_completed = $_POST['date_completed'];
+            
+            $id = createTask($u_id, $username, $name, $description,
+                               $complete, $comment, $photo, $audio,
+                               $date_created, $date_completed);
+            
+            if ($id) {
+                $response["success"] = 1;
+                $response["id"] = $id;
+                echo json_encode($response);
+            } else {
+                $response["error"] = 1;
+                $response["error_msg"] = "Unable to create task";
+                echo json_encode($response);
+            }
         } else {
             echo "Invalid Request";
         }

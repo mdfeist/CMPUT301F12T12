@@ -71,6 +71,60 @@
         }
         
     }
+    
+    function updateEmail($username, $email) {
+        global $mysqli;
+        
+        $query = sprintf("UPDATE users SET email = '%s' WHERE username = '%s'", $email, $username);
+        $res = $mysqli->query($query);
+    }
+    
+    function listTasks($limit, $last_date) {
+        global $mysqli;
+        
+        $query = sprintf("SELECT * FROM tasks WHERE date_created > '%s' LIMIT %s;", $last_date, $limit);
+        $res = $mysqli->query($query);
+        
+        $tasks = array();
+        while($row = $res->fetch_assoc()) {
+            $tasks[] = $row;
+        }
+        
+        return $tasks;
+    }
+    
+    function createTask($id, $username, $name, $description,
+                        $complete, $comment, $photo, $audio) {
+        
+        global $mysqli;
+        
+        $date_created = date( 'Y-m-d H:i:s' );
+        
+        if ($id == 0) {
+            $query = sprintf("INSERT INTO tasks (username, name, description, complete, comment, photo, audio, date_created) VALUES('%s','%s', '%s', '%s','%s', '%s', '%s','%s');", $username, $name, $description, $complete, $comment, $photo, $audio, $date_created);
+            
+            $res = $mysqli->query($query);
+            
+            if ($res) {
+                return $mysqli->insert_id;
+            } else {
+                return false;
+            }
+        } else {
+            $query = sprintf("UPDATE tasks SET name = '%s', description = '%s', complete = '%s', comment = '%s', photo = '%s', audio = '%s' WHERE id = '%s';", $name, $description, $complete, $comment, $photo, $audio, $id);
+            
+            $res = $mysqli->query($query);
+            
+            if ($res) {
+                return $id;
+            } else {
+                return false;
+            }
+        }
+        
+        return false;
+
+    }
 
     
     ?>
