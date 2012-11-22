@@ -1,11 +1,11 @@
 package ca.ualberta.cs.completemytask.activities;
 
 import ca.ualberta.cs.completemytask.R;
-import ca.ualberta.cs.completemytask.database.DatabaseManager;
 import ca.ualberta.cs.completemytask.saving.LocalSaving;
+import ca.ualberta.cs.completemytask.settings.Settings;
 import ca.ualberta.cs.completemytask.userdata.Task;
 import ca.ualberta.cs.completemytask.userdata.TaskManager;
-import android.os.AsyncTask;
+import ca.ualberta.cs.completemytask.userdata.User;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -57,8 +57,10 @@ public class ViewTaskActivity extends Activity {
     	
 		if (position >= 0) {
 			Task task = TaskManager.getInstance().getTaskAt(position);
-
-			if (!task.isPublic()) {
+			
+			User taskUser = task.getUser();
+			
+			if (taskUser.getUserName().equals(Settings.getInstance().getUserName())) {
 				editTask = new Button(this);
 				editTask.setText("Edit Task");
 				editTask.setBackgroundResource(R.drawable.button_selector);
@@ -92,7 +94,9 @@ public class ViewTaskActivity extends Activity {
 		if (position >= 0) {
 			Task task = TaskManager.getInstance().getTaskAt(position);
 			
-			if (task.isPublic()) {
+			User taskUser = task.getUser();
+			
+			if (!taskUser.getUserName().equals(Settings.getInstance().getUserName())) {
 				if (editTask != null) {
 					ViewGroup parent = (ViewGroup) editTask.getParent();
 					
@@ -179,51 +183,10 @@ public class ViewTaskActivity extends Activity {
         if(requestCode == EDIT_TASK) {
             if(resultCode == RESULT_OK && intent != null) {
             	
-            	int position = intent.getIntExtra("Task Position", -1);
-            	
-            	if (position >= 0) {
-					// If task is public then sync with database
-					if (intent.getBooleanExtra("Public", false)) {
-						syncTask(position);
-					}
-					
-					saver.open();
-					saver.saveTask(TaskManager.getInstance().getTaskAt(position));
-					saver.close();
-            	}
             }
         }
     }
     
-    public void syncTask(final int position) {
-    	class SyncTaskAsyncTask extends AsyncTask<String, Void, Long>{
-    		
-    		@Override
-    		protected void onPreExecute() {
-    		}
-    		
-	        @Override
-	        protected Long doInBackground(String... params) {
-	        	
-	        	DatabaseManager.getInstance().syncTaskToDatabase(position);
-	        	
-				return (long) 1;
-			}
-	        
-	        @Override
-	        protected void onProgressUpdate(Void... voids) {
-	        	
-	        }
-	        
-	        @Override
-	        protected void onPostExecute(Long result) {
-	            super.onPostExecute(null);
-	        }        
-		}
-		
-    	SyncTaskAsyncTask syncTask = new SyncTaskAsyncTask();
-    	syncTask.execute(); 
-    }
     
     /**
      * Closes the task

@@ -175,6 +175,8 @@ public class DatabaseManager {
 			username = user.getUserName();
 		}
 		
+		long u_id = task.getId();
+		
 		String name = task.getName();
 		String description = task.getDescription();
 		
@@ -189,6 +191,7 @@ public class DatabaseManager {
 		// Building Parameters
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("action", sync_task_tag));
+		params.add(new BasicNameValuePair("id", String.valueOf(u_id)));
 		params.add(new BasicNameValuePair("username", username));
 		params.add(new BasicNameValuePair("name", name));
 		params.add(new BasicNameValuePair("description", description));

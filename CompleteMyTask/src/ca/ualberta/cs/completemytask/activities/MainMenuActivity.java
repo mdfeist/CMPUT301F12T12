@@ -163,20 +163,6 @@ public class MainMenuActivity extends Activity{
             if(resultCode == RESULT_OK && intent != null) {
             	Log.v(TAG, "Task added");
             	
-            	int position = intent.getIntExtra("Task Position", -1);
-            	
-            	if (position >= 0) {
-					// If task is public then sync with database
-					if (intent.getBooleanExtra("Public", false)) {
-						syncTask(position);
-					}
-					
-					Log.v(TAG, "Saving");
-					saver.open();
-					saver.saveTask(TaskManager.getInstance().getTaskAt(position));
-					saver.close();
-            	}
-            	
             	TaskManager.getInstance().sort();
             	adapter.notifyDataSetChanged();
             }

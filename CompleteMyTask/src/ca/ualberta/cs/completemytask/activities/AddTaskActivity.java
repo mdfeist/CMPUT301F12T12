@@ -1,6 +1,10 @@
 package ca.ualberta.cs.completemytask.activities;
 
 import ca.ualberta.cs.completemytask.R;
+import ca.ualberta.cs.completemytask.background.BackgroundTask;
+import ca.ualberta.cs.completemytask.background.HandleInBackground;
+import ca.ualberta.cs.completemytask.database.DatabaseManager;
+import ca.ualberta.cs.completemytask.saving.LocalSaving;
 import ca.ualberta.cs.completemytask.settings.Settings;
 import ca.ualberta.cs.completemytask.userdata.Task;
 import ca.ualberta.cs.completemytask.userdata.TaskManager;
@@ -27,6 +31,7 @@ public class AddTaskActivity extends Activity {
 	private static final String TAG = "AddTaskActivity";
 	private int position;
 	private boolean newTask;
+	
 	/**
 	 * Creates the view
 	 */
@@ -66,6 +71,23 @@ public class AddTaskActivity extends Activity {
         	
         	newTask = false;
         }
+    }
+    
+    @Override
+    public void onResume() {
+    	super.onResume();
+    	if (position >= 0) {
+	    	Button share = (Button) findViewById(R.id.ShareTaskButton);
+	    	Task task = TaskManager.getInstance().getTaskAt(position);
+	    	
+	    	if (task.isPublic()) {
+	    		share.setClickable(false);
+	    		share.setAlpha(0.0f);
+	    	} else {
+	    		share.setClickable(true);
+	    		share.setAlpha(1.0f);
+	    	}
+    	}
     }
 
     /**
@@ -137,10 +159,14 @@ public class AddTaskActivity extends Activity {
     	if (newTask) {
     		task = new Task(taskName, taskDescription);
     		position = TaskManager.getInstance().addTask(task);
+    		
+    		Log.v(TAG, "Creating New Task: \n" + task.toString());
     	} else {
     		task = TaskManager.getInstance().getTaskAt(position);
     		task.setName(taskName);
     		task.setDescription(taskDescription);
+    		
+    		Log.v(TAG, "Editing Task: \n" + task.toString());
     	}
     	
     	if (Settings.getInstance().hasUser()) {
@@ -151,15 +177,28 @@ public class AddTaskActivity extends Activity {
     			photoRequirementCheckbox.isChecked(), 
     			audioRequirementCheckbox.isChecked());
     	
-    	Log.v(TAG, task.toString());
-    	
     	Intent intent = new Intent();
     	
     	if (task.isPublic()) {
-    		intent.putExtra("Public", true);
+    		BackgroundTask bg = new BackgroundTask();
+        	bg.runInBackGround(new HandleInBackground() {
+        		public void onPreExecute() {
+        		}
+        		
+        		public void onPostExecute() {
+        		}
+        		
+        		public int handleInBackground(Object o) {
+        			DatabaseManager.getInstance().syncTaskToDatabase(position);
+    				return 0;
+        		}
+        	});
     	}
-    	
-    	intent.putExtra("Task Position", position);
+		
+    	LocalSaving saver = new LocalSaving();
+		saver.open();
+		saver.saveTask(TaskManager.getInstance().getTaskAt(position));
+		saver.close();
     	
     	setResult(RESULT_OK, intent);
     	this.finish();
