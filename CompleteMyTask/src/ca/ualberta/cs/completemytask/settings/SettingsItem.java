@@ -7,7 +7,7 @@ public class SettingsItem {
 	private int linkid;
 	private Class<? extends Activity> new_activity;
 	
-	SettingsItem(String title, int linkid, Class<? extends Activity> new_activity) {
+	public SettingsItem(String title, int linkid, Class<? extends Activity> new_activity) {
 		this.title = title;
 		this.linkid = linkid;
 		this.new_activity = new_activity;

@@ -18,7 +18,7 @@ public class SettingsListAdapter  extends BaseAdapter {
 	private LayoutInflater inflater = null;
 	private List<SettingsItem> items;
 	
-	SettingsListAdapter(Activity activity) {
+	public SettingsListAdapter(Activity activity) {
 		this.inflater = (LayoutInflater) activity
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		

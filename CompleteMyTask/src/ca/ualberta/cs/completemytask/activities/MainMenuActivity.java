@@ -6,7 +6,6 @@ import ca.ualberta.cs.completemytask.background.HandleInBackground;
 import ca.ualberta.cs.completemytask.database.DatabaseManager;
 import ca.ualberta.cs.completemytask.saving.LocalSaving;
 import ca.ualberta.cs.completemytask.settings.Settings;
-import ca.ualberta.cs.completemytask.settings.SettingsActivity;
 import ca.ualberta.cs.completemytask.userdata.Task;
 import ca.ualberta.cs.completemytask.userdata.TaskAdapter;
 import ca.ualberta.cs.completemytask.userdata.TaskManager;

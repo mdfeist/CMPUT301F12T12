@@ -1,10 +1,6 @@
 package ca.ualberta.cs.completemytask.settings;
 
-<<<<<<< HEAD:CompleteMyTask/src/ca/ualberta/cs/completemytask/Settings.java
-import android.app.Activity;
-=======
 import ca.ualberta.cs.completemytask.userdata.User;
->>>>>>> Database_SQL:CompleteMyTask/src/ca/ualberta/cs/completemytask/settings/Settings.java
 import android.content.Context;
 import android.content.SharedPreferences;
 

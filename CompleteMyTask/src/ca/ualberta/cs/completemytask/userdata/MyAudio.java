@@ -19,18 +19,10 @@ import android.util.Log;
  * @author Michael Feist and Ian Watts
  *
  */
-@SuppressWarnings("serial")
 public class MyAudio extends ChildUserData implements UserContent<byte[]> {
 	protected final String TAG = "MyAudio";
-<<<<<<< HEAD:CompleteMyTask/src/ca/ualberta/cs/completemytask/MyAudio.java
-	
-	byte[] audio;
-	
-=======
-
 	byte[] audio;
 
->>>>>>> Database_SQL:CompleteMyTask/src/ca/ualberta/cs/completemytask/userdata/MyAudio.java
 	public MyAudio() {
 		this.audio = null;
 	}
@@ -48,11 +40,6 @@ public class MyAudio extends ChildUserData implements UserContent<byte[]> {
 		 * This functions converts audio file to a string which can be
 		 * JSONified.
 		 */
-<<<<<<< HEAD:CompleteMyTask/src/ca/ualberta/cs/completemytask/MyAudio.java
-		
-=======
-
->>>>>>> Database_SQL:CompleteMyTask/src/ca/ualberta/cs/completemytask/userdata/MyAudio.java
 		byte []buffer = new byte[(int) audioFile.length()];
 		InputStream ios = null;
 
@@ -94,18 +81,6 @@ public class MyAudio extends ChildUserData implements UserContent<byte[]> {
 		String encodedString = Base64.encodeToString(audioByte, Base64.URL_SAFE);
 		return encodedString;
 	}
-
-
-	/**
-	 * Takes a byte array (our representation of audio file) and return
-	 * a string that can be used for JSON
-	 * @param audioByte
-	 * @return String
-	 */
-	public String getStringFromByte(byte[] audioByte) {
-		String encodedString = Base64.encodeToString(audioByte, Base64.URL_SAFE);
-		return encodedString;
-	}
 	
 	
 	/**
@@ -121,11 +96,7 @@ public class MyAudio extends ChildUserData implements UserContent<byte[]> {
 		 * */
 
 		byte[] decodedByteArray = Base64.decode(audioString, Base64.URL_SAFE);
-<<<<<<< HEAD:CompleteMyTask/src/ca/ualberta/cs/completemytask/MyAudio.java
 		
-=======
-
->>>>>>> Database_SQL:CompleteMyTask/src/ca/ualberta/cs/completemytask/userdata/MyAudio.java
 		//This will be split into a new part
 		File decodedAudio = new File(android.os.Environment.getExternalStorageDirectory()+"/Record/test.3gp");
 		try {
@@ -147,11 +118,6 @@ public class MyAudio extends ChildUserData implements UserContent<byte[]> {
 		*/
 		return decodedAudio;
 	}
-<<<<<<< HEAD:CompleteMyTask/src/ca/ualberta/cs/completemytask/MyAudio.java
-	
-=======
-
->>>>>>> Database_SQL:CompleteMyTask/src/ca/ualberta/cs/completemytask/userdata/MyAudio.java
 
 	/**
 	 * Takes a String (used in the JSON object) and returns
@@ -163,11 +129,7 @@ public class MyAudio extends ChildUserData implements UserContent<byte[]> {
 		byte[] decodedByteArray = Base64.decode(audioString, Base64.URL_SAFE);
 		return decodedByteArray;
 	}
-<<<<<<< HEAD:CompleteMyTask/src/ca/ualberta/cs/completemytask/MyAudio.java
-	
-=======
 
->>>>>>> Database_SQL:CompleteMyTask/src/ca/ualberta/cs/completemytask/userdata/MyAudio.java
 	/*  This part of the code might be unnecessary
 	/**
 	 * Decodes a string into an audio file and then
@@ -178,12 +140,7 @@ public class MyAudio extends ChildUserData implements UserContent<byte[]> {
 		this.audio = getAudioFromString(audioString);
 	}
 	*/
-<<<<<<< HEAD:CompleteMyTask/src/ca/ualberta/cs/completemytask/MyAudio.java
-	
-=======
 
-	@Override
->>>>>>> Database_SQL:CompleteMyTask/src/ca/ualberta/cs/completemytask/userdata/MyAudio.java
 	public String toJSON() {
 		// TODO Auto-generated method stub
 		JSONObject json = new JSONObject();
@@ -219,13 +176,8 @@ public class MyAudio extends ChildUserData implements UserContent<byte[]> {
 
 		String userName = "Unknown";
 		String audioString = "";
-<<<<<<< HEAD:CompleteMyTask/src/ca/ualberta/cs/completemytask/MyAudio.java
 		long parentID = 0;
-		
-=======
-		String parentID = "";
 
->>>>>>> Database_SQL:CompleteMyTask/src/ca/ualberta/cs/completemytask/userdata/MyAudio.java
 		try {
 			userName = data.getString("user");
 		} catch (JSONException e) {
@@ -256,9 +208,5 @@ public class MyAudio extends ChildUserData implements UserContent<byte[]> {
 		this.audio = getByteFromString(audioString);
 		this.setParentId(parentID);
 	}
+}
 
-<<<<<<< HEAD:CompleteMyTask/src/ca/ualberta/cs/completemytask/MyAudio.java
-}
-=======
-}
->>>>>>> Database_SQL:CompleteMyTask/src/ca/ualberta/cs/completemytask/userdata/MyAudio.java

@@ -1,5 +1,8 @@
-package ca.ualberta.cs.completemytask;
+package ca.ualberta.cs.completemytask.activities;
 
+import ca.ualberta.cs.completemytask.R;
+import ca.ualberta.cs.completemytask.settings.SettingsItem;
+import ca.ualberta.cs.completemytask.settings.SettingsListAdapter;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
