@@ -17,9 +17,10 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	public static final String COLUMN_GLOBALID = "globalId";
 	public static final String COLUMN_PARENT_GLOBALID = "parentGlobalId";
 	public static final String COLUMN_USER = "user";
-	public static final String COLUMN_EMAIL = "email";
+	public static final String COLUMN_TIME = "time";
 
 	// Tasks
+	public static final String COLUMN_EMAIL = "email";
 	public static final String COLUMN_TASK_NAME = "name";
 	public static final String COLUMN_TASK_DESCRIPTION = "description";
 	public static final String COLUMN_TASK_COMPLETE = "complete";
@@ -34,7 +35,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	public static final String COLUMN_PHOTO = "photo";
 
 	private static final String DATABASE_NAME = "localSave.db";
-	private static final int DATABASE_VERSION = 3;
+	private static final int DATABASE_VERSION = 4;
 
 	// Database creation sql statement
 	private static final String DATABASE_CREATE_TASKS = "create table "
@@ -46,21 +47,21 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 			+ COLUMN_TASK_NEEDS_PHOTO + " integer, " + COLUMN_TASK_NEEDS_AUDIO
 			+ " integer, " 
 			+ COLUMN_USER + " text,"
-			+ COLUMN_EMAIL + " text);";
+			+ COLUMN_EMAIL + " text, " + COLUMN_TIME + " text);";
 
 	private static final String DATABASE_CREATE_COMMENTS = "create table "
 			+ TABLE_COMMENTS + "(" + COLUMN_ID
 			+ " integer primary key autoincrement, " + COLUMN_PARENT_ID
 			+ " integer, " + COLUMN_GLOBALID + " text, "
 			+ COLUMN_PARENT_GLOBALID + " text, " + COLUMN_COMMENT + " text, " +
-			COLUMN_USER + " text);";
+			COLUMN_USER + " text, " + COLUMN_TIME + " text);";
 	
 	private static final String DATABASE_CREATE_PHOTOS = "create table "
 			+ TABLE_PHOTOS + "(" + COLUMN_ID
 			+ " integer primary key autoincrement, " + COLUMN_PARENT_ID
 			+ " integer, " + COLUMN_GLOBALID + " text, "
 			+ COLUMN_PARENT_GLOBALID + " text, " + COLUMN_PHOTO + " text, " +
-			COLUMN_USER + " text);";
+			COLUMN_USER + " text, " + COLUMN_TIME + " text);";
 
 	public SQLiteHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
