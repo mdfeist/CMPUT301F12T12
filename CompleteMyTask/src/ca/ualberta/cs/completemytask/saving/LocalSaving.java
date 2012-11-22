@@ -32,43 +32,45 @@ public class LocalSaving {
 
 	public void saveTask(Task task) {
 
-		User user = task.getUser();
-
-		String userName = null;
-		String email = null;
-
-		if (user != null) {
-			userName = user.getUserName();
-			email = user.getEmail();
-		}
-
-		// Get values of Task
-		ContentValues values = new ContentValues();
-
-		values.put(SQLiteHelper.COLUMN_GLOBALID, task.getId());
-		values.put(SQLiteHelper.COLUMN_TASK_NAME, task.getName());
-		values.put(SQLiteHelper.COLUMN_TASK_DESCRIPTION, task.getDescription());
-		values.put(SQLiteHelper.COLUMN_TASK_COMPLETE, (task.isComplete()) ? 1
-				: 0);
-		values.put(SQLiteHelper.COLUMN_TASK_NEEDS_COMMENT,
-				(task.needsComment()) ? 1 : 0);
-		values.put(SQLiteHelper.COLUMN_TASK_NEEDS_PHOTO,
-				(task.needsPhoto()) ? 1 : 0);
-		values.put(SQLiteHelper.COLUMN_TASK_NEEDS_AUDIO,
-				(task.needsAudio()) ? 1 : 0);
-
-		values.put(SQLiteHelper.COLUMN_USER, userName);
-		values.put(SQLiteHelper.COLUMN_EMAIL, email);
-
-		if (task.getLocalId() == 0) {
-			// Insert
-			long insertId = database.insert(SQLiteHelper.TABLE_TASKS, null,
-					values);
-			// Set local id
-			task.setLocalId(insertId);
-		} else {
-			String strFilter = SQLiteHelper.COLUMN_ID + "=" + task.getLocalId();
-			database.update(SQLiteHelper.TABLE_TASKS, values, strFilter, null);
+		if (task.isLocal()) {
+			User user = task.getUser();
+	
+			String userName = null;
+			String email = null;
+	
+			if (user != null) {
+				userName = user.getUserName();
+				email = user.getEmail();
+			}
+			
+			// Get values of Task
+			ContentValues values = new ContentValues();
+	
+			values.put(SQLiteHelper.COLUMN_GLOBALID, task.getId());
+			values.put(SQLiteHelper.COLUMN_TASK_NAME, task.getName());
+			values.put(SQLiteHelper.COLUMN_TASK_DESCRIPTION, task.getDescription());
+			values.put(SQLiteHelper.COLUMN_TASK_COMPLETE, (task.isComplete()) ? 1
+					: 0);
+			values.put(SQLiteHelper.COLUMN_TASK_NEEDS_COMMENT,
+					(task.needsComment()) ? 1 : 0);
+			values.put(SQLiteHelper.COLUMN_TASK_NEEDS_PHOTO,
+					(task.needsPhoto()) ? 1 : 0);
+			values.put(SQLiteHelper.COLUMN_TASK_NEEDS_AUDIO,
+					(task.needsAudio()) ? 1 : 0);
+	
+			values.put(SQLiteHelper.COLUMN_USER, userName);
+			values.put(SQLiteHelper.COLUMN_EMAIL, email);
+	
+			if (task.getLocalId() == 0) {
+				// Insert
+				long insertId = database.insert(SQLiteHelper.TABLE_TASKS, null,
+						values);
+				// Set local id
+				task.setLocalId(insertId);
+			} else {
+				String strFilter = SQLiteHelper.COLUMN_ID + "=" + task.getLocalId();
+				database.update(SQLiteHelper.TABLE_TASKS, values, strFilter, null);
+			}
 		}
 
 	}
