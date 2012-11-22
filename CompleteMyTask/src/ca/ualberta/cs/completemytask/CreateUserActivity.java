@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.util.Log;
 import android.view.Menu;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+@SuppressLint("HandlerLeak")
 public class CreateUserActivity extends Activity {
 
 	private static final String TAG = "Create User";
@@ -21,10 +23,6 @@ public class CreateUserActivity extends Activity {
 	Button create;
 
 	private static final int UPDATE_ERROR = 1;
-	private static String KEY_SUCCESS = "success";
-
-	// private static String KEY_ERROR = "error";
-	// private static String KEY_ERROR_MSG = "error_msg";
 	// private static String KEY_UID = "id";
 	// private static String KEY_NAME = "username";
 	// private static String KEY_EMAIL = "email";
@@ -85,6 +83,10 @@ public class CreateUserActivity extends Activity {
 								.createUser(username, email, password);
 
 						if (json == null) {
+							Message msg = handler.obtainMessage();
+							msg.what = UPDATE_ERROR;
+							msg.obj = "Error: Can't connect to server.";
+							handler.sendMessage(msg);
 							return;
 						}
 
@@ -92,8 +94,8 @@ public class CreateUserActivity extends Activity {
 
 						// check for login response
 						try {
-							if (json.getString(KEY_SUCCESS) != null) {
-								String res = json.getString(KEY_SUCCESS);
+							if (json.getString(DatabaseManager.KEY_SUCCESS) != null) {
+								String res = json.getString(DatabaseManager.KEY_SUCCESS);
 								if (Integer.parseInt(res) == 1) {
 									// Create new User
 									User user = new User(username, email);
@@ -106,10 +108,18 @@ public class CreateUserActivity extends Activity {
 									// Close Login Screen
 									finish();
 								} else {
-									Message msg = handler.obtainMessage();
-									msg.what = UPDATE_ERROR;
-									msg.obj = "User already taken";
-									handler.sendMessage(msg);
+
+									if (json.getString(DatabaseManager.KEY_ERROR) != null) {
+										String res_error = json.getString(DatabaseManager.KEY_ERROR);
+										if (Integer.parseInt(res_error) == 1) {
+											String error = json.getString(DatabaseManager.KEY_ERROR_MSG);
+											
+											Message msg = handler.obtainMessage();
+											msg.what = UPDATE_ERROR;
+											msg.obj = error;
+											handler.sendMessage(msg);
+										}
+									}
 								}
 							}
 						} catch (JSONException e) {
@@ -137,5 +147,9 @@ public class CreateUserActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.activity_create_user, menu);
 		return true;
+	}
+	
+	public void cancel(View view) {
+		this.finish();
 	}
 }

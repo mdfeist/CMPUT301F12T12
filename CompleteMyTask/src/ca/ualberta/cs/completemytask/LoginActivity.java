@@ -21,7 +21,6 @@ public class LoginActivity extends Activity {
 	private static final String TAG = "LoginActivity";
 	
 	private static final int UPDATE_ERROR = 1;
-	private static String KEY_SUCCESS = "success";
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -66,8 +65,8 @@ public class LoginActivity extends Activity {
 
 				// check for login response
 				try {
-					if (json.getString(KEY_SUCCESS) != null) {
-						String res = json.getString(KEY_SUCCESS);
+					if (json.getString(DatabaseManager.KEY_SUCCESS) != null) {
+						String res = json.getString(DatabaseManager.KEY_SUCCESS);
 						if (Integer.parseInt(res) == 1) {
 
 							JSONObject j_user = json.getJSONObject("user");
@@ -80,16 +79,25 @@ public class LoginActivity extends Activity {
 							Settings.getInstance().setUser(user);
 							Settings.getInstance().save(getBaseContext());
 
+							User u = Settings.getInstance().getUser();
+							Log.v(TAG, "Name: " + u.getUserName());
+							
 							Intent intent = new Intent();
 							setResult(RESULT_OK, intent);
-
 							// Close Login Screen
 							finish();
 						} else {
-							Message msg = handler.obtainMessage();
-							msg.what = UPDATE_ERROR;
-							msg.obj = "Login Error: invalid username or password";
-							handler.sendMessage(msg);
+							if (json.getString(DatabaseManager.KEY_ERROR) != null) {
+								String res_error = json.getString(DatabaseManager.KEY_ERROR);
+								if (Integer.parseInt(res_error) == 1) {
+									String error = json.getString(DatabaseManager.KEY_ERROR_MSG);
+									
+									Message msg = handler.obtainMessage();
+									msg.what = UPDATE_ERROR;
+									msg.obj = error;
+									handler.sendMessage(msg);
+								}
+							}
 						}
 					}
 				} catch (JSONException e) {

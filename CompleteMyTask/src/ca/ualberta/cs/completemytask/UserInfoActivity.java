@@ -32,7 +32,8 @@ public class UserInfoActivity extends Activity {
 			userNameText.setText(username);
 			editEmailEditText.setText(email);
 		} else {
-			newUser(null);
+			Intent intent = new Intent(this, NewUserActivity.class);
+			startActivity(intent);
 		}
 	}
 
@@ -47,9 +48,32 @@ public class UserInfoActivity extends Activity {
 	 * Attaches a UserName to the user to use as identification when interacting
 	 * with Tasks.
 	 */
-	public void newUser(View view) {
-		Intent intent = new Intent(this, NewUserActivity.class);
-		startActivity(intent);
+	public void save(View view) {
+		// Save User
+		EditText editEmailEditText = (EditText) findViewById(R.id.EditEmail);
+		final String email = editEmailEditText.getText().toString();
+		
+		User user = Settings.getInstance().getUser();
+		user.setEmail(email);
+		Settings.getInstance().save(this);
+		
+		final String username = user.getUserName();
+		
+		BackgroundTask bg = new BackgroundTask();
+		bg.runInBackGround(new HandleInBackground() {
+    		public void onPreExecute() {
+    		}
+    		
+    		public void onPostExecute() {
+    		}
+    		
+    		public int handleInBackground(Object o) {
+    			DatabaseManager.getInstance().updateEmail(username, email);
+				return 0;
+    		}
+    	});
+		
+		this.finish();
 	}
 	
 	public void cancel(View view) {

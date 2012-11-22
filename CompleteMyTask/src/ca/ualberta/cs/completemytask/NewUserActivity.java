@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
 
 public class NewUserActivity extends Activity {
 	
@@ -30,6 +31,20 @@ public class NewUserActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_user);
+    }
+    
+    @Override
+    public void onResume() {
+    	super.onResume();
+    	
+    	Button cancel = (Button) findViewById(R.id.BackButton);
+    	if (!Settings.getInstance().hasUser()) {
+    		cancel.setClickable(false);
+    		cancel.setAlpha(0.0f);
+    	} else {
+    		cancel.setClickable(true);
+    		cancel.setAlpha(1.0f);
+    	}
     }
 
     @Override
@@ -60,14 +75,14 @@ public class NewUserActivity extends Activity {
     	// Login
         if(requestCode == Display.LOGIN.getValue()) {
             if(resultCode == RESULT_OK && intent != null) {
-            	
+            	this.finish();
             }
         }
         
         // Login
         if(requestCode == Display.CREATE.getValue()) {
             if(resultCode == RESULT_OK && intent != null) {
-            	
+            	this.finish();
             }
         }
         super.onActivityResult(requestCode, resultCode, intent);

@@ -133,6 +133,7 @@
             android:background="@drawable/button_selector"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
+            android:onClick="cancel"
             android:text="@string/CancelButtonLabel"
             android:textColor="#ffffffff" />
 

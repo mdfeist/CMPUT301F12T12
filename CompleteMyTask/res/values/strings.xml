@@ -7,15 +7,18 @@
 
     <!-- Buttons -->
     <string name="AddTaskButtonLabel">Add Task</string>
-     <string name="NewUserButtonLabel">New User</string>
+    <string name="NewUserButtonLabel">New User</string>
     <string name="ShareTaskButtonLabel">Share</string>
     <string name="NextButtonLabel">Next</string>
     <string name="CancelButtonLabel">Cancel</string>
+    <string name="BackButtonLabel">Back</string>
+    <string name="SaveButtonLabel">Save</string>
     <string name="CloseButtonLabel">Close</string>
     <string name="CreateButtonLabel">Create</string>
     <string name="LoginButtonLabel">Login</string>
     <string name="SendButtonLabel">Send</string>
     <string name="SyncTaskButtonLabel">Sync</string>
+     <string name="SettingsButtonLabel">Settings</string>
     <string name="ClearDataButtonLabel">Clear Data</string>
     <string name="EditUserButtonLabel">Edit User</string>
     <string name="ViewCommentsButtonLabel">View Comments</string>
@@ -76,9 +79,9 @@
     <string name="title_activity_view_image">View Image</string>
     <string name="title_activity_view_audio">ViewAudioActivity</string>
     <string name="TakeAudioButtonLabel">Add Audio</string>
-    
     <string name="title_activity_create_user">Create New User</string>
     <string name="title_activity_new_user">New User</string>
     <string name="title_activity_login">Login</string>
+    <string name="title_activity_settings">Settings</string>
 
 </resources>

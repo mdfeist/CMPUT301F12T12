@@ -51,16 +51,16 @@
          android:weightSum="1.0" >
         
         <Button
-            android:id="@+id/NewButton"
+            android:id="@+id/SaveButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_weight=".33"
             android:background="@drawable/button_selector"
-            android:onClick="newUser"
+            android:onClick="save"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:text="@string/NewUserButtonLabel"
+            android:text="@string/SaveButtonLabel"
             android:textColor="#ffffffff" />
 
         <Space
