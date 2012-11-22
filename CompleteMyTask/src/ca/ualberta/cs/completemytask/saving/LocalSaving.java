@@ -143,7 +143,7 @@ public class LocalSaving {
 			// Set local id
 			photo.setLocalId(insertId);
 
-			Log.v(TAG, "Insert");
+			Log.v(TAG, "Insert: " + photo.getLocalId());
 		} else {
 			String strFilter = SQLiteHelper.COLUMN_ID + "="
 					+ photo.getLocalId();
@@ -185,17 +185,18 @@ public class LocalSaving {
 				SQLiteHelper.COLUMN_TASK_NEEDS_COMMENT,
 				SQLiteHelper.COLUMN_TASK_NEEDS_PHOTO,
 				SQLiteHelper.COLUMN_TASK_NEEDS_AUDIO, SQLiteHelper.COLUMN_USER,
-				SQLiteHelper.COLUMN_EMAIL };
+				SQLiteHelper.COLUMN_EMAIL, SQLiteHelper.COLUMN_TIME };
 
 		String[] col_comments = { SQLiteHelper.COLUMN_ID,
 				SQLiteHelper.COLUMN_PARENT_ID, SQLiteHelper.COLUMN_GLOBALID,
 				SQLiteHelper.COLUMN_PARENT_GLOBALID,
-				SQLiteHelper.COLUMN_COMMENT, SQLiteHelper.COLUMN_USER };
+				SQLiteHelper.COLUMN_COMMENT, SQLiteHelper.COLUMN_USER, 
+				SQLiteHelper.COLUMN_TIME };
 
 		String[] col_photos = { SQLiteHelper.COLUMN_ID,
 				SQLiteHelper.COLUMN_PARENT_ID, SQLiteHelper.COLUMN_GLOBALID,
 				SQLiteHelper.COLUMN_PARENT_GLOBALID, SQLiteHelper.COLUMN_PHOTO,
-				SQLiteHelper.COLUMN_USER };
+				SQLiteHelper.COLUMN_USER, SQLiteHelper.COLUMN_TIME };
 
 		// Get Tasks
 		Cursor cursor = database.query(SQLiteHelper.TABLE_TASKS, col, null,
@@ -212,8 +213,8 @@ public class LocalSaving {
 			Cursor cursor_comment = database.query(SQLiteHelper.TABLE_COMMENTS,
 					col_comments, SQLiteHelper.COLUMN_PARENT_ID + " = ?",
 					new String[] { String.valueOf(task.getLocalId()) }, null,
-					null, SQLiteHelper.COLUMN_ID +" ASC");
-
+					null, SQLiteHelper.COLUMN_TIME +" ASC");
+			
 			cursor_comment.moveToFirst();
 			while (!cursor_comment.isAfterLast()) {
 				Comment comment = cursorToComment(cursor_comment);
@@ -223,13 +224,13 @@ public class LocalSaving {
 			}
 
 			cursor_comment.close();
-
+			
 			// Get Photos for Task
 			Cursor cursor_photo = database.query(SQLiteHelper.TABLE_PHOTOS,
 					col_photos, SQLiteHelper.COLUMN_PARENT_ID + " = ?",
 					new String[] { String.valueOf(task.getLocalId()) }, null,
-					null, SQLiteHelper.COLUMN_ID +" ASC");
-
+					null, SQLiteHelper.COLUMN_TIME +" ASC");
+			
 			cursor_photo.moveToFirst();
 			while (!cursor_photo.isAfterLast()) {
 				MyPhoto photo = cursorToPhoto(cursor_photo);
@@ -260,7 +261,7 @@ public class LocalSaving {
 				(cursor.getLong(6) == 1), (cursor.getLong(7) == 1));
 
 		task.setLocal(true);
-		task.setPublic(cursor.getString(1) != null);
+		task.setPublic(task.getId() != 0);
 
 		User user = new User();
 		user.setUserName(cursor.getString(8));

@@ -129,6 +129,7 @@ public class ViewImageActivity extends Activity {
 
 		image.setUser(user);
 		image.setParentId(task.getId());
+		image.setLocalParentId(task.getLocalId());
 
 		sync(image);
 	}
