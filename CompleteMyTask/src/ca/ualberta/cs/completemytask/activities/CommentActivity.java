@@ -3,6 +3,7 @@ package ca.ualberta.cs.completemytask.activities;
 import ca.ualberta.cs.completemytask.R;
 import ca.ualberta.cs.completemytask.background.BackgroundTask;
 import ca.ualberta.cs.completemytask.background.HandleInBackground;
+import ca.ualberta.cs.completemytask.database.DatabaseManager;
 import ca.ualberta.cs.completemytask.saving.LocalSaving;
 import ca.ualberta.cs.completemytask.settings.Settings;
 import ca.ualberta.cs.completemytask.userdata.Comment;
@@ -49,17 +50,32 @@ public class CommentActivity extends Activity {
 		
 		commentsTextView = (TextView) findViewById(R.id.commentsView);
 		
-		int numberOfComments = task.getNumberOfComments();
-		
-		for (int i = 0; i < numberOfComments; i++) {
-			
-			Comment comment = task.getCommentAt(i);
-			User user = comment.getUser();
-			
-			String commentsString = commentsTextView.getText().toString();
-			commentsString +=  user.getUserName() + "\n\n\t" + comment.getContent() + "\n\n\n";
-			commentsTextView.setText(commentsString);
-		}
+		BackgroundTask bg = new BackgroundTask();	
+    	bg.runInBackGround(new HandleInBackground() {
+    		public void onPreExecute() {
+    		}
+    		
+    		public void onPostExecute(int response) {
+    			int numberOfComments = task.getNumberOfComments();
+    			
+    			for (int i = 0; i < numberOfComments; i++) {
+    				
+    				Comment comment = task.getCommentAt(i);
+    				User user = comment.getUser();
+    				
+    				String commentsString = commentsTextView.getText().toString();
+    				commentsString +=  user.getUserName() + "\n\n\t" + comment.getContent() + "\n\n\n";
+    				commentsTextView.setText(commentsString);
+    			}
+    		}
+    		
+    		public void onUpdate(int response) {
+    		}
+    		
+    		public boolean handleInBackground(Object o) {	
+				return DatabaseManager.getInstance().syncDatabaseComments(task);
+    		}
+    	});
 		
 		commentEditText = (EditText) findViewById(R.id.Comment);
 		commentEditText.setOnEditorActionListener(new EditText.OnEditorActionListener() {
@@ -129,7 +145,7 @@ public class CommentActivity extends Activity {
     		}
     		
     		public boolean handleInBackground(Object o) {
-    			//DatabaseManager.getInstance().syncData(comment);
+    			DatabaseManager.getInstance().syncComment(comment);
 				task.addComment(comment);
 				
 				if (task.isLocal()) {
