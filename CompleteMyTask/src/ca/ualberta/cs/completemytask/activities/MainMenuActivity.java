@@ -4,6 +4,7 @@ import ca.ualberta.cs.completemytask.R;
 import ca.ualberta.cs.completemytask.background.BackgroundTask;
 import ca.ualberta.cs.completemytask.background.HandleInBackground;
 import ca.ualberta.cs.completemytask.database.DatabaseManager;
+import ca.ualberta.cs.completemytask.notification.NotificationService;
 import ca.ualberta.cs.completemytask.saving.LocalSaving;
 import ca.ualberta.cs.completemytask.settings.Settings;
 import ca.ualberta.cs.completemytask.userdata.Task;
@@ -70,6 +71,8 @@ public class MainMenuActivity extends Activity{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
+        
+        startService(new Intent(NotificationService.class.getName()));
         
         this.loadingView = new LoadingView(this, MAIN_MENU_LAYOUT,
         		"Syncing with Database");
