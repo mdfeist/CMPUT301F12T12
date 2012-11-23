@@ -73,7 +73,8 @@ public class CommentActivity extends Activity {
     		}
     		
     		public boolean handleInBackground(Object o) {	
-				return DatabaseManager.getInstance().syncDatabaseComments(task);
+    			DatabaseManager.getInstance().getComments(task);
+				return true;
     		}
     	});
 		
