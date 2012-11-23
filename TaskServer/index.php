@@ -107,6 +107,62 @@
                 $response["error_msg"] = "Unable to create task";
                 echo json_encode($response);
             }
+        } else if ($action == 'list_comments') {
+            $taskid = $_POST['taskid'];
+
+            $comments = listComments($taskid);
+            
+            $response["success"] = 1;
+            $response["comments"] = $comments;
+            echo json_encode($response);
+            
+        } else if ($action == 'sync_comment') {
+            
+            $taskid = $_POST['taskid'];
+            $username = $_POST['username'];
+            $comment = $_POST['content'];
+            $date_created = $_POST['date_created'];
+
+            
+            $id = createComment($taskid, $username, $comment, $date_created);
+            
+            if ($id) {
+                $response["success"] = 1;
+                $response["id"] = $id;
+                echo json_encode($response);
+            } else {
+                $response["error"] = 1;
+                $response["error_msg"] = "Unable to create task";
+                echo json_encode($response);
+            }
+        } else if ($action == 'list_photos') {
+            $taskid = $_POST['taskid'];
+            
+            $photos = listPhotos($taskid);
+            
+            $response["success"] = 1;
+            $response["photos"] = $photos;
+            echo json_encode($response);
+            
+        } else if ($action == 'sync_photo') {
+            
+            $taskid = $_POST['taskid'];
+            $username = $_POST['username'];
+            $photo= $_POST['content'];
+            $date_created = $_POST['date_created'];
+            
+            
+            $id = createPhoto($taskid, $username, $photo, $date_created);
+            
+            if ($id) {
+                $response["success"] = 1;
+                $response["id"] = $id;
+                echo json_encode($response);
+            } else {
+                $response["error"] = 1;
+                $response["error_msg"] = "Unable to create task";
+                echo json_encode($response);
+            }
         } else {
             echo "Invalid Request";
         }

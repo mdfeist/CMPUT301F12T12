@@ -125,6 +125,75 @@
         return false;
 
     }
+    
+    function listComments($taskid) {
+        global $mysqli;
+        
+        $query = sprintf("SELECT * FROM comments WHERE taskid = '%s';", $taskid);
+        $res = $mysqli->query($query);
+        
+        $comments = array();
+        while($row = $res->fetch_assoc()) {
+            $comments[] = $row;
+        }
+        
+        return $comments;
+    }
+    
+    function createComment($taskid, $username, $comment, $date_created) {
+        
+        global $mysqli;
+        
+        $date_created = date( 'Y-m-d H:i:s' );
+        
+        $query = sprintf("INSERT INTO comments (taskid, username, comment, date_created) VALUES('%s','%s', '%s', '%s');", $taskid, $username, $comment, $date_created);
+        
+        $res = $mysqli->query($query);
+        
+        if ($res) {
+            return $mysqli->insert_id;
+        } else {
+            return false;
+        }
+        
+        return false;
+        
+    }
+    
+    function listPhotos($taskid) {
+        global $mysqli;
+        
+        $query = sprintf("SELECT * FROM photos WHERE taskid = '%s';", $taskid);
+        $res = $mysqli->query($query);
+        
+        $comments = array();
+        while($row = $res->fetch_assoc()) {
+            $comments[] = $row;
+        }
+        
+        return $comments;
+    }
+    
+    function createPhoto($taskid, $username, $photo, $date_created) {
+        
+        global $mysqli;
+        
+        $date_created = date( 'Y-m-d H:i:s' );
+        
+        $query = sprintf("INSERT INTO photos (taskid, username, photo, date_created) VALUES('%s','%s', '%s', '%s');", $taskid, $username, $photo, $date_created);
+        
+        $res = $mysqli->query($query);
+        
+        if ($res) {
+            return $mysqli->insert_id;
+        } else {
+            return false;
+        }
+        
+        return false;
+        
+    }
+
 
     
     ?>
