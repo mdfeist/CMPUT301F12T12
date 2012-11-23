@@ -33,7 +33,8 @@ public class DatabaseManager {
 	// /////////////////////////////////////////////
 
 	private static final String TAG = "DatabaseManager";
-	private static final String URL = "http://10.0.2.2:8888/TaskServer/";
+	//private static final String URL = "http://10.0.2.2:8888/TaskServer/";
+	private static final String URL = "http://cmput301t12.net78.net/";
 	private static DatabaseManager instance = null;
 
 	private static String login_tag = "login";
