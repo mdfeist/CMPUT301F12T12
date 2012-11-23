@@ -43,6 +43,8 @@ public class DatabaseManager {
 	private static String sync_task_tag = "sync_task";
 	private static String list_comments_tag = "list_comments";
 	private static String sync_comment_tag = "sync_comment";
+	private static String list_photos_tag = "list_photos";
+	private static String sync_photo_tag = "sync_photo";
 
 	public static final String KEY_SUCCESS = "success";
 	public static final String KEY_ERROR = "error";
@@ -54,11 +56,13 @@ public class DatabaseManager {
 
 	private Map<Long, Task> tasks;
 	private Map<Long, Comment> comments;
+	private Map<Long, MyPhoto> photos;
 
 	protected DatabaseManager() {
 		this.jsonParser = new JSONParser();
 		this.tasks = new HashMap<Long, Task>();
 		this.comments = new HashMap<Long, Comment>();
+		this.photos = new HashMap<Long, MyPhoto>();
 	}
 
 	/**
@@ -248,6 +252,63 @@ public class DatabaseManager {
 		}
 	}
 
+	public void getPhotos(Task task) {
+
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("action", list_photos_tag));
+		params.add(new BasicNameValuePair("taskid", String.valueOf(task.getId())));
+		JSONObject json = jsonParser.getJSONFromUrl(URL, params);
+
+		Log.v("JSON", json.toString());
+
+		// check for login response
+		try {
+			if (json.getString(DatabaseManager.KEY_SUCCESS) != null) {
+				String res = json.getString(DatabaseManager.KEY_SUCCESS);
+				if (Integer.parseInt(res) == 1) {
+					JSONArray photosArray = json.getJSONArray("photos");
+
+					for (int i = 0; i < photosArray.length(); i++) {
+						JSONObject photo = photosArray.getJSONObject(i);
+
+						int id = photo.getInt("id");
+
+						if (!this.photos.containsKey(Long.valueOf((long) id))) {
+							String username = photo.getString("username");
+							String content = photo.getString("photo");
+							String date_created = photo.getString("date_created");
+
+							User user = new User(username);
+
+							MyPhoto p = new MyPhoto();
+							p.setUser(user);
+							p.setId(id);
+							p.setParentId(task.getId());
+							p.setImageFromString(content);
+							
+							task.addPhoto(p);
+
+							this.photos.put(Long.valueOf(p.getId()), p);
+						}
+					}
+				} else {
+
+					if (json.getString(DatabaseManager.KEY_ERROR) != null) {
+						String res_error = json
+								.getString(DatabaseManager.KEY_ERROR);
+						if (Integer.parseInt(res_error) == 1) {
+							String error = json
+									.getString(DatabaseManager.KEY_ERROR_MSG);
+							Log.e(TAG, error);
+						}
+					}
+				}
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void syncTask(Task task) {
 
 		String username = "";
@@ -383,6 +444,69 @@ public class DatabaseManager {
 			}
 		}
 	}
+	
+	public void syncPhoto(MyPhoto photo) {
+
+		if (photo.getId() == 0) {
+			String username = "";
+
+			User user = photo.getUser();
+			if (user != null) {
+				username = user.getUserName();
+			}
+
+			long taskid = photo.getParentId();
+
+			String content = photo.getImageAsString();
+
+			String date_created = "";
+
+			// Building Parameters
+			List<NameValuePair> params = new ArrayList<NameValuePair>();
+			params.add(new BasicNameValuePair("action", sync_photo_tag));
+			params.add(new BasicNameValuePair("taskid", String.valueOf(taskid)));
+			params.add(new BasicNameValuePair("username", username));
+			params.add(new BasicNameValuePair("content", content));
+			params.add(new BasicNameValuePair("date_created", date_created));
+
+			JSONObject json = jsonParser.getJSONFromUrl(URL, params);
+
+			Log.v("JSON", json.toString());
+
+			// check for login response
+			try {
+				if (json.getString(DatabaseManager.KEY_SUCCESS) != null) {
+					String res = json.getString(DatabaseManager.KEY_SUCCESS);
+					if (Integer.parseInt(res) == 1) {
+						int id = json.getInt("id");
+						photo.setId((long) id);
+
+						LocalSaving saver = new LocalSaving();
+						saver.open();
+						saver.savePhoto(photo);
+						saver.close();
+
+						this.photos.put(Long.valueOf(photo.getId()),
+								photo);
+
+					} else {
+
+						if (json.getString(DatabaseManager.KEY_ERROR) != null) {
+							String res_error = json
+									.getString(DatabaseManager.KEY_ERROR);
+							if (Integer.parseInt(res_error) == 1) {
+								String error = json
+										.getString(DatabaseManager.KEY_ERROR_MSG);
+								Log.e(TAG, error);
+							}
+						}
+					}
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
 	/**
 	 * Syncs a task based on it's location in the TaskManager.
@@ -447,12 +571,5 @@ public class DatabaseManager {
 		testSyncComplete = true;
 
 		return finished;
-	}
-	
-	public boolean syncDatabaseComments(Task task) {
-		
-		this.getComments(task);
-		
-		return true;
 	}
 }

@@ -5,6 +5,7 @@ import java.io.File;
 import ca.ualberta.cs.completemytask.R;
 import ca.ualberta.cs.completemytask.background.BackgroundTask;
 import ca.ualberta.cs.completemytask.background.HandleInBackground;
+import ca.ualberta.cs.completemytask.database.DatabaseManager;
 import ca.ualberta.cs.completemytask.saving.LocalSaving;
 import ca.ualberta.cs.completemytask.settings.Settings;
 import ca.ualberta.cs.completemytask.userdata.ImageAdapter;
@@ -21,7 +22,7 @@ import android.provider.MediaStore;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.util.Log;
+//import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Gallery;
@@ -35,7 +36,7 @@ import android.widget.ImageView;
 public class ViewImageActivity extends Activity {
 
 	private static final int CAPTURE_IMAGE_REQUEST_CODE = 100;
-	private static final String TAG = "ViewImageActivity";
+	//private static final String TAG = "ViewImageActivity";
 	Gallery photoGallery;
 	ImageAdapter adapter;
 	ImageView imagePreview;
@@ -61,16 +62,32 @@ public class ViewImageActivity extends Activity {
 		photoGallery = (Gallery) findViewById(R.id.ImageGallery);
 		imagePreview = (ImageView) findViewById(R.id.TaskImageView);
 		
-		if (task.getNumberOfPhotos() > 0) {
-			imagePreview.setImageBitmap(task.getPhotoAt(0).getContent());
-		}
-		
 		adapter = new ImageAdapter(this, task);
 
 		photoGallery.setAdapter(adapter);
 		adapter.notifyDataSetChanged();
 		
-		Log.v(TAG, "# of Images: " + task.getNumberOfPhotos());
+		BackgroundTask bg = new BackgroundTask();	
+    	bg.runInBackGround(new HandleInBackground() {
+    		public void onPreExecute() {
+    		}
+    		
+    		public void onPostExecute(int response) {
+    			if (task.getNumberOfPhotos() > 0) {
+    				imagePreview.setImageBitmap(task.getPhotoAt(0).getContent());
+    			}
+    			
+    			adapter.notifyDataSetChanged();
+    		}
+    		
+    		public void onUpdate(int response) {
+    		}
+    		
+    		public boolean handleInBackground(Object o) {	
+    			DatabaseManager.getInstance().getPhotos(task);
+				return true;
+    		}
+    	});
 	}
 
 	@Override
@@ -154,7 +171,7 @@ public class ViewImageActivity extends Activity {
     		}
     		
     		public boolean handleInBackground(Object o) {
-    			//DatabaseManager.getInstance().syncData(image);
+    			DatabaseManager.getInstance().syncPhoto(image);
 				task.addPhoto(image);
 				
 				if (task.isLocal()) {
