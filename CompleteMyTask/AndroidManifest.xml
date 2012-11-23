@@ -6,9 +6,13 @@
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="15" />
-    
+
     <uses-permission android:name="android.permission.INTERNET" />
-	<permission android:name="android.permission.STATUS_BAR_SERVICE" android:protectionLevel="signature" />
+
+    <permission
+        android:name="android.permission.STATUS_BAR_SERVICE"
+        android:protectionLevel="signature" />
+
     <uses-feature android:name="android.hardware.camera" />
 
     <application
@@ -74,6 +78,12 @@
             </intent-filter>
         </service>
 
+        <receiver android:name=".notification.NotificationReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <category android:name="android.intent.category.HOME" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

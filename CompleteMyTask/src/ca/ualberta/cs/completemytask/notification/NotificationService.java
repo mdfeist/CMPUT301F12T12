@@ -48,7 +48,7 @@ public class NotificationService extends Service {
 	public void onCreate() {
 		super.onCreate();
 		Log.i(TAG, "Service creating");
-		
+		showNotification();
 		timer = new Timer("UpdateTimer");
 		//timer.schedule(updateTask, 1000L, 60 * 1000L);
 	}

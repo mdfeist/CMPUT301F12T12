@@ -72,7 +72,7 @@ public class MainMenuActivity extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
         
-        startService(new Intent(NotificationService.class.getName()));
+        //startService(new Intent(NotificationService.class.getName()));
         
         this.loadingView = new LoadingView(this, MAIN_MENU_LAYOUT,
         		"Syncing with Database");
