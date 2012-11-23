@@ -76,7 +76,7 @@ public class NotificationService extends Service {
     	// Build notification
     	// Actions are just fake
     	Notification noti = new Notification.Builder(this)
-    	        .setContentTitle("New mail from " + "test@gmail.com")
+    	        .setContentTitle("Task Completed")
     	        .setContentText("Subject")
     	        .setSmallIcon(R.drawable.checkbox_on_background)
     	        .setContentIntent(pIntent)
