@@ -124,6 +124,7 @@ public class CommentActivity extends Activity {
 			}
 			
 			comment.setUser(user);
+			comment.setLocalParentId(task.getLocalId());
 			comment.setParentId(task.getId());
 			sync(comment);
 			
@@ -146,7 +147,11 @@ public class CommentActivity extends Activity {
     		}
     		
     		public boolean handleInBackground(Object o) {
-    			DatabaseManager.getInstance().syncComment(comment);
+    			
+    			if (task.isPublic()) {
+    				DatabaseManager.getInstance().syncComment(comment);
+    			}
+    			
 				task.addComment(comment);
 				
 				if (task.isLocal()) {

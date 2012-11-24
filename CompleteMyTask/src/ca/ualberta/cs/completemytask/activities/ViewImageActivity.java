@@ -145,9 +145,8 @@ public class ViewImageActivity extends Activity {
 		}
 
 		image.setUser(user);
-		image.setParentId(task.getId());
 		image.setLocalParentId(task.getLocalId());
-
+		image.setParentId(task.getId());
 		sync(image);
 	}
 
@@ -171,7 +170,10 @@ public class ViewImageActivity extends Activity {
     		}
     		
     		public boolean handleInBackground(Object o) {
-    			DatabaseManager.getInstance().syncPhoto(image);
+    			
+    			if (task.isPublic()) {
+    				DatabaseManager.getInstance().syncPhoto(image);
+    			}
 				task.addPhoto(image);
 				
 				if (task.isLocal()) {
