@@ -70,7 +70,6 @@ public class DatabaseManager {
 
 	/**
 	 * Returns the singleton's instance.
-	 * 
 	 * @return instances
 	 */
 	public static DatabaseManager getInstance() {
