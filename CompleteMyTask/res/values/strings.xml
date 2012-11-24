@@ -7,6 +7,7 @@
 
     <!-- Buttons -->
     <string name="AddTaskButtonLabel">Add Task</string>
+    <string name="EditTaskButtonLabel">Edit Task</string>
     <string name="NewUserButtonLabel">New User</string>
     <string name="ShareTaskButtonLabel">Share</string>
     <string name="NextButtonLabel">Next</string>
@@ -14,6 +15,7 @@
     <string name="BackButtonLabel">Back</string>
     <string name="SaveButtonLabel">Save</string>
     <string name="CloseButtonLabel">Close</string>
+    <string name="CompleteButtonLabel">Complete</string>
     <string name="CreateButtonLabel">Create</string>
     <string name="LoginButtonLabel">Login</string>
     <string name="SendButtonLabel">Send</string>

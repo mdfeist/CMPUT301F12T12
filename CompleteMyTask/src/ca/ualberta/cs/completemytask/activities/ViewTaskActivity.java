@@ -8,105 +8,69 @@ import ca.ualberta.cs.completemytask.userdata.TaskManager;
 import ca.ualberta.cs.completemytask.userdata.User;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.view.Menu;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Space;
+import android.widget.EditText;
 import android.widget.TextView;
 
 /**
  * This class handles the ViewTask activity
  * 
  * @author Devon Waldon, Michael Feist and Ian Watts
- *
+ * 
  */
 
 public class ViewTaskActivity extends Activity {
 
 	// Position of Task in TaskManager
 	private int position;
-	
-	private Button editTask;
-	private Space spacer;
-	private int spacerIndex;
-	
+
 	// View IDs
 	private static final int EDIT_TASK = 1;
 	private static final int VIEW_IMAGE = 2;
 	private static final int VIEW_COMMENTS = 3;
 	private static final int VIEW_AUDIO = 4;
-	
+
 	public LocalSaving saver;
-	
+
 	/**
 	 * Sets up the task view by populating text fields with relevant data and
 	 * adding images and audio to the respective galleries
 	 * 
 	 */
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_task);
-        
-        saver = new LocalSaving();
-        
-        position = TaskManager.getInstance().getCurrentTaskPosition();
-    	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_view_task);
+
+		saver = new LocalSaving();
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+
+		position = TaskManager.getInstance().getCurrentTaskPosition();
+
 		if (position >= 0) {
 			Task task = TaskManager.getInstance().getTaskAt(position);
-			
+
 			User taskUser = task.getUser();
-			
-			if (taskUser.getUserName().equals(Settings.getInstance().getUserName())) {
-				editTask = new Button(this);
-				editTask.setText("Edit Task");
-				editTask.setBackgroundResource(R.drawable.button_selector);
-				editTask.setTextColor(Color.WHITE);
 
-				editTask.setOnClickListener(new View.OnClickListener() {
-					public void onClick(View v) {
-						editTask(v);
-					}
-				});
-
-				spacer = (Space) findViewById(R.id.EditTaskSpacer);
-
-				editTask.setLayoutParams(spacer.getLayoutParams());
-
-				ViewGroup parent = (ViewGroup) spacer.getParent();
-				spacerIndex = parent.indexOfChild(spacer);
-				parent.removeView(spacer);
-
-				parent.addView(editTask, spacerIndex);
+			Button editTask = (Button) findViewById(R.id.EditTaskButton);
+			if (taskUser.getUserName().equals(
+					Settings.getInstance().getUserName())) {
+				editTask.setClickable(true);
+				editTask.setAlpha(1.0f);
+			} else {
+				editTask.setClickable(false);
+				editTask.setAlpha(0.0f);
 			}
-		}
-    }
-    
-    @Override
-    public void onResume() {
-    	super.onResume();
-    	
-    	position = TaskManager.getInstance().getCurrentTaskPosition();
-    	
-		if (position >= 0) {
-			Task task = TaskManager.getInstance().getTaskAt(position);
-			
-			User taskUser = task.getUser();
-			
-			if (!taskUser.getUserName().equals(Settings.getInstance().getUserName())) {
-				if (editTask != null) {
-					ViewGroup parent = (ViewGroup) editTask.getParent();
-					
-					if (parent != null) {
-						parent.removeView(editTask);
-						parent.addView(spacer, spacerIndex);
-					}
-				}
-			}
-			
+
 			TextView taskName = (TextView) findViewById(R.id.TaskName);
 			taskName.setText(task.getName());
 
@@ -134,66 +98,152 @@ public class ViewTaskActivity extends Activity {
 			TextView taskRequirements = (TextView) findViewById(R.id.TaskRequirements);
 			taskRequirements.setText(requires);
 		}
-    }
-    
-    public void editTask(View view) {
-    	Intent intent = new Intent(view.getContext(), AddTaskActivity.class);
-    	startActivityForResult(intent, EDIT_TASK);
-    }
-    
-    /**
-     * Called to view the comments for a particular task
-     * @param A view
-     */
-    public void viewComments(View view){
-    	Intent intent = new Intent(this, CommentActivity.class);
-    	startActivityForResult(intent, VIEW_COMMENTS);
-    }
-    
-    /**
-     * Called to view the images for a particular task
-     * @param A view
-     */
-    public void viewImage(View view){
-    	Intent intent = new Intent(this, ViewImageActivity.class);
-    	startActivityForResult(intent, VIEW_IMAGE);
-    }
-    
-    /**
-     * Called to view the audio for a particular task
-     * @param A view
-     */
-    public void viewAudio(View view){
-    	Intent intent = new Intent(this, ViewAudioActivity.class);
-    	startActivityForResult(intent, VIEW_AUDIO);
-    }
+	}
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_view_task, menu);
-        return true;
-    }
-    
-    /**
-     * Called when an intent is finished and data is returned.
-     */
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-    	// If task added save and update the list view
-        if(requestCode == EDIT_TASK) {
-            if(resultCode == RESULT_OK && intent != null) {
-            	
-            }
-        }
-    }
-    
-    
-    /**
-     * Closes the task
-     * 
-     * @param view
-     */
-    public void close(View view) {
-    	this.finish();
-    }
+	private void showComplete(Task task) {
+
+		AlertDialog.Builder helpBuilder = new AlertDialog.Builder(this);
+		helpBuilder.setTitle("Complete Task");
+		helpBuilder.setMessage("Enter a message:");
+		final EditText input = new EditText(this);
+		input.setSingleLine();
+		input.setText("");
+		helpBuilder.setView(input);
+		helpBuilder.setPositiveButton("Send",
+				new DialogInterface.OnClickListener() {
+
+					public void onClick(DialogInterface dialog, int which) {
+						// Do nothing but close the dialog
+					}
+				});
+
+		helpBuilder.setNegativeButton("Cancel",
+				new DialogInterface.OnClickListener() {
+
+					public void onClick(DialogInterface dialog, int which) {
+						// Do nothing
+						
+					}
+				});
+
+		// Remember, create doesn't show the dialog
+		AlertDialog helpDialog = helpBuilder.create();
+		helpDialog.show();
+
+	}
+
+	private void showNotComplete(String message) {
+
+		AlertDialog.Builder helpBuilder = new AlertDialog.Builder(this);
+		helpBuilder.setTitle("Unable To Complete");
+		helpBuilder.setMessage("Task still needs " + message + ".");
+
+		helpBuilder.setNegativeButton("Back",
+				new DialogInterface.OnClickListener() {
+
+					public void onClick(DialogInterface dialog, int which) {
+						// Do nothing
+					}
+				});
+
+		// Remember, create doesn't show the dialog
+		AlertDialog helpDialog = helpBuilder.create();
+		helpDialog.show();
+
+	}
+
+	public void complete(View view) {
+
+		Task task = TaskManager.getInstance().getTaskAt(position);
+
+		if (task.needsComment()) {
+			if (task.getNumberOfComments() == 0) {
+				showNotComplete("Comment");
+				return;
+			}
+		}
+
+		if (task.needsPhoto()) {
+			if (task.getNumberOfPhotos() == 0) {
+				showNotComplete("Photo");
+				return;
+			}
+		}
+
+		if (task.needsAudio()) {
+			if (task.getNumberOfAudios() == 0) {
+				showNotComplete("Audio");
+				return;
+			}
+		}
+		
+		showComplete(task);
+	}
+
+	public void editTask(View view) {
+		Intent intent = new Intent(view.getContext(), AddTaskActivity.class);
+		startActivityForResult(intent, EDIT_TASK);
+	}
+
+	/**
+	 * Called to view the comments for a particular task
+	 * 
+	 * @param A
+	 *            view
+	 */
+	public void viewComments(View view) {
+		Intent intent = new Intent(this, CommentActivity.class);
+		startActivityForResult(intent, VIEW_COMMENTS);
+	}
+
+	/**
+	 * Called to view the images for a particular task
+	 * 
+	 * @param A
+	 *            view
+	 */
+	public void viewImage(View view) {
+		Intent intent = new Intent(this, ViewImageActivity.class);
+		startActivityForResult(intent, VIEW_IMAGE);
+	}
+
+	/**
+	 * Called to view the audio for a particular task
+	 * 
+	 * @param A
+	 *            view
+	 */
+	public void viewAudio(View view) {
+		Intent intent = new Intent(this, ViewAudioActivity.class);
+		startActivityForResult(intent, VIEW_AUDIO);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.activity_view_task, menu);
+		return true;
+	}
+
+	/**
+	 * Called when an intent is finished and data is returned.
+	 */
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode,
+			Intent intent) {
+		// If task added save and update the list view
+		if (requestCode == EDIT_TASK) {
+			if (resultCode == RESULT_OK && intent != null) {
+
+			}
+		}
+	}
+
+	/**
+	 * Closes the task
+	 * 
+	 * @param view
+	 */
+	public void close(View view) {
+		this.finish();
+	}
 }
