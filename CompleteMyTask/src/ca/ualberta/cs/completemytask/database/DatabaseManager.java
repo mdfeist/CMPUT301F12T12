@@ -34,7 +34,7 @@ public class DatabaseManager {
 
 	private static final String TAG = "DatabaseManager";
 	//private static final String URL = "http://10.0.2.2:8888/TaskServer/";
-	 private static final String URL = "http://cmput301t12.net78.net/";
+	private static final String URL = "http://cmput301t12.net78.net/";
 	private static DatabaseManager instance = null;
 
 	private static String login_tag = "login";
@@ -48,6 +48,8 @@ public class DatabaseManager {
 	private static String list_photos_tag = "list_photos";
 	private static String sync_photo_tag = "sync_photo";
 	private static String complete_task_tag = "complete_task";
+	private static String list_notifications_tag = "list_notifications";
+	private static String delete_notification_tag = "delete_notification";
 
 	public static final String KEY_SUCCESS = "success";
 	public static final String KEY_ERROR = "error";
@@ -124,7 +126,25 @@ public class DatabaseManager {
 		params.add(new BasicNameValuePair("message", message));
 		jsonParser.getJSONFromUrl(URL, params);
 	}
-
+	
+	public JSONObject getNotifications(String username) {
+		// Building Parameters
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("action", list_notifications_tag));
+		params.add(new BasicNameValuePair("username", username));
+		JSONObject json = jsonParser.getJSONFromUrl(URL, params);
+		// return json
+		//Log.e("JSON", json.toString());
+		return json;
+	}
+	
+	public void deleteNotifications(String id) {
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("action", delete_notification_tag));
+		params.add(new BasicNameValuePair("id", id));
+		jsonParser.getJSONFromUrl(URL, params);
+	}
+	
 	public void setNumberOfAttachments(Task task) {
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("action", list_tasks_attachments_tag));
