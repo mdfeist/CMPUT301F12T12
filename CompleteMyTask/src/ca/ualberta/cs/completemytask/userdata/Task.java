@@ -33,6 +33,10 @@ public class Task extends UserData {
 	private List<Comment> comments;
 	private List<MyPhoto> photos;
 	private List<MyAudio> audios;
+	
+	private int numOfCommentsOnServer;
+	private int numOfPhotosOnServer;
+	private int numOfAudiosOnServer;
 
 	public Task() {
 		this("New Task", "No Description");
@@ -55,7 +59,27 @@ public class Task extends UserData {
 		this.photos = new ArrayList<MyPhoto>();
 		this.audios = new ArrayList<MyAudio>();
 		
-
+		this.numOfCommentsOnServer = 0;
+		this.numOfPhotosOnServer = 0;
+		this.numOfAudiosOnServer = 0;
+	}
+	
+	public void setNumberOfAttachments(int comments, int photos, int audios) {
+		this.numOfCommentsOnServer = comments;
+		this.numOfPhotosOnServer = photos;
+		this.numOfAudiosOnServer = audios;
+	}
+	
+	public int getNumberOfCommentsOnServer() {
+		return this.numOfCommentsOnServer;
+	}
+	
+	public int getNumberOfPhotosOnServer() {
+		return this.numOfPhotosOnServer;
+	}
+	
+	public int getNumberOfAudiosOnServer() {
+		return this.numOfAudiosOnServer;
 	}
 	
 	/**

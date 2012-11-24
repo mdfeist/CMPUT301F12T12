@@ -1,6 +1,9 @@
 package ca.ualberta.cs.completemytask.activities;
 
 import ca.ualberta.cs.completemytask.R;
+import ca.ualberta.cs.completemytask.background.BackgroundTask;
+import ca.ualberta.cs.completemytask.background.HandleInBackground;
+import ca.ualberta.cs.completemytask.database.DatabaseManager;
 import ca.ualberta.cs.completemytask.saving.LocalSaving;
 import ca.ualberta.cs.completemytask.settings.Settings;
 import ca.ualberta.cs.completemytask.userdata.Task;
@@ -48,6 +51,26 @@ public class ViewTaskActivity extends Activity {
 		setContentView(R.layout.activity_view_task);
 
 		saver = new LocalSaving();
+		position = TaskManager.getInstance().getCurrentTaskPosition();
+
+		BackgroundTask bg = new BackgroundTask();
+		bg.runInBackGround(new HandleInBackground() {
+			public void onPreExecute() {
+			}
+
+			public void onPostExecute(int response) {
+
+			}
+
+			public void onUpdate(int response) {
+			}
+
+			public boolean handleInBackground(Object o) {
+				Task task = TaskManager.getInstance().getTaskAt(position);
+				DatabaseManager.getInstance().setNumberOfAttachments(task);
+				return true;
+			}
+		});
 	}
 
 	@Override
@@ -63,12 +86,21 @@ public class ViewTaskActivity extends Activity {
 
 			Button editTask = (Button) findViewById(R.id.EditTaskButton);
 			if (taskUser.getUserName().equals(
-					Settings.getInstance().getUserName())) {
+					Settings.getInstance().getUserName()) && !task.isComplete()) {
 				editTask.setClickable(true);
 				editTask.setAlpha(1.0f);
 			} else {
 				editTask.setClickable(false);
 				editTask.setAlpha(0.0f);
+			}
+			
+			Button completeTask = (Button) findViewById(R.id.CompleteButton);
+			if (task.isComplete()) {
+				completeTask.setClickable(false);
+				completeTask.setAlpha(0.0f);
+			} else {
+				completeTask.setClickable(true);
+				completeTask.setAlpha(1.0f);
 			}
 
 			TextView taskName = (TextView) findViewById(R.id.TaskName);
@@ -111,9 +143,39 @@ public class ViewTaskActivity extends Activity {
 		helpBuilder.setView(input);
 		helpBuilder.setPositiveButton("Send",
 				new DialogInterface.OnClickListener() {
-
+			
 					public void onClick(DialogInterface dialog, int which) {
-						// Do nothing but close the dialog
+						Task task = TaskManager.getInstance().getTaskAt(position);
+						task.setComplete(true);
+						
+						LocalSaving saver = new LocalSaving();
+						saver.open();
+						saver.saveTask(task);
+						saver.close();
+						
+						final long taskid = task.getId();
+						final String from = Settings.getInstance().getUserName();
+						final String to = task.getUser().getUserName();
+						final String message = input.getText().toString();
+						
+						BackgroundTask bg = new BackgroundTask();	
+				    	bg.runInBackGround(new HandleInBackground() {
+				    		public void onPreExecute() {
+				    		}
+				    		
+				    		public void onPostExecute(int response) {
+				    			
+				    		}
+				    		
+				    		public void onUpdate(int response) {
+				    		}
+				    		
+				    		public boolean handleInBackground(Object o) {
+				    			DatabaseManager.getInstance().completeTask(taskid, from, to, message);
+								return true;
+				    		}
+				    	});
+						
 					}
 				});
 
@@ -157,26 +219,27 @@ public class ViewTaskActivity extends Activity {
 		Task task = TaskManager.getInstance().getTaskAt(position);
 
 		if (task.needsComment()) {
-			if (task.getNumberOfComments() == 0) {
+			if ((task.getNumberOfComments() + task
+					.getNumberOfCommentsOnServer()) == 0) {
 				showNotComplete("Comment");
 				return;
 			}
 		}
 
 		if (task.needsPhoto()) {
-			if (task.getNumberOfPhotos() == 0) {
+			if ((task.getNumberOfPhotos() + task.getNumberOfPhotosOnServer()) == 0) {
 				showNotComplete("Photo");
 				return;
 			}
 		}
 
 		if (task.needsAudio()) {
-			if (task.getNumberOfAudios() == 0) {
+			if ((task.getNumberOfAudios() + task.getNumberOfAudiosOnServer()) == 0) {
 				showNotComplete("Audio");
 				return;
 			}
 		}
-		
+
 		showComplete(task);
 	}
 

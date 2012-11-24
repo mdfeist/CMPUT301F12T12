@@ -34,18 +34,20 @@ public class DatabaseManager {
 
 	private static final String TAG = "DatabaseManager";
 	//private static final String URL = "http://10.0.2.2:8888/TaskServer/";
-	private static final String URL = "http://cmput301t12.net78.net/";
+	 private static final String URL = "http://cmput301t12.net78.net/";
 	private static DatabaseManager instance = null;
 
 	private static String login_tag = "login";
 	private static String register_tag = "register";
 	private static String update_email_tag = "update_email";
+	private static String list_tasks_attachments_tag = "list_tasks_attachments";
 	private static String list_tasks_tag = "list_tasks";
 	private static String sync_task_tag = "sync_task";
 	private static String list_comments_tag = "list_comments";
 	private static String sync_comment_tag = "sync_comment";
 	private static String list_photos_tag = "list_photos";
 	private static String sync_photo_tag = "sync_photo";
+	private static String complete_task_tag = "complete_task";
 
 	public static final String KEY_SUCCESS = "success";
 	public static final String KEY_ERROR = "error";
@@ -113,6 +115,55 @@ public class DatabaseManager {
 		// return json
 		// Log.e("JSON", json.toString());
 	}
+	
+	public void completeTask(long taskid, String from, String to, String message) {
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("action", complete_task_tag));
+		params.add(new BasicNameValuePair("taskid", String.valueOf(taskid)));
+		params.add(new BasicNameValuePair("from", from));
+		params.add(new BasicNameValuePair("to", to));
+		params.add(new BasicNameValuePair("message", message));
+		jsonParser.getJSONFromUrl(URL, params);
+	}
+
+	public void setNumberOfAttachments(Task task) {
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("action", list_tasks_attachments_tag));
+		params.add(new BasicNameValuePair("taskid",
+				String.valueOf(task.getId())));
+		JSONObject json = jsonParser.getJSONFromUrl(URL, params);
+
+		Log.v("JSON", json.toString());
+
+		// check for response
+		try {
+			if (json.getString(DatabaseManager.KEY_SUCCESS) != null) {
+				String res = json.getString(DatabaseManager.KEY_SUCCESS);
+				if (Integer.parseInt(res) == 1) {
+					int num_comments = json.getInt("comments");
+					int num_photos = json.getInt("photos");
+					int num_audios = json.getInt("audios");
+					
+					task.setNumberOfAttachments(num_comments, num_photos, num_audios);
+					
+				} else {
+
+					if (json.getString(DatabaseManager.KEY_ERROR) != null) {
+						String res_error = json
+								.getString(DatabaseManager.KEY_ERROR);
+						if (Integer.parseInt(res_error) == 1) {
+							String error = json
+									.getString(DatabaseManager.KEY_ERROR_MSG);
+							Log.e(TAG, error);
+						}
+					}
+				}
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+	}
 
 	public boolean getTasks(int limit) {
 
@@ -126,7 +177,7 @@ public class DatabaseManager {
 
 		boolean finished = false;
 
-		// check for login response
+		// check for response
 		try {
 			if (json.getString(DatabaseManager.KEY_SUCCESS) != null) {
 				String res = json.getString(DatabaseManager.KEY_SUCCESS);
@@ -195,17 +246,18 @@ public class DatabaseManager {
 
 		return finished;
 	}
-	
+
 	public void getComments(Task task) {
 
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("action", list_comments_tag));
-		params.add(new BasicNameValuePair("taskid", String.valueOf(task.getId())));
+		params.add(new BasicNameValuePair("taskid",
+				String.valueOf(task.getId())));
 		JSONObject json = jsonParser.getJSONFromUrl(URL, params);
 
 		Log.v("JSON", json.toString());
 
-		// check for login response
+		// check for response
 		try {
 			if (json.getString(DatabaseManager.KEY_SUCCESS) != null) {
 				String res = json.getString(DatabaseManager.KEY_SUCCESS);
@@ -220,7 +272,8 @@ public class DatabaseManager {
 						if (!this.comments.containsKey(Long.valueOf((long) id))) {
 							String username = comment.getString("username");
 							String content = comment.getString("comment");
-							String date_created = comment.getString("date_created");
+							String date_created = comment
+									.getString("date_created");
 
 							User user = new User(username);
 
@@ -229,7 +282,7 @@ public class DatabaseManager {
 							c.setId(id);
 							c.setParentId(task.getId());
 							c.setContent(content);
-							
+
 							task.addComment(c);
 
 							this.comments.put(Long.valueOf(c.getId()), c);
@@ -257,12 +310,13 @@ public class DatabaseManager {
 
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("action", list_photos_tag));
-		params.add(new BasicNameValuePair("taskid", String.valueOf(task.getId())));
+		params.add(new BasicNameValuePair("taskid",
+				String.valueOf(task.getId())));
 		JSONObject json = jsonParser.getJSONFromUrl(URL, params);
 
 		Log.v("JSON", json.toString());
 
-		// check for login response
+		// check for response
 		try {
 			if (json.getString(DatabaseManager.KEY_SUCCESS) != null) {
 				String res = json.getString(DatabaseManager.KEY_SUCCESS);
@@ -277,7 +331,8 @@ public class DatabaseManager {
 						if (!this.photos.containsKey(Long.valueOf((long) id))) {
 							String username = photo.getString("username");
 							String content = photo.getString("photo");
-							String date_created = photo.getString("date_created");
+							String date_created = photo
+									.getString("date_created");
 
 							User user = new User(username);
 
@@ -286,7 +341,7 @@ public class DatabaseManager {
 							p.setId(id);
 							p.setParentId(task.getId());
 							p.setImageFromString(content);
-							
+
 							task.addPhoto(p);
 
 							this.photos.put(Long.valueOf(p.getId()), p);
@@ -309,7 +364,7 @@ public class DatabaseManager {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void syncTask(Task task) {
 
 		String username = "";
@@ -350,7 +405,7 @@ public class DatabaseManager {
 
 		Log.v("JSON", json.toString());
 
-		// check for login response
+		// check for response
 		try {
 			if (json.getString(DatabaseManager.KEY_SUCCESS) != null) {
 				String res = json.getString(DatabaseManager.KEY_SUCCESS);
@@ -411,7 +466,7 @@ public class DatabaseManager {
 
 			Log.v("JSON", json.toString());
 
-			// check for login response
+			// check for response
 			try {
 				if (json.getString(DatabaseManager.KEY_SUCCESS) != null) {
 					String res = json.getString(DatabaseManager.KEY_SUCCESS);
@@ -445,7 +500,7 @@ public class DatabaseManager {
 			}
 		}
 	}
-	
+
 	public void syncPhoto(MyPhoto photo) {
 
 		if (photo.getId() == 0) {
@@ -474,7 +529,7 @@ public class DatabaseManager {
 
 			Log.v("JSON", json.toString());
 
-			// check for login response
+			// check for response
 			try {
 				if (json.getString(DatabaseManager.KEY_SUCCESS) != null) {
 					String res = json.getString(DatabaseManager.KEY_SUCCESS);
@@ -487,8 +542,7 @@ public class DatabaseManager {
 						saver.savePhoto(photo);
 						saver.close();
 
-						this.photos.put(Long.valueOf(photo.getId()),
-								photo);
+						this.photos.put(Long.valueOf(photo.getId()), photo);
 
 					} else {
 

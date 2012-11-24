@@ -60,7 +60,10 @@ public class TaskAdapter extends BaseAdapter {
 		Task task = TaskManager.getInstance().getTaskAt(position);
 
 		// Setting all values in listview
-		if (task.isPublic()) {
+		if (task.isComplete()) {
+			shared.setText("Complete");
+			shared.setTextColor(0xFF00FF00);
+		} else if (task.isPublic()) {
 			shared.setText("Public");
 			shared.setTextColor(Color.parseColor("#10BCC9"));
 		} else {
