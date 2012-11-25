@@ -79,6 +79,36 @@
         $res = $mysqli->query($query);
     }
     
+    function getNumberOfComments($taskid) {
+        global $mysqli;
+        
+        $query = sprintf("SELECT * FROM comments WHERE taskid = '%s';", $taskid);
+        $res = $mysqli->query($query);
+        
+        return $res->num_rows;
+    }
+    
+    function getNumberOfPhotos($taskid) {
+        global $mysqli;
+        
+        $query = sprintf("SELECT * FROM photos WHERE taskid = '%s';", $taskid);
+        $res = $mysqli->query($query);
+        
+        return $res->num_rows;
+    }
+    
+    function getNumberOfAudios($taskid) {
+        return 0;
+        /*
+        global $mysqli;
+        
+        $query = sprintf("SELECT * FROM audios WHERE taskid = '%s';", $taskid);
+        $res = $mysqli->query($query);
+        
+        return $res->num_rows;
+         */
+    }
+    
     function listTasks($limit, $last_date) {
         global $mysqli;
         
@@ -121,8 +151,6 @@
                 return false;
             }
         }
-        
-        return false;
 
     }
     
@@ -156,8 +184,6 @@
             return false;
         }
         
-        return false;
-        
     }
     
     function listPhotos($taskid) {
@@ -190,10 +216,48 @@
             return false;
         }
         
-        return false;
-        
     }
 
+    function completeTask($taskid, $from, $to, $message) {
+        global $mysqli;
+        
+        $date = date( 'Y-m-d H:i:s' );
+        
+        $query = sprintf("UPDATE tasks SET complete = '1', date_completed = '%s' WHERE id = '%s';", $date, $taskid);
+        
+         $res = $mysqli->query($query);
+        
+        $query = sprintf("INSERT INTO `notifications` (`id`, `type`, `taskid`, `from`, `to`, `message`, `date_created`) VALUES (NULL, 1, %s, '%s', '%s', '%s', '%s');", $taskid, $from, $to, $message, $date);
+        
+        $res = $mysqli->query($query);
+        
+        if ($res) {
+            return $mysqli->insert_id;
+        } else {
+            return false;
+        }
+    }
+    
+    function listNotificationsFor($username) {
+        global $mysqli;
+        
+        $query = sprintf("SELECT * FROM notifications WHERE to_user = '%s';", $username);
+        $res = $mysqli->query($query);
+        
+        $notifications = array();
+        while($row = $res->fetch_assoc()) {
+            $notifications[] = $row;
+        }
+        
+        return $notifications;
+    }
+    
+    function deleteNotification($id) {
+        global $mysqli;
+        
+        $query = sprintf("DELETE FROM notifications WHERE id = %s;", $id);
+        $res = $mysqli->query($query);
+    }
 
     
     ?>

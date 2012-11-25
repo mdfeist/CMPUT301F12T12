@@ -71,6 +71,15 @@
             
             updateEmail($username, $email);
             
+        } else if ($action == 'list_tasks_attachments') {
+            $taskid = $_POST['taskid'];
+            
+            $response["success"] = 1;
+            $response["comments"] = getNumberOfComments($taskid);
+            $response["photos"] = getNumberOfPhotos($taskid);
+            $response["audios"] = getNumberOfAudios($taskid);
+            echo json_encode($response);
+            
         } else if ($action == 'list_tasks') {
             $limit = $_POST['limit'];
             $last_date = $_POST['date'];
@@ -163,6 +172,33 @@
                 $response["error_msg"] = "Unable to create task";
                 echo json_encode($response);
             }
+        } else if ($action == 'complete_task') {
+            $taskid = $_POST['taskid'];
+            $from = $_POST['from'];
+            $to = $_POST['to'];
+            $message = $_POST['message'];
+            
+            completeTask($taskid, $from, $to, $message);
+            
+            $response["success"] = 1;
+            echo json_encode($response);
+        } else if ($action == 'list_notifications') {
+            $username = $_POST['username'];
+            
+            $notifications = listNotificationsFor($username);
+            
+            $response["success"] = 1;
+            $response["notifications"] = $notifications;
+            echo json_encode($response);
+            
+        } else if ($action == 'delete_notification') {
+            $id = $_POST['id'];
+            
+            deleteNotification($id);
+            
+            $response["success"] = 1;
+            echo json_encode($response);
+            
         } else {
             echo "Invalid Request";
         }
