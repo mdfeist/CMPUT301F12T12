@@ -84,7 +84,8 @@ public class NotificationSender extends BroadcastReceiver {
     								break;
     							}
     							
-    							showNotification(context, title, message);
+    							Intent intent = new Intent(context, MainMenuActivity.class);
+    							showNotification(context, title, message, intent);
     							
     							//DatabaseManager.getInstance().deleteNotifications(id);
     						}
@@ -133,12 +134,11 @@ public class NotificationSender extends BroadcastReceiver {
 	/**
 	 * Show a notification while this service is running.
 	 */
-	private void showNotification(Context context, String title, String subject) {
+	private void showNotification(Context context, String title, String subject, Intent intent) {
 		// Prepare intent which is triggered if the
 		// notification is selected
-		Intent intent = new Intent(context, MainMenuActivity.class);
 		PendingIntent pIntent = PendingIntent
-				.getActivity(context, 0, intent, 0);
+				.getActivity(context, 0, intent,  PendingIntent.FLAG_CANCEL_CURRENT);
 
 		// Build notification
 		// Actions are just fake

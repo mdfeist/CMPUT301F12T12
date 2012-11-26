@@ -17,12 +17,14 @@ public class TaskManager {
 	
 	//private static final String TAG = "TaskManager";
 	private List<Task> tasks;
+	private Set<Long> loadedTasks;
 	
 	private int currentPosition;
 
 	protected TaskManager() {
 		this.tasks = new ArrayList<Task>();
 		this.currentPosition = -1;
+		this.loadedTasks = new TreeSet<Long>();
 	}
 
 	/**
@@ -44,6 +46,10 @@ public class TaskManager {
 		return this.tasks.size();
 	}
 	
+	public boolean contains(Long id) {
+		return this.loadedTasks.contains(id);
+	}
+	
 	/**
 	 * Add a task to the task manager.
 	 * @param task
@@ -53,6 +59,10 @@ public class TaskManager {
 		
 		if(!this.tasks.contains(task)) {
 			this.tasks.add(task);
+		}
+		
+		if (!this.loadedTasks.contains(task.getLocalId())) {
+			this.loadedTasks.add(task.getLocalId());
 		}
 		
 		return this.tasks.indexOf(task);

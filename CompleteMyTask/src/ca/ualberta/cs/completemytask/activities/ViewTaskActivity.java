@@ -14,6 +14,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+//import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -29,6 +30,8 @@ import android.widget.TextView;
 
 public class ViewTaskActivity extends Activity {
 
+	//private static final String TAG = "ViewTaskActivity";
+	
 	// Position of Task in TaskManager
 	private int position;
 
@@ -51,26 +54,7 @@ public class ViewTaskActivity extends Activity {
 		setContentView(R.layout.activity_view_task);
 
 		saver = new LocalSaving();
-		position = TaskManager.getInstance().getCurrentTaskPosition();
-
-		BackgroundTask bg = new BackgroundTask();
-		bg.runInBackGround(new HandleInBackground() {
-			public void onPreExecute() {
-			}
-
-			public void onPostExecute(int response) {
-
-			}
-
-			public void onUpdate(int response) {
-			}
-
-			public boolean handleInBackground(Object o) {
-				Task task = TaskManager.getInstance().getTaskAt(position);
-				DatabaseManager.getInstance().setNumberOfAttachments(task);
-				return true;
-			}
-		});
+		
 	}
 
 	@Override
@@ -78,8 +62,27 @@ public class ViewTaskActivity extends Activity {
 		super.onResume();
 
 		position = TaskManager.getInstance().getCurrentTaskPosition();
-
+		
 		if (position >= 0) {
+			BackgroundTask bg = new BackgroundTask();
+			bg.runInBackGround(new HandleInBackground() {
+				public void onPreExecute() {
+				}
+
+				public void onPostExecute(int response) {
+
+				}
+
+				public void onUpdate(int response) {
+				}
+
+				public boolean handleInBackground(Object o) {
+					Task task = TaskManager.getInstance().getTaskAt(position);
+					DatabaseManager.getInstance().setNumberOfAttachments(task);
+					return true;
+				}
+			});
+			
 			Task task = TaskManager.getInstance().getTaskAt(position);
 
 			User taskUser = task.getUser();

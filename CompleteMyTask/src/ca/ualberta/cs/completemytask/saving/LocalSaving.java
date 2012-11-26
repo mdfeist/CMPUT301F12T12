@@ -1,8 +1,5 @@
 package ca.ualberta.cs.completemytask.saving;
 
-import java.util.Set;
-import java.util.TreeSet;
-
 import ca.ualberta.cs.completemytask.CompleteMyTask;
 import ca.ualberta.cs.completemytask.userdata.Comment;
 import ca.ualberta.cs.completemytask.userdata.MyPhoto;
@@ -20,12 +17,9 @@ public class LocalSaving {
 
 	private SQLiteDatabase database;
 	private SQLiteHelper dbHelper;
-	
-	private Set<Long> loadedTasks;
 
 	public LocalSaving() {
 		dbHelper = new SQLiteHelper(CompleteMyTask.getAppContext());
-		this.loadedTasks = new TreeSet<Long>();
 	}
 
 	public void open() throws SQLException {
@@ -212,8 +206,7 @@ public class LocalSaving {
 		while (!cursor.isAfterLast()) {
 			// Load Task
 			Task task = cursorToTask(cursor);
-			if (!loadedTasks.contains(task.getLocalId())) {
-				loadedTasks.add(task.getLocalId());
+			if (!TaskManager.getInstance().contains(task.getLocalId())) {
 				Log.v(TAG, "Loading Task: " + task.getName());
 				TaskManager.getInstance().addTask(task);
 	
