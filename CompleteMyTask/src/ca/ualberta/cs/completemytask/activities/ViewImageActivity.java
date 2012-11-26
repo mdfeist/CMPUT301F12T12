@@ -25,6 +25,8 @@ import android.graphics.Bitmap;
 //import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Gallery;
 import android.widget.ImageView;
 
@@ -67,6 +69,12 @@ public class ViewImageActivity extends Activity {
 		photoGallery.setAdapter(adapter);
 		adapter.notifyDataSetChanged();
 		
+		photoGallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			public void onItemClick(AdapterView parent, View v, int position, long id) {
+				updateImagePreview(position);
+			}
+		});
+		
 		BackgroundTask bg = new BackgroundTask();	
     	bg.runInBackGround(new HandleInBackground() {
     		public void onPreExecute() {
@@ -94,6 +102,14 @@ public class ViewImageActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.activity_view_image, menu);
 		return true;
+	}
+	
+	/**
+	 * Updates the image preview to show the image selected in the gallery.
+	 */
+	public void updateImagePreview(int position){
+		Bitmap selectedImage = task.getPhotoAt(position).getContent();
+		imagePreview.setImageBitmap(selectedImage);
 	}
 
 	/**
