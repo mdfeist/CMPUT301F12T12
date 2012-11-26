@@ -145,6 +145,14 @@ public class ViewTaskActivity extends Activity {
 				new DialogInterface.OnClickListener() {
 			
 					public void onClick(DialogInterface dialog, int which) {
+						Button editTask = (Button) findViewById(R.id.EditTaskButton);
+						editTask.setClickable(false);
+						editTask.setAlpha(0.0f);
+						
+						Button completeTask = (Button) findViewById(R.id.CompleteButton);
+						completeTask.setClickable(false);
+						completeTask.setAlpha(0.0f);
+						
 						Task task = TaskManager.getInstance().getTaskAt(position);
 						task.setComplete(true);
 						
