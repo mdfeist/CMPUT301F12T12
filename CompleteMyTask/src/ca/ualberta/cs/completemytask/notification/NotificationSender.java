@@ -86,7 +86,7 @@ public class NotificationSender extends BroadcastReceiver {
     							
     							showNotification(context, title, message);
     							
-    							DatabaseManager.getInstance().deleteNotifications(id);
+    							//DatabaseManager.getInstance().deleteNotifications(id);
     						}
     						
     					} else {

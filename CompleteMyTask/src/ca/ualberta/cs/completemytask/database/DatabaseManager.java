@@ -629,7 +629,7 @@ public class DatabaseManager {
 	public boolean syncDatabase() {
 		testSyncComplete = false;
 
-		boolean finished = this.getTasks(1);
+		boolean finished = this.getTasks(5);
 
 		for (Task t : TaskManager.getInstance().getTaskArray()) {
 			if (t.isPublic()) {

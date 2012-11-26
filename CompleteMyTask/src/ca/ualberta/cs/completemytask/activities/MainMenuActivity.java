@@ -73,20 +73,17 @@ public class MainMenuActivity extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
         
-        if (!loaded) {
-	        this.loadingView = new LoadingView(this, MAIN_MENU_LAYOUT,
-	        		"Syncing with Database");
-	        
-	        setupSettings();
-	        setupList();
-	        
-	        saver = new LocalSaving();
-	        saver.open();
-	        saver.loadAllTasks();
-	        saver.close();
-        }
+        this.loadingView = new LoadingView(this, MAIN_MENU_LAYOUT,
+        		"Syncing with Database");
         
-        loaded = true;
+        saver = new LocalSaving();
+        
+        setupSettings();
+        setupList();
+        
+        saver.open();
+        saver.loadAllTasks();
+        saver.close();
         
         adapter.notifyDataSetChanged();
         

@@ -35,7 +35,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	public static final String COLUMN_PHOTO = "photo";
 
 	private static final String DATABASE_NAME = "localSave.db";
-	private static final int DATABASE_VERSION = 6;
+	private static final int DATABASE_VERSION = 9;
 
 	// Database creation sql statement
 	private static final String DATABASE_CREATE_TASKS = "create table "
