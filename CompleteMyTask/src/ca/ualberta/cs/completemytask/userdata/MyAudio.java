@@ -22,6 +22,7 @@ import android.util.Log;
 public class MyAudio extends ChildUserData implements UserContent<byte[]> {
 	protected final String TAG = "MyAudio";
 	byte[] audio;
+	//Add strings for Username and Filename?
 
 	public MyAudio() {
 		this.audio = null;
@@ -189,7 +190,7 @@ public class MyAudio extends ChildUserData implements UserContent<byte[]> {
 			audioString = data.getString("audio");
 			audioString = audioString.substring(1, audioString.length() - 1);
 		} catch (JSONException e) {
-			Log.w(TAG, "Failed to get image.");
+			Log.w(TAG, "Failed to get audio.");
 			audioString = "";
 		}
 
