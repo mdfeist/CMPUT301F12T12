@@ -71,7 +71,7 @@ public class CreateTaskTest extends ActivityInstrumentationTestCase2<AddTaskActi
 			if(task.getName().equals(taskName)) {
 				foundTask = true;
 				assertTrue("Wrong Description", task.getDescription().endsWith(taskDescription));
-				assertTrue("No ID", task.getId() == null);
+				assertNull("No ID", task.getId());
 				
 				assertTrue("Failed isComplete", task.isComplete() == false);
 				
