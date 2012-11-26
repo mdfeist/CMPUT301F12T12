@@ -34,8 +34,6 @@ public class MainMenuActivity extends Activity{
 	private LoadingView loadingView;
 	public LocalSaving saver;
 	
-	private boolean loaded = false;
-	
 	// View id's
 	//private int ADD_TASK_BUTTON = R.id.AddTaskButton;
 	//private int SYNC_TASK_BUTTON = R.id.SyncTaskButton;

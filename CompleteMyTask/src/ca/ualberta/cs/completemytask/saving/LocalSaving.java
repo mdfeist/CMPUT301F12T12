@@ -1,5 +1,8 @@
 package ca.ualberta.cs.completemytask.saving;
 
+import java.util.Set;
+import java.util.TreeSet;
+
 import ca.ualberta.cs.completemytask.CompleteMyTask;
 import ca.ualberta.cs.completemytask.userdata.Comment;
 import ca.ualberta.cs.completemytask.userdata.MyPhoto;
@@ -17,9 +20,12 @@ public class LocalSaving {
 
 	private SQLiteDatabase database;
 	private SQLiteHelper dbHelper;
+	
+	private Set<Long> loadedTasks;
 
 	public LocalSaving() {
 		dbHelper = new SQLiteHelper(CompleteMyTask.getAppContext());
+		this.loadedTasks = new TreeSet<Long>();
 	}
 
 	public void open() throws SQLException {
@@ -206,40 +212,43 @@ public class LocalSaving {
 		while (!cursor.isAfterLast()) {
 			// Load Task
 			Task task = cursorToTask(cursor);
-			Log.v(TAG, "Loading Task: " + task.getName());
-			TaskManager.getInstance().addTask(task);
-
-			// Get Comments for Task
-			Cursor cursor_comment = database.query(SQLiteHelper.TABLE_COMMENTS,
-					col_comments, SQLiteHelper.COLUMN_PARENT_ID + " = ?",
-					new String[] { String.valueOf(task.getLocalId()) }, null,
-					null, SQLiteHelper.COLUMN_TIME +" ASC");
-			
-			cursor_comment.moveToFirst();
-			while (!cursor_comment.isAfterLast()) {
-				Comment comment = cursorToComment(cursor_comment);
-				task.addComment(comment);
-				Log.v(TAG, "Loading Comment: " + comment.getContent());
-				cursor_comment.moveToNext();
+			if (!loadedTasks.contains(task.getLocalId())) {
+				loadedTasks.add(task.getLocalId());
+				Log.v(TAG, "Loading Task: " + task.getName());
+				TaskManager.getInstance().addTask(task);
+	
+				// Get Comments for Task
+				Cursor cursor_comment = database.query(SQLiteHelper.TABLE_COMMENTS,
+						col_comments, SQLiteHelper.COLUMN_PARENT_ID + " = ?",
+						new String[] { String.valueOf(task.getLocalId()) }, null,
+						null, SQLiteHelper.COLUMN_TIME +" ASC");
+				
+				cursor_comment.moveToFirst();
+				while (!cursor_comment.isAfterLast()) {
+					Comment comment = cursorToComment(cursor_comment);
+					task.addComment(comment);
+					Log.v(TAG, "Loading Comment: " + comment.getContent());
+					cursor_comment.moveToNext();
+				}
+	
+				cursor_comment.close();
+				
+				// Get Photos for Task
+				Cursor cursor_photo = database.query(SQLiteHelper.TABLE_PHOTOS,
+						col_photos, SQLiteHelper.COLUMN_PARENT_ID + " = ?",
+						new String[] { String.valueOf(task.getLocalId()) }, null,
+						null, SQLiteHelper.COLUMN_TIME +" ASC");
+				
+				cursor_photo.moveToFirst();
+				while (!cursor_photo.isAfterLast()) {
+					MyPhoto photo = cursorToPhoto(cursor_photo);
+					task.addPhoto(photo);
+					Log.v(TAG, "Loading Photo");
+					cursor_photo.moveToNext();
+				}
+	
+				cursor_photo.close();
 			}
-
-			cursor_comment.close();
-			
-			// Get Photos for Task
-			Cursor cursor_photo = database.query(SQLiteHelper.TABLE_PHOTOS,
-					col_photos, SQLiteHelper.COLUMN_PARENT_ID + " = ?",
-					new String[] { String.valueOf(task.getLocalId()) }, null,
-					null, SQLiteHelper.COLUMN_TIME +" ASC");
-			
-			cursor_photo.moveToFirst();
-			while (!cursor_photo.isAfterLast()) {
-				MyPhoto photo = cursorToPhoto(cursor_photo);
-				task.addPhoto(photo);
-				Log.v(TAG, "Loading Photo");
-				cursor_photo.moveToNext();
-			}
-
-			cursor_photo.close();
 
 			cursor.moveToNext();
 		}

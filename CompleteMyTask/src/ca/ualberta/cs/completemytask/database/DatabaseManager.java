@@ -211,6 +211,12 @@ public class DatabaseManager {
 						JSONObject task = tasksArray.getJSONObject(i);
 
 						int id = task.getInt("id");
+						String date_created = task
+								.getString("date_created");
+						
+						if (date_created.compareTo(LAST_DATE) > 0) {
+							LAST_DATE = date_created;
+						}
 
 						if (!this.tasks.containsKey(Long.valueOf((long) id))) {
 							String username = task.getString("username");
@@ -222,15 +228,10 @@ public class DatabaseManager {
 							boolean photo = (task.getInt("photo") == 1);
 							boolean audio = (task.getInt("audio") == 1);
 
-							String date_created = task
-									.getString("date_created");
+							
 							String date_completed = task
 									.getString("date_completed");
-
-							if (date_created.compareTo(LAST_DATE) > 0) {
-								LAST_DATE = date_created;
-							}
-
+							
 							User user = new User(username);
 
 							Task t = new Task();
@@ -629,7 +630,7 @@ public class DatabaseManager {
 	public boolean syncDatabase() {
 		testSyncComplete = false;
 
-		boolean finished = this.getTasks(5);
+		boolean finished = this.getTasks(1);
 
 		for (Task t : TaskManager.getInstance().getTaskArray()) {
 			if (t.isPublic()) {
