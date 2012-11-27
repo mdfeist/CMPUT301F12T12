@@ -230,7 +230,6 @@ public class ViewImageActivity extends Activity {
 					saver.open();
 					saver.savePhoto(image);
 					saver.close();
-
 				}
 				
 				task.addPhoto(image);
@@ -246,9 +245,11 @@ public class ViewImageActivity extends Activity {
 	 */
 	protected void onActivityResult(int requestCode, int resultCode, Intent intent){
 		if(requestCode == CAPTURE_IMAGE_REQUEST_CODE){
-			Bitmap b = getBitmap(intent);
-			imagePreview.setImageBitmap(b);
-			addImage(b);
+			if (resultCode == Activity.RESULT_OK) {
+				Bitmap b = getBitmap(intent);
+				imagePreview.setImageBitmap(b);
+				addImage(b);
+			}
 		}
 	}
 
