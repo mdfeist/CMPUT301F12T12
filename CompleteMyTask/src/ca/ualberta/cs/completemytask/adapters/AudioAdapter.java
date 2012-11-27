@@ -77,7 +77,7 @@ public class AudioAdapter extends BaseAdapter {
 		String tempAudioName = (task.getAudioAt(position).getAudioName());
 		
 		//Test
-		tempAudioName = "Test field"; 
+		//tempAudioName = "Test field"; 
 		//////////////
 		
 		// Setting all values in listview

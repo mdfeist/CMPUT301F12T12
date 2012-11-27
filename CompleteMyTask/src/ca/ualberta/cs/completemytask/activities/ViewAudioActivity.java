@@ -125,16 +125,28 @@ public class ViewAudioActivity extends CustomActivity {
 		byte[] newAudio = (byte[]) extras.get("audioData");
 		return newAudio;
 	}
+	
+	/**
+	 * Gets the byte[] out of an intent. 
+	 * @param intent
+	 * @return a byte[] that was carried by the intent
+	 */
+	private String getAudioName(Intent intent) {		
+		Bundle extras = intent.getExtras();
+		String newAudioName = (String) extras.get("title");
+		return newAudioName;
+	}
   
 	/**
 	 * Adds the Audio 'clip' to both the task and the ListView
 	 * Used in OnActivityResult --> use in different spot (user accepts audio)
 	 * @param clip
 	 */
-	private void addAudio(byte[] clip){
+	private void addAudio(byte[] clip, String name){
 		MyAudio audio = new MyAudio();
 		audio.setContent(clip);
-
+		audio.setAudioName(name);
+		
 		User user = null;
 
 		if (Settings.getInstance().hasUser()) {
@@ -148,7 +160,7 @@ public class ViewAudioActivity extends CustomActivity {
 
 		sync(audio);
 	}
-  
+	
 	/**
 	 * Syncs the image to the task (copied from CommentActivity, 12/11/01)
 	 * @param image
@@ -179,7 +191,7 @@ public class ViewAudioActivity extends CustomActivity {
 				if (task.isLocal()) {
 					saver.open();
 					//UNCOMMENT
-					//saver.saveAudio(audio);
+					saver.saveAudio(audio);
 					saver.close();
 				}
 				
@@ -200,7 +212,10 @@ public class ViewAudioActivity extends CustomActivity {
 			if (resultCode == RESULT_OK) {
 				byte[] a = getAudioByte(intent);
 				//imagePreview.setImageBitmap(b);
-				addAudio(a);
+				String n = getAudioName(intent);
+
+				addAudio(a, n);
+	
 			}
 		}
 	}

@@ -13,6 +13,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 import ca.ualberta.cs.completemytask.R;
 
 public class AudioCaptureActivity extends CustomActivity {
@@ -23,6 +25,7 @@ public class AudioCaptureActivity extends CustomActivity {
 	String captureUserName;
 	String captureAudioName;
 	File tempAudioFile;
+	private EditText audioNameTextView;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,8 @@ public class AudioCaptureActivity extends CustomActivity {
 
     public void onStart(){
     	super.onStart();
+    	
+    	audioNameTextView = (EditText) findViewById(R.id.audioNameView);
     	
     	boolean exists = (new File(android.os.Environment.getExternalStorageDirectory() + "/Record/")).exists();
     	if (!exists) {
@@ -155,10 +160,11 @@ public class AudioCaptureActivity extends CustomActivity {
     	
     	//Convert the File to byte[]
     	returnAudio = getByteFromFile(tempAudioFile);
+    	captureAudioName = audioNameTextView.getText().toString();
     	
 		//CALL THIS before exiting the AudioCaptureActivity
 		Intent resultData = new Intent();
-		resultData.putExtra("name", captureUserName);
+		//resultData.putExtra("name", captureUserName);
 		resultData.putExtra("title", captureAudioName);
 		resultData.putExtra("audioData", returnAudio);
 		setResult(Activity.RESULT_OK, resultData);
