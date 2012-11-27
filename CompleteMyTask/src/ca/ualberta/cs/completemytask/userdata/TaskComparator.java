@@ -23,8 +23,8 @@ public class TaskComparator implements Comparator<Task>{
         }else if (!shared1 && shared2){
             return -1;
         }else{
-        	String date1 = task1.getDateAsString();
-            String date2 = task2.getDateAsString();
+        	String date1 = task1.getDate();
+            String date2 = task2.getDate();
             
             int date = date1.compareTo(date2);
         	
