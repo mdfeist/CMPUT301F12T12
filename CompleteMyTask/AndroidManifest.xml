@@ -59,6 +59,10 @@
             android:label="@string/title_activity_view_audio" >
         </activity>
         <activity
+            android:name=".activities.AudioCaptureActivity"
+            android:label="@string/title_activity_audio_capture" >
+        </activity>
+        <activity
             android:name=".activities.CreateUserActivity"
             android:label="@string/title_activity_create_user" >
         </activity>
@@ -87,15 +91,6 @@
             </intent-filter>
         </receiver>
 
-        <activity
-            android:name=".activities.AudioCaptureActivity"
-            android:label="@string/title_activity_audio_capture" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>
