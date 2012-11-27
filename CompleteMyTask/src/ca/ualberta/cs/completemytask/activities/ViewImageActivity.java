@@ -151,25 +151,28 @@ public class ViewImageActivity extends Activity {
 		Bundle extras = intent.getExtras();
 		Bitmap newPhoto = (Bitmap) extras.get("data");
 		
-		int width, height;
-		double ratio;
 		
-		int size = 640;
-		
-		if (newPhoto.getWidth() > newPhoto.getHeight()) {
-			width = size;
-			ratio = width/newPhoto.getWidth();
-			height = (int)(newPhoto.getHeight()*ratio);
-		} else {
-			height = size;
-			ratio = height/newPhoto.getHeight();
-			width = (int)(newPhoto.getWidth()*ratio);
-		}
-		
-		newPhoto = Bitmap.createScaledBitmap(newPhoto, width, height, false);
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		newPhoto.compress(CompressFormat.PNG, 50, out);
 		Bitmap bitmap = BitmapFactory.decodeStream(new ByteArrayInputStream(out.toByteArray()));
+		
+		int width, height;
+		double ratio;
+		
+		int size = 320;
+		
+		if (bitmap.getWidth() > bitmap.getHeight()) {
+			width = size;
+			ratio = width/bitmap.getWidth();
+			height = (int)(bitmap.getHeight()*ratio);
+		} else {
+			height = size;
+			ratio = height/bitmap.getHeight();
+			width = (int)(bitmap.getWidth()*ratio);
+		}
+		
+		bitmap = Bitmap.createScaledBitmap(bitmap, width, height, false);
+		
 		return bitmap;
 	}
 
