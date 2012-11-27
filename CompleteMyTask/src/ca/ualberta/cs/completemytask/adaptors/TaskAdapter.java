@@ -1,6 +1,8 @@
-package ca.ualberta.cs.completemytask.userdata;
+package ca.ualberta.cs.completemytask.adaptors;
 
 import ca.ualberta.cs.completemytask.R;
+import ca.ualberta.cs.completemytask.userdata.Task;
+import ca.ualberta.cs.completemytask.userdata.TaskManager;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
