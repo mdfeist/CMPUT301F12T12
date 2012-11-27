@@ -58,7 +58,7 @@ public class MyPhoto extends ChildUserData implements UserContent<Bitmap> {
 		 * This functions converts Bitmap picture to a string which can be
 		 * JSONified.
 		 */
-		final int COMPRESSION_QUALITY = 80;
+		final int COMPRESSION_QUALITY = 25;
 		
 		ByteArrayOutputStream byteArrayBitmapStream = new ByteArrayOutputStream();
 		bitmapPicture.compress(Bitmap.CompressFormat.PNG, COMPRESSION_QUALITY,

@@ -81,6 +81,7 @@ public class ViewImageActivity extends Activity {
 		BackgroundTask bg = new BackgroundTask();	
     	bg.runInBackGround(new HandleInBackground() {
     		public void onPreExecute() {
+    			loadingView.showLoadView(true);
     		}
     		
     		public void onPostExecute(int response) {
@@ -89,6 +90,8 @@ public class ViewImageActivity extends Activity {
     			}
     			
     			adapter.notifyDataSetChanged();
+    			
+    			loadingView.showLoadView(false);
     		}
     		
     		public void onUpdate(int response) {
@@ -152,7 +155,7 @@ public class ViewImageActivity extends Activity {
 		Bitmap newPhoto = (Bitmap) extras.get("data");
 		
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		newPhoto.compress(CompressFormat.PNG, 50, out);
+		newPhoto.compress(CompressFormat.PNG, 5, out);
 		Bitmap bitmap = BitmapFactory.decodeStream(new ByteArrayInputStream(out.toByteArray()));
 		
 		int width, height;
