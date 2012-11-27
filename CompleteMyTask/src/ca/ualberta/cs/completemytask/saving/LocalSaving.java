@@ -156,9 +156,23 @@ public class LocalSaving {
 
 	public void deleteTask(Task task) {
 		long id = task.getLocalId();
-		System.out.println("Comment deleted with id: " + id);
+		System.out.println("Task deleted with id: " + id);
 		database.delete(SQLiteHelper.TABLE_TASKS, SQLiteHelper.COLUMN_ID
 				+ " = " + id, null);
+		
+		for (int i = 0; i < task.getNumberOfComments(); i++) {
+			id = task.getCommentAt(i).getLocalId();
+			System.out.println("Comment deleted with id: " + id);
+			database.delete(SQLiteHelper.TABLE_COMMENTS, SQLiteHelper.COLUMN_ID
+					+ " = " + id, null);
+		}
+		
+		for (int i = 0; i < task.getNumberOfPhotos(); i++) {
+			id = task.getPhotoAt(i).getLocalId();
+			System.out.println("Photo deleted with id: " + id);
+			database.delete(SQLiteHelper.TABLE_PHOTOS, SQLiteHelper.COLUMN_ID
+					+ " = " + id, null);
+		}
 	}
 
 	public void saveAllTasks() {
