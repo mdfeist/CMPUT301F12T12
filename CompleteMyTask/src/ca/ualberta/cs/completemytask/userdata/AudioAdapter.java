@@ -48,7 +48,13 @@ public class AudioAdapter extends BaseAdapter {
 		//Put username and audio into the container that will populate the ListView entries
 		//Put the Audio file name here?
 		//Put the username after?
-		String tempUserName = (task.getAudioAt(position).getAudioUser());
+		String tempUserName = "Unknown";
+		
+		User user = task.getAudioAt(position).getUser();
+		if (user != null) {
+			tempUserName = (user.getUserName());
+		}
+		
 		String tempAudioName = (task.getAudioAt(position).getAudioName());
 		
 		//Define a map

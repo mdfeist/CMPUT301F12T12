@@ -22,12 +22,10 @@ import android.util.Log;
 public class MyAudio extends ChildUserData implements UserContent<byte[]> {
 	protected final String TAG = "MyAudio";
 	byte[] audio;
-	String audioUser;
 	String audioName;
 
 	public MyAudio() {
 		this.audio = null;
-		this.audioUser = null;
 		this.audioName = null;
 	}
 
@@ -37,14 +35,6 @@ public class MyAudio extends ChildUserData implements UserContent<byte[]> {
 
 	public void setContent(byte[] content) {
 		this.audio = content;
-	}
-	
-	public String getAudioUser() {
-		return this.audioUser;
-	}
-
-	public void setAudioUser(String content) {
-		this.audioUser = content;
 	}
 	
 	public String getAudioName() {
@@ -158,73 +148,5 @@ public class MyAudio extends ChildUserData implements UserContent<byte[]> {
 		this.audio = getAudioFromString(audioString);
 	}
 	*/
-
-	public String toJSON() {
-		// TODO Auto-generated method stub
-		JSONObject json = new JSONObject();
-
-		String userName = "Unknown";
-
-		if (hasUser()) {
-			userName = getUser().getUserName();
-		}
-
-		try {
-			json.put( "type", "Audio");
-			json.put( "user", userName);
-			//json.put( "audio", "'" + getStringFromFile(this.audio) + "'");
-			json.put( "audio", "'" + this.audio + "'");
-			json.put( "parentID", this.parentID);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-
-		return json.toString();
-	}
-
-	/**
-	 * From the given JSONObject retrieve the needed
-	 * info for the audio File
-	 * @param A JSONObject of the audio File
-	 * @return A File
-	 */
-	public void decodeAudio(JSONObject data) {
-
-		Log.v(TAG, "Decoding Audio Data");
-
-		String userName = "Unknown";
-		String audioString = "";
-		long parentID = 0;
-
-		try {
-			userName = data.getString("user");
-		} catch (JSONException e) {
-			Log.w(TAG, "Failed to get user.");
-			userName = "Unknown";
-		}
-
-		try {
-			audioString = data.getString("audio");
-			audioString = audioString.substring(1, audioString.length() - 1);
-		} catch (JSONException e) {
-			Log.w(TAG, "Failed to get audio.");
-			audioString = "";
-		}
-
-		try {
-			parentID = data.getLong("parentID");
-		} catch (JSONException e) {
-			Log.w(TAG, "Failed to get parentID.");
-			parentID = 0;
-		}
-
-		Log.v(TAG, audioString);
-
-		User user = new User(userName);
-		this.setUser(user);
-		//this.setAudioFromString(audioString);
-		this.audio = getByteFromString(audioString);
-		this.setParentId(parentID);
-	}
 }
 
