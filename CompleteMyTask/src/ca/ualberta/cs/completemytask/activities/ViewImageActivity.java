@@ -161,7 +161,7 @@ public class ViewImageActivity extends Activity {
 		int width, height;
 		double ratio;
 		
-		int size = 20;
+		int size = 320;
 		
 		if (bitmap.getWidth() > bitmap.getHeight()) {
 			width = size;
