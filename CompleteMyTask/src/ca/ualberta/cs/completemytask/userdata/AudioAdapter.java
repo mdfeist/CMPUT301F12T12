@@ -5,10 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import ca.ualberta.cs.completemytask.R;
+
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -16,14 +20,19 @@ import android.view.ViewGroup;
 public class AudioAdapter extends BaseAdapter {
 	private Context context;
 	private Task task = null;
+	private LayoutInflater inflater = null;
 	
 	public AudioAdapter(Context c) {
 		this.context = c;
+		this.inflater = (LayoutInflater) c
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
 	
 	public AudioAdapter(Context c, Task task) {
 		this.context = c;
 		this.task = task;
+		this.inflater = (LayoutInflater) c
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
 	
 	public int getCount() {
@@ -43,7 +52,15 @@ public class AudioAdapter extends BaseAdapter {
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {
-		ListView i = new ListView(context);
+		//ListView i = new ListView(context);
+		View vi = convertView;
+		if (convertView == null)
+			vi = inflater.inflate(R.layout.audio_row, null);
+		//The "List_Row" will have the information for the list in it
+		
+		TextView shared = (TextView) vi.findViewById(R.id.audio_name); // Shared
+		TextView title = (TextView) vi.findViewById(R.id.user_name); // title
+		
 		
 		//Put username and audio into the container that will populate the ListView entries
 		//Put the Audio file name here?
@@ -76,12 +93,12 @@ public class AudioAdapter extends BaseAdapter {
                 new String[] {"Audio", "Name"},
                 new int[] {android.R.id.text1,
                            android.R.id.text2});
-		i.setAdapter(adapter);
+		//vi.setAdapter(adapter);
 		
 		//i.setImageBitmap(task.getPhotoAt(position).getContent());
 		//i.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 
-		return i;
+		return vi;
 	}
 
 }
