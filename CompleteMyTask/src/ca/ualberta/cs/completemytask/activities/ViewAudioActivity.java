@@ -2,8 +2,6 @@ package ca.ualberta.cs.completemytask.activities;
 
 //import java.io.File;
 
-import java.io.File;
-
 import ca.ualberta.cs.completemytask.R;
 import ca.ualberta.cs.completemytask.background.BackgroundTask;
 import ca.ualberta.cs.completemytask.background.HandleInBackground;
@@ -67,6 +65,8 @@ public class ViewAudioActivity extends Activity {
 		//Pass the text along with the byte Array
 		adapter = new AudioAdapter(this, task);
 
+		////
+		
 		audioListEntries.setAdapter(adapter);
 		adapter.notifyDataSetChanged();
 
@@ -78,6 +78,8 @@ public class ViewAudioActivity extends Activity {
     		public void onPostExecute(int response) {
     			if (task.getNumberOfAudios() > 0) {
     				//This needs to be changed
+    				
+    				//Does the adapter populate the listview at once?
     				
     				//(task.getAudioAt(0).getContent());
     				//imagePreview.setImageBitmap(task.getPhotoAt(0).getContent());
@@ -110,18 +112,13 @@ public class ViewAudioActivity extends Activity {
 	 */
   public void takeAudio(View view) {	  
 	    //Getting an error in eclipse when trying to add and activity for this...
-		//Intent intentAudio = new Intent(this, AudioCaptureActivity.class);
-		Intent intentAudio = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+		Intent intentAudio = new Intent(this, AudioCaptureActivity.class);
+		//Intent intentAudio = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 		
 		//Do I want to pass something extra to the intent?
 		//Some sort of container?
 		//intent.putExtra(MediaStore.ACTION_IMAGE_CAPTURE, imageFileUri);
 		
-		//CALL THIS before exiting the AudioCaptureActivity
-//		Intent resultData = new Intent();
-//		intentAudio.putExtra("valueName", "valueData");
-//		setResult(Activity.RESULT_OK, resultData);
-//		finish();
 		startActivityForResult(intentAudio, CAPTURE_AUDIO_REQUEST_CODE);
   }
   
@@ -130,9 +127,9 @@ public class ViewAudioActivity extends Activity {
 	 * @param intent
 	 * @return a byte[] that was carried by the intent
 	 */
-	private byte[] getAudioByte(Intent intent) {
+	private byte[] getAudioByte(Intent intent) {		
 		Bundle extras = intent.getExtras();
-		byte[] newAudio = (byte[]) extras.get("data");
+		byte[] newAudio = (byte[]) extras.get("audioData");
 		return newAudio;
 	}
   
@@ -207,9 +204,12 @@ public class ViewAudioActivity extends Activity {
 	 */
 	protected void onActivityResult(int requestCode, int resultCode, Intent intent){
 		if(requestCode == CAPTURE_AUDIO_REQUEST_CODE){
-			byte[] a = getAudioByte(intent);
-			//imagePreview.setImageBitmap(b);
-			addAudio(a);
+			
+			if (resultCode == RESULT_OK) {
+				byte[] a = getAudioByte(intent);
+				//imagePreview.setImageBitmap(b);
+				addAudio(a);
+			}
 		}
 	}
   

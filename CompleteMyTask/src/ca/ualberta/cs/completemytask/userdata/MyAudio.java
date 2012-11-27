@@ -22,10 +22,13 @@ import android.util.Log;
 public class MyAudio extends ChildUserData implements UserContent<byte[]> {
 	protected final String TAG = "MyAudio";
 	byte[] audio;
-	//Add strings for Username and Filename?
+	String audioUser;
+	String audioName;
 
 	public MyAudio() {
 		this.audio = null;
+		this.audioUser = null;
+		this.audioName = null;
 	}
 
 	public byte[] getContent() {
@@ -34,6 +37,22 @@ public class MyAudio extends ChildUserData implements UserContent<byte[]> {
 
 	public void setContent(byte[] content) {
 		this.audio = content;
+	}
+	
+	public String getAudioUser() {
+		return this.audioUser;
+	}
+
+	public void setAudioUser(String content) {
+		this.audioUser = content;
+	}
+	
+	public String getAudioName() {
+		return this.audioName;
+	}
+
+	public void setAudioName(String content) {
+		this.audioName = content;
 	}
 
 	public String getStringFromFile(File audioFile) {
@@ -71,7 +90,6 @@ public class MyAudio extends ChildUserData implements UserContent<byte[]> {
 		return encodedString;
 	}
 
-
 	/**
 	 * Takes a byte array (our representation of audio file) and return
 	 * a string that can be used for JSON
@@ -82,7 +100,6 @@ public class MyAudio extends ChildUserData implements UserContent<byte[]> {
 		String encodedString = Base64.encodeToString(audioByte, Base64.URL_SAFE);
 		return encodedString;
 	}
-	
 	
 	/**
 	 * Takes a string, decodes it and then writes it as
