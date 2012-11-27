@@ -10,6 +10,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	public static final String TABLE_TASKS = "tasks";
 	public static final String TABLE_COMMENTS = "comments";
 	public static final String TABLE_PHOTOS = "photos";
+	public static final String TABLE_AUDIOS = "audios";
 
 	// Common
 	public static final String COLUMN_ID = "_id";
@@ -33,9 +34,13 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	
 	// Photos
 	public static final String COLUMN_PHOTO = "photo";
+	
+	// Audios
+	public static final String COLUMN_AUDIO_NAME = "name";
+	public static final String COLUMN_AUDIO = "audio";
 
 	private static final String DATABASE_NAME = "localSave.db";
-	private static final int DATABASE_VERSION = 10;
+	private static final int DATABASE_VERSION = 11;
 
 	// Database creation sql statement
 	private static final String DATABASE_CREATE_TASKS = "create table "
@@ -62,6 +67,14 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 			+ " integer, " + COLUMN_GLOBALID + " text, "
 			+ COLUMN_PARENT_GLOBALID + " text, " + COLUMN_PHOTO + " text, " +
 			COLUMN_USER + " text, " + COLUMN_TIME + " text);";
+	
+	private static final String DATABASE_CREATE_AUDIOS = "create table "
+			+ TABLE_AUDIOS + "(" + COLUMN_ID
+			+ " integer primary key autoincrement, " + COLUMN_PARENT_ID
+			+ " integer, " + COLUMN_GLOBALID + " text, "
+			+ COLUMN_PARENT_GLOBALID + " text, " + COLUMN_AUDIO_NAME + " text, "
+			+ COLUMN_AUDIO + " text, " +
+			COLUMN_USER + " text, " + COLUMN_TIME + " text);";
 
 	public SQLiteHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -72,6 +85,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 		db.execSQL(DATABASE_CREATE_TASKS);
 		db.execSQL(DATABASE_CREATE_COMMENTS);
 		db.execSQL(DATABASE_CREATE_PHOTOS);
+		db.execSQL(DATABASE_CREATE_AUDIOS);
 	}
 
 	@Override
@@ -83,6 +97,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_TASKS);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_COMMENTS);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_PHOTOS);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_AUDIOS);
 
 		onCreate(db);
 	}

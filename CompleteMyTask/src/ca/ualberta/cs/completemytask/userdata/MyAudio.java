@@ -88,6 +88,11 @@ public class MyAudio extends ChildUserData implements UserContent<byte[]> {
 		return encodedString;
 	}
 	
+	public String getStringFromAudio() {
+		return getStringFromByte(audio);
+	}
+
+	
 	/**
 	 * Takes a string, decodes it and then writes it as
 	 * a file to the SD card
@@ -134,7 +139,7 @@ public class MyAudio extends ChildUserData implements UserContent<byte[]> {
 		byte[] decodedByteArray = Base64.decode(audioString, Base64.URL_SAFE);
 		return decodedByteArray;
 	}
-
+	
 	/*  This part of the code might be unnecessary
 	/**
 	 * Decodes a string into an audio file and then

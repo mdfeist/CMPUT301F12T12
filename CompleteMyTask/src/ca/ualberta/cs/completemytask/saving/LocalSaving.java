@@ -2,6 +2,7 @@ package ca.ualberta.cs.completemytask.saving;
 
 import ca.ualberta.cs.completemytask.CompleteMyTask;
 import ca.ualberta.cs.completemytask.userdata.Comment;
+import ca.ualberta.cs.completemytask.userdata.MyAudio;
 import ca.ualberta.cs.completemytask.userdata.MyPhoto;
 import ca.ualberta.cs.completemytask.userdata.Task;
 import ca.ualberta.cs.completemytask.userdata.TaskManager;
@@ -153,6 +154,46 @@ public class LocalSaving {
 		}
 
 	}
+	
+	public void saveAudio(MyAudio audio) {
+
+		// Get values of Task
+		ContentValues values = new ContentValues();
+
+		User user = audio.getUser();
+
+		String userName = null;
+
+		if (user != null) {
+			userName = user.getUserName();
+		}
+
+		values.put(SQLiteHelper.COLUMN_PARENT_ID, audio.getLocalParentId());
+		values.put(SQLiteHelper.COLUMN_GLOBALID, audio.getId());
+		values.put(SQLiteHelper.COLUMN_PARENT_GLOBALID, audio.getParentId());
+		values.put(SQLiteHelper.COLUMN_AUDIO_NAME, audio.getAudioName());
+		values.put(SQLiteHelper.COLUMN_AUDIO, audio.getStringFromAudio());
+		values.put(SQLiteHelper.COLUMN_USER, userName);
+
+		Log.v(TAG, "Saving photo: " + audio.getAudioName());
+
+		if (audio.getLocalId() == 0) {
+			// Insert
+			long insertId = database.insert(SQLiteHelper.TABLE_AUDIOS, null,
+					values);
+			// Set local id
+			audio.setLocalId(insertId);
+
+			Log.v(TAG, "Insert: " + audio.getLocalId());
+		} else {
+			String strFilter = SQLiteHelper.COLUMN_ID + "="
+					+ audio.getLocalId();
+			database.update(SQLiteHelper.TABLE_AUDIOS, values, strFilter, null);
+
+			Log.v(TAG, "Update");
+		}
+
+	}
 
 	public void deleteTask(Task task) {
 		long id = task.getLocalId();
@@ -173,6 +214,13 @@ public class LocalSaving {
 			database.delete(SQLiteHelper.TABLE_PHOTOS, SQLiteHelper.COLUMN_ID
 					+ " = " + id, null);
 		}
+		
+		for (int i = 0; i < task.getNumberOfAudios(); i++) {
+			id = task.getAudioAt(i).getLocalId();
+			System.out.println("Audio deleted with id: " + id);
+			database.delete(SQLiteHelper.TABLE_AUDIOS, SQLiteHelper.COLUMN_ID
+					+ " = " + id, null);
+		}
 	}
 
 	public void saveAllTasks() {
@@ -186,6 +234,10 @@ public class LocalSaving {
 	
 				for (int i = 0; i < task.getNumberOfPhotos(); i++) {
 					savePhoto(task.getPhotoAt(i));
+				}
+				
+				for (int i = 0; i < task.getNumberOfAudios(); i++) {
+					saveAudio(task.getAudioAt(i));
 				}
 			}
 		}
