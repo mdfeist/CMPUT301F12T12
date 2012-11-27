@@ -12,7 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class SettingsActivity extends Activity {
+public class SettingsActivity extends CustomActivity {
 
 	private SettingsListAdapter adapter;
 	

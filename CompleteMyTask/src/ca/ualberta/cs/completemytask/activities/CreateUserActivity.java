@@ -21,7 +21,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 @SuppressLint("HandlerLeak")
-public class CreateUserActivity extends Activity {
+public class CreateUserActivity extends CustomActivity {
 
 	private static final String TAG = "Create User";
 

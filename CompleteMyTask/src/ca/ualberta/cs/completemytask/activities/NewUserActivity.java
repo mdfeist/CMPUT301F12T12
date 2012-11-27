@@ -9,7 +9,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 
-public class NewUserActivity extends Activity {
+public class NewUserActivity extends CustomActivity {
 	
 	/**
 	 *  Used to know what display are we going to 

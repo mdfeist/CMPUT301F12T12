@@ -15,6 +15,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -26,7 +27,7 @@ import android.widget.ListView;
  * @author Michael Feist
  *
  */
-public class MainMenuActivity extends Activity{
+public class MainMenuActivity extends CustomActivity{
 
 	private static final String TAG = "MainMenuActivity";
 	private TaskAdapter adapter;
@@ -135,14 +136,14 @@ public class MainMenuActivity extends Activity{
     	}
     }
     
-    /**
+/*    /**
      * Called when user wants to edit their information.
      * @param A view
      */
-    public void settings(View view) {
+ /*   public void settings(View view) {
     	Intent intent = new Intent(this, SettingsActivity.class);
     	startActivityForResult(intent, Display.SETTINGS.getValue());
-    } 
+    }*/ 
     
     /**
      * Called when the user wants to create a new task.

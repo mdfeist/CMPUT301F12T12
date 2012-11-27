@@ -35,7 +35,7 @@ import android.widget.ListView;
 * 
 * @author Ian Watts
 */
-public class ViewAudioActivity extends Activity {
+public class ViewAudioActivity extends CustomActivity {
 
 	private static final int CAPTURE_AUDIO_REQUEST_CODE = 10;
 	//private static final String TAG = "ViewAudioActivity";

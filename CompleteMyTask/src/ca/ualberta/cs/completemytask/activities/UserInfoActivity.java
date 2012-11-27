@@ -20,7 +20,7 @@ import android.widget.TextView;
  * @author Michael Feist
  * 
  */
-public class UserInfoActivity extends Activity {
+public class UserInfoActivity extends CustomActivity {
 
 	//private static final String TAG = "UserInfoActivity";
 

@@ -29,7 +29,7 @@ import android.widget.TextView;
  * @author 
  *
  */
-public class CommentActivity extends Activity {
+public class CommentActivity extends CustomActivity {
 
 	private static final String TAG = "CommentActivity";
 	private EditText commentEditText;

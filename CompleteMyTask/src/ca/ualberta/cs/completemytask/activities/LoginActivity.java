@@ -21,7 +21,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 @SuppressLint("HandlerLeak")
-public class LoginActivity extends Activity {
+public class LoginActivity extends CustomActivity {
 
 	private static final String TAG = "LoginActivity";
 	

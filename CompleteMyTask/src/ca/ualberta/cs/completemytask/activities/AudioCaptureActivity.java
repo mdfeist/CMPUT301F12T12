@@ -16,7 +16,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 
-public class AudioCaptureActivity extends Activity {
+public class AudioCaptureActivity extends CustomActivity {
 	protected final String TAG = "AudioCaptureActivity";
 	
 	MediaRecorder recorder = new MediaRecorder();

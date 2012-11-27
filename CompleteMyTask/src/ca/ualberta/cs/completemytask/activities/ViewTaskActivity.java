@@ -28,7 +28,7 @@ import android.widget.TextView;
  * 
  */
 
-public class ViewTaskActivity extends Activity {
+public class ViewTaskActivity extends CustomActivity {
 
 	//private static final String TAG = "ViewTaskActivity";
 	

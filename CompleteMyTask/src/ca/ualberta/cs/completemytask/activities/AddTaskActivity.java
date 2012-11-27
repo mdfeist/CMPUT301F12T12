@@ -26,7 +26,7 @@ import android.widget.EditText;
  * @author Michael Feist
  *
  */
-public class AddTaskActivity extends Activity {
+public class AddTaskActivity extends CustomActivity {
 
 	private static final String TAG = "AddTaskActivity";
 	private int position;

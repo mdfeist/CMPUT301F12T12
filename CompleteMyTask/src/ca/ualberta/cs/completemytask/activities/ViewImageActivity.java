@@ -38,7 +38,7 @@ import android.widget.ImageView;
  * 
  * @author Devon Waldon
  */
-public class ViewImageActivity extends Activity {
+public class ViewImageActivity extends CustomActivity {
 
 	private static final int CAPTURE_IMAGE_REQUEST_CODE = 100;
 	//private static final String TAG = "ViewImageActivity";
