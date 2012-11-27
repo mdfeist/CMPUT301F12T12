@@ -178,8 +178,6 @@ public class ViewAudioActivity extends Activity {
   		
 			public boolean handleInBackground(Object o) {
 				
-				task.addAudio(audio);
-				
 				if (task.isPublic()) {
 					//UNCOMMENT
 					//DatabaseManager.getInstance().syncAudio(audio);
@@ -191,6 +189,8 @@ public class ViewAudioActivity extends Activity {
 					//saver.saveAudio(audio);
 					saver.close();
 				}
+				
+				task.addAudio(audio);
 
 				return true;
 			}

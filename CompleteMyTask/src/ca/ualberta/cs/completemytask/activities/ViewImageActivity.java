@@ -26,7 +26,6 @@ import android.graphics.Bitmap;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Gallery;
 import android.widget.ImageView;
 
@@ -70,7 +69,7 @@ public class ViewImageActivity extends Activity {
 		adapter.notifyDataSetChanged();
 		
 		photoGallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			public void onItemClick(AdapterView parent, View v, int position, long id) {
+			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 				updateImagePreview(position);
 			}
 		});
@@ -190,7 +189,6 @@ public class ViewImageActivity extends Activity {
     			if (task.isPublic()) {
     				DatabaseManager.getInstance().syncPhoto(image);
     			}
-				task.addPhoto(image);
 				
 				if (task.isLocal()) {
 					saver.open();
@@ -198,6 +196,9 @@ public class ViewImageActivity extends Activity {
 					saver.close();
 
 				}
+				
+				task.addPhoto(image);
+				
 				return true;
     		}
     	});

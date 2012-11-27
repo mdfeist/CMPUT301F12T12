@@ -57,7 +57,6 @@ public class CommentActivity extends Activity {
     		
     		public void onPostExecute(int response) {
     			int numberOfComments = task.getNumberOfComments();
-    			
     			for (int i = 0; i < numberOfComments; i++) {
     				
     				Comment comment = task.getCommentAt(i);
@@ -151,8 +150,6 @@ public class CommentActivity extends Activity {
     			if (task.isPublic()) {
     				DatabaseManager.getInstance().syncComment(comment);
     			}
-    			
-				task.addComment(comment);
 				
 				if (task.isLocal()) {
 					saver.open();
@@ -160,6 +157,9 @@ public class CommentActivity extends Activity {
 					saver.close();
 
 				}
+				
+				task.addComment(comment);
+				
 				return true;
     		}
     	});
