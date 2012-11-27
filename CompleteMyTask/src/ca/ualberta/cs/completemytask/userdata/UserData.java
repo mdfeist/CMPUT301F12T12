@@ -13,11 +13,12 @@ import java.util.GregorianCalendar;
 public abstract class UserData {
 	
 	User user;
-	GregorianCalendar date;
+	String date;
 	
 	protected long id;
 	protected long localid;
 	protected boolean sync;
+	
 	
 	UserData() {
 		this(null);
@@ -27,7 +28,14 @@ public abstract class UserData {
 		this.user = user;
 		this.sync = true;
 		
-		date = new GregorianCalendar();
+		GregorianCalendar calendarDate = new GregorianCalendar();
+		int year = calendarDate.get(Calendar.YEAR);
+		int month = calendarDate.get(Calendar.MONTH) + 1;
+		int day = calendarDate.get(Calendar.DAY_OF_MONTH);
+		int hour = calendarDate.get(Calendar.HOUR_OF_DAY);
+		int minute = calendarDate.get(Calendar.MINUTE);
+		int second = calendarDate.get(Calendar.SECOND);
+		date = String.format("%d-%d-%d %d:%d:%d", year, month, day, hour, minute, second);
 	}
 	
 	/**
@@ -70,17 +78,12 @@ public abstract class UserData {
 		return false;
 	}
 	
-	public GregorianCalendar getDate() {
+	public String getDate() {
 		return this.date;
 	}
 	
-	public String getDateAsString() {
-		String strDate = String.format("%d-%d-%d", 
-				this.date.get(Calendar.YEAR), 
-				this.date.get(Calendar.MONTH) + 1,
-				this.date.get(Calendar.DAY_OF_MONTH));
-		
-		return strDate;
+	public void setDate(String newDate) {
+		this.date = newDate;
 	}
 	
 	/**
