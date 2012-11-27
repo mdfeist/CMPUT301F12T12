@@ -1,4 +1,4 @@
-package ca.ualberta.cs.completemytask.adaptors;
+package ca.ualberta.cs.completemytask.adapters;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -229,8 +229,8 @@ public class DatabaseManager {
 							boolean audio = (task.getInt("audio") == 1);
 
 							
-							String date_completed = task
-									.getString("date_completed");
+							/*String date_completed = task
+									.getString("date_completed");*/
 							
 							User user = new User(username);
 

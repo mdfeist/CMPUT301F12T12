@@ -71,7 +71,7 @@ public class NotificationSender extends BroadcastReceiver {
     						for (int i = 0; i < notificationsArray.length(); i++) {
     							JSONObject notification = notificationsArray.getJSONObject(i);
 
-    							String id = notification.getString("id");
+    							/*String id = notification.getString("id");*/
     							int type = notification.getInt("type");
     							String from = notification.getString("from_user");
     							String message = notification.getString("message");

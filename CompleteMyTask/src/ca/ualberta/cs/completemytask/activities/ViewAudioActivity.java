@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import ca.ualberta.cs.completemytask.R;
-import ca.ualberta.cs.completemytask.adaptors.AudioAdapter;
+import ca.ualberta.cs.completemytask.adapters.AudioAdapter;
 import ca.ualberta.cs.completemytask.background.BackgroundTask;
 import ca.ualberta.cs.completemytask.background.HandleInBackground;
 import ca.ualberta.cs.completemytask.saving.LocalSaving;

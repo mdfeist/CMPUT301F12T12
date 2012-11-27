@@ -1,4 +1,4 @@
-package ca.ualberta.cs.completemytask.adaptors;
+package ca.ualberta.cs.completemytask.adapters;
 
 import ca.ualberta.cs.completemytask.R;
 import ca.ualberta.cs.completemytask.userdata.Task;

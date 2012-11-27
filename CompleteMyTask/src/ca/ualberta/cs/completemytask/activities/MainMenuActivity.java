@@ -9,7 +9,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import ca.ualberta.cs.completemytask.R;
-import ca.ualberta.cs.completemytask.adaptors.TaskAdapter;
+import ca.ualberta.cs.completemytask.adapters.TaskAdapter;
 import ca.ualberta.cs.completemytask.background.BackgroundTask;
 import ca.ualberta.cs.completemytask.background.HandleInBackground;
 import ca.ualberta.cs.completemytask.database.DatabaseManager;

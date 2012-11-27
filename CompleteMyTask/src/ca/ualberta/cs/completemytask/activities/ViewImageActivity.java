@@ -5,7 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 import ca.ualberta.cs.completemytask.R;
-import ca.ualberta.cs.completemytask.adaptors.ImageAdapter;
+import ca.ualberta.cs.completemytask.adapters.ImageAdapter;
 import ca.ualberta.cs.completemytask.background.BackgroundTask;
 import ca.ualberta.cs.completemytask.background.HandleInBackground;
 import ca.ualberta.cs.completemytask.database.DatabaseManager;
