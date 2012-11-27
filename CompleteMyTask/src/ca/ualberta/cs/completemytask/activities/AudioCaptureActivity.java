@@ -82,6 +82,8 @@ public class AudioCaptureActivity extends CustomActivity {
 			//System.out.println("About to stop...");
 			recorder.stop();
 			//System.out.println("It worked After stop");
+			recorder.reset(); 
+			
 			recorder.release();
 			//System.out.println("Recorder released");
 			
@@ -186,7 +188,8 @@ public class AudioCaptureActivity extends CustomActivity {
 		
 		Intent resultData = new Intent();
 		setResult(Activity.RESULT_CANCELED, resultData);
-		this.finish();
+		//this.finish();
+		finish();
 	}
     
 }
