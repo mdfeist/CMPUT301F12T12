@@ -1,5 +1,7 @@
 package ca.ualberta.cs.completemytask.activities;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 import ca.ualberta.cs.completemytask.R;
@@ -22,6 +24,8 @@ import android.provider.MediaStore;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
+import android.graphics.BitmapFactory;
 //import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -163,8 +167,10 @@ public class ViewImageActivity extends Activity {
 		}
 		
 		newPhoto = Bitmap.createScaledBitmap(newPhoto, width, height, false);
-		
-		return newPhoto;
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		newPhoto.compress(CompressFormat.PNG, 50, out);
+		Bitmap bitmap = BitmapFactory.decodeStream(new ByteArrayInputStream(out.toByteArray()));
+		return bitmap;
 	}
 
 	/**
