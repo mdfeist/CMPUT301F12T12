@@ -159,21 +159,18 @@ public class ViewImageActivity extends Activity {
 		Bitmap bitmap = BitmapFactory.decodeStream(new ByteArrayInputStream(out.toByteArray()));
 		
 		int width, height;
-		double ratio;
 		
 		int size = 320;
 		
 		if (bitmap.getWidth() > bitmap.getHeight()) {
 			width = size;
-			ratio = width/bitmap.getWidth();
-			height = (int)(bitmap.getHeight()*ratio);
+			height = Math.round(size * ((float)bitmap.getHeight()/bitmap.getWidth()));
 		} else {
 			height = size;
-			ratio = height/bitmap.getHeight();
-			width = (int)(bitmap.getWidth()*ratio);
+			width = Math.round(size * ((float)bitmap.getWidth()/bitmap.getHeight()));
 		}
 		
-		bitmap = Bitmap.createScaledBitmap(bitmap, width, height, false);
+		bitmap = Bitmap.createScaledBitmap(bitmap, width, height, true);
 		
 		return bitmap;
 	}
