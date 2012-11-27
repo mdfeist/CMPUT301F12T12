@@ -1,4 +1,4 @@
-package ca.ualberta.cs.completemytask.userdata;
+package ca.ualberta.cs.completemytask.adaptors;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import ca.ualberta.cs.completemytask.R;
+import ca.ualberta.cs.completemytask.userdata.Task;
+import ca.ualberta.cs.completemytask.userdata.User;
 
 import android.widget.BaseAdapter;
 import android.widget.ListView;

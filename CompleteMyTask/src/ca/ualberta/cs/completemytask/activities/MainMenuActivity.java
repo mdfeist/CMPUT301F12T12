@@ -1,13 +1,13 @@
 package ca.ualberta.cs.completemytask.activities;
 
 import ca.ualberta.cs.completemytask.R;
+import ca.ualberta.cs.completemytask.adaptors.TaskAdapter;
 import ca.ualberta.cs.completemytask.background.BackgroundTask;
 import ca.ualberta.cs.completemytask.background.HandleInBackground;
 import ca.ualberta.cs.completemytask.database.DatabaseManager;
 import ca.ualberta.cs.completemytask.saving.LocalSaving;
 import ca.ualberta.cs.completemytask.settings.Settings;
 import ca.ualberta.cs.completemytask.userdata.Task;
-import ca.ualberta.cs.completemytask.userdata.TaskAdapter;
 import ca.ualberta.cs.completemytask.userdata.TaskManager;
 import ca.ualberta.cs.completemytask.views.LoadingView;
 import android.os.Bundle;

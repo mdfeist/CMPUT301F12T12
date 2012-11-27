@@ -5,12 +5,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 import ca.ualberta.cs.completemytask.R;
+import ca.ualberta.cs.completemytask.adaptors.ImageAdapter;
 import ca.ualberta.cs.completemytask.background.BackgroundTask;
 import ca.ualberta.cs.completemytask.background.HandleInBackground;
 import ca.ualberta.cs.completemytask.database.DatabaseManager;
 import ca.ualberta.cs.completemytask.saving.LocalSaving;
 import ca.ualberta.cs.completemytask.settings.Settings;
-import ca.ualberta.cs.completemytask.userdata.ImageAdapter;
 import ca.ualberta.cs.completemytask.userdata.MyPhoto;
 import ca.ualberta.cs.completemytask.userdata.Task;
 import ca.ualberta.cs.completemytask.userdata.TaskManager;

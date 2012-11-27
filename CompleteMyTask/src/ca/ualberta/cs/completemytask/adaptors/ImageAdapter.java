@@ -1,8 +1,9 @@
-package ca.ualberta.cs.completemytask.userdata;
+package ca.ualberta.cs.completemytask.adaptors;
 
 //import java.util.ArrayList;
 //import java.util.List;
 
+import ca.ualberta.cs.completemytask.userdata.Task;
 import android.content.Context;
 //import android.graphics.Bitmap;
 import android.view.View;

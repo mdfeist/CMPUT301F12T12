@@ -3,12 +3,12 @@ package ca.ualberta.cs.completemytask.activities;
 //import java.io.File;
 
 import ca.ualberta.cs.completemytask.R;
+import ca.ualberta.cs.completemytask.adaptors.AudioAdapter;
 import ca.ualberta.cs.completemytask.background.BackgroundTask;
 import ca.ualberta.cs.completemytask.background.HandleInBackground;
 import ca.ualberta.cs.completemytask.database.DatabaseManager;
 import ca.ualberta.cs.completemytask.saving.LocalSaving;
 import ca.ualberta.cs.completemytask.settings.Settings;
-import ca.ualberta.cs.completemytask.userdata.AudioAdapter;
 import ca.ualberta.cs.completemytask.userdata.MyAudio;
 import ca.ualberta.cs.completemytask.userdata.Task;
 import ca.ualberta.cs.completemytask.userdata.TaskManager;
