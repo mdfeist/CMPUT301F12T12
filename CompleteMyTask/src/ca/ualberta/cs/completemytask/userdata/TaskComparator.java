@@ -14,13 +14,15 @@ public class TaskComparator implements Comparator<Task>{
  
     public int compare(Task task1, Task task2) {
  
-    	boolean shared1 = task1.isPublic();
-    	boolean shared2 = task2.isPublic();
-        
+    	int sharedOrder1 = (task1.isPublic() ? 1 : 0) + (task1.isComplete() ? 2 : 0);
+    	int sharedOrder2 = (task2.isPublic() ? 1 : 0) + (task2.isComplete() ? 2 : 0);
+    	
+    	int sharedOrder = sharedOrder1 - sharedOrder2;
+    	
         // Compare if Shared
-        if (shared1 && !shared2){
+        if (sharedOrder > 0){
             return +1;
-        }else if (!shared1 && shared2){
+        }else if (sharedOrder < 0){
             return -1;
         }else{
         	String date1 = task1.getDate();

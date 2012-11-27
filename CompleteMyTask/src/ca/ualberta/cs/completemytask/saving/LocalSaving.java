@@ -263,6 +263,12 @@ public class LocalSaving {
 				SQLiteHelper.COLUMN_PARENT_ID, SQLiteHelper.COLUMN_GLOBALID,
 				SQLiteHelper.COLUMN_PARENT_GLOBALID, SQLiteHelper.COLUMN_PHOTO,
 				SQLiteHelper.COLUMN_USER, SQLiteHelper.COLUMN_TIME };
+		
+		String[] col_audios = { SQLiteHelper.COLUMN_ID,
+				SQLiteHelper.COLUMN_PARENT_ID, SQLiteHelper.COLUMN_GLOBALID,
+				SQLiteHelper.COLUMN_PARENT_GLOBALID, SQLiteHelper.COLUMN_AUDIO_NAME, 
+				SQLiteHelper.COLUMN_AUDIO,
+				SQLiteHelper.COLUMN_USER, SQLiteHelper.COLUMN_TIME };
 
 		// Get Tasks
 		Cursor cursor = database.query(SQLiteHelper.TABLE_TASKS, col, null,
@@ -307,6 +313,22 @@ public class LocalSaving {
 				}
 	
 				cursor_photo.close();
+				
+				// Get Audios for Task
+				Cursor cursor_audio = database.query(SQLiteHelper.TABLE_AUDIOS,
+						col_audios, SQLiteHelper.COLUMN_PARENT_ID + " = ?",
+						new String[] { String.valueOf(task.getLocalId()) }, null,
+						null, SQLiteHelper.COLUMN_TIME +" ASC");
+				
+				cursor_audio.moveToFirst();
+				while (!cursor_audio.isAfterLast()) {
+					MyAudio audio = cursorToAudio(cursor_audio);
+					task.addAudio(audio);
+					Log.v(TAG, "Loading Audio");
+					cursor_audio.moveToNext();
+				}
+	
+				cursor_audio.close();
 			}
 
 			cursor.moveToNext();
@@ -382,5 +404,27 @@ public class LocalSaving {
 		photo.setDate(cursor.getString(6));
 
 		return photo;
+	}
+	
+	private MyAudio cursorToAudio(Cursor cursor) {
+		MyAudio audio = new MyAudio();
+
+		audio.setLocalId(cursor.getLong(0));
+		audio.setLocalParentId(cursor.getLong(1));
+
+		audio.setId(cursor.getLong(2));
+		audio.setParentId(cursor.getLong(3));
+
+		audio.setAudioName(cursor.getString(4));
+		audio.setAudioFromString(cursor.getString(5));
+
+		User user = new User();
+		user.setUserName(cursor.getString(6));
+
+		audio.setUser(user);
+		
+		audio.setDate(cursor.getString(7));
+
+		return audio;
 	}
 }

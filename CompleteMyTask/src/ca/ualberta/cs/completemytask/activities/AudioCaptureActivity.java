@@ -138,10 +138,18 @@ public class AudioCaptureActivity extends CustomActivity {
     }
     
     public void recordReset(View view){
-    	//If the File Exists
+    	if (tempAudioFile != null){
     	//	delete the file
-    	//else
-    	//	put the MediaRecorder back into prepare(check android dev)
+    	//  Reset
+    		recorder.reset(); 
+    	}
+    	else {
+//    		put the MediaRecorder back into prepare(check android dev)
+    		recorder.reset(); 
+    	}
+    		
+    	
+    
     }
     
     public void submitAudio(View view){
@@ -164,6 +172,13 @@ public class AudioCaptureActivity extends CustomActivity {
 	 */
 	public void close(View view) {
 		//delete the outstanding file?
+		//File file = new File(selectedFilePath);
+//		boolean deleted = file.delete();
+//		file.getAbsolutePath(returnAudio);
+//		boolean deleted = file.delete();
+		
+		//Exit mediarecorder if it is running.
+		
 		Intent resultData = new Intent();
 		setResult(Activity.RESULT_CANCELED, resultData);
 		this.finish();
