@@ -78,98 +78,13 @@ public class MainMenuTest extends ActivityInstrumentationTestCase2<MainMenuActiv
 	 */
 	private void insertFakeTaskIntoDatabase() {
 		
-		HttpClient httpClient = new DefaultHttpClient();
-		
-		Task task = new Task(taskName, taskDescription);
-		task.setRequirements(testNeedsComment, testNeedsPhoto, testNeedsAudio);
-		task.setPublic(true);
-		task.setLocal(testIsLocal);
-		task.setComplete(testIsComplete);
-		task.setUser(new User(userName));
-		
-		for(int i = 0; i < numberOfComments; i++) {
-			Comment comment = new Comment();
-			comment.setContent(commentText + (i + 1));
-			task.addComment(comment);
-		}
-		
-		for(int i = 0; i < numberOfPhotos; i++) {
-			MyPhoto photo = new MyPhoto();
-			task.addPhoto(photo);
-		}
-		
-		for(int i = 0; i < numberOfAudio; i++) {
-			MyAudio audio = new MyAudio();
-			task.addAudio(audio);
-		}
-		
-		try {
-			String post = String
-					.format("%s?action=post&summary=%s&description=%s",
-							DatabaseManager.getDatabaseURL(),
-							"Task", task.getDateAsString());
-			
-			String save = String.format("content=%s&id=%s", task.toJSON(), task.getId());
-			
-
-			HttpPost request = new HttpPost(post);
-
-			StringEntity se = new StringEntity(save);	
-			
-			request.setEntity(se);
-			
-			request.setHeader("Connection", "keep-alive");
-			request.setHeader("Accept", "application/json");
-			request.setHeader("Content-type", "application/x-www-form-urlencoded");
-			
-			ResponseHandler<String> responseHandler = new BasicResponseHandler();
-			httpClient.execute(request, responseHandler);
-
-
-		} catch (ClientProtocolException e) {
-			assertTrue("ClientProtocolException: " + e.toString(), true);
-		} catch (IOException e) {
-			assertTrue("IOException: " + e.toString(), true);
-		} finally {
-			httpClient.getConnectionManager().shutdown();
-		}
 	}
 	
 	/**
 	 * Removes the fake data
 	 */
 	private void removeFakeTaskFromDatabase(Task task) {
-		HttpClient httpClient = new DefaultHttpClient();
 		
-		try {
-			String post = String
-					.format("%s?action=remove",
-							DatabaseManager.getDatabaseURL());
-			
-			String save = String.format("id=%s", task.getId());
-			
-
-			HttpPost request = new HttpPost(post);
-
-			StringEntity se = new StringEntity(save);	
-			
-			request.setEntity(se);
-			
-			request.setHeader("Connection", "keep-alive");
-			request.setHeader("Accept", "application/json");
-			request.setHeader("Content-type", "application/x-www-form-urlencoded");
-			
-			ResponseHandler<String> responseHandler = new BasicResponseHandler();
-			httpClient.execute(request, responseHandler);
-
-
-		} catch (ClientProtocolException e) {
-			assertTrue("ClientProtocolException: " + e.toString(), true);
-		} catch (IOException e) {
-			assertTrue("IOException: " + e.toString(), true);
-		} finally {
-			httpClient.getConnectionManager().shutdown();
-		}
 	}
 	
 	/**
