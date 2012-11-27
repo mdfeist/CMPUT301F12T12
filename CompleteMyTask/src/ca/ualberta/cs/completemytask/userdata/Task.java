@@ -7,6 +7,8 @@ import org.json.JSONObject;
 import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * Stores a information about a task.
@@ -34,6 +36,13 @@ public class Task extends UserData {
 	private List<MyPhoto> photos;
 	private List<MyAudio> audios;
 	
+	private Set<Long> localComments;
+	private Set<Long> globalComments;
+	private Set<Long> localPhotos;
+	private Set<Long> globalPhotos;
+	private Set<Long> localAudios;
+	private Set<Long> globalAudios;
+	
 	private int numOfCommentsOnServer;
 	private int numOfPhotosOnServer;
 	private int numOfAudiosOnServer;
@@ -58,6 +67,13 @@ public class Task extends UserData {
 		this.comments = new ArrayList<Comment>();
 		this.photos = new ArrayList<MyPhoto>();
 		this.audios = new ArrayList<MyAudio>();
+		
+		this.localComments = new TreeSet<Long>();
+		this.globalComments = new TreeSet<Long>();
+		this.localPhotos = new TreeSet<Long>();
+		this.globalPhotos = new TreeSet<Long>();
+		this.localAudios = new TreeSet<Long>();
+		this.globalAudios = new TreeSet<Long>();
 		
 		this.numOfCommentsOnServer = 0;
 		this.numOfPhotosOnServer = 0;
@@ -95,6 +111,16 @@ public class Task extends UserData {
 	 * @param A comment
 	 */
 	public void addComment(Comment comment) {
+		
+		if (this.localComments.contains(comment.getLocalId()))
+			return;
+		
+		if (this.globalComments.contains(comment.getId()))
+			return;
+		
+		this.localComments.add(comment.getLocalId());
+		this.globalComments.add(comment.getId());
+		
 		comment.setLocalParentId(this.getLocalId());
 		this.comments.add(comment);
 	}
@@ -121,6 +147,16 @@ public class Task extends UserData {
 	 * @param A photo
 	 */
 	public void addPhoto(MyPhoto photo) {
+		if (this.localPhotos.contains(photo.getLocalId()))
+			return;
+		
+		if (this.globalPhotos.contains(photo.getId()))
+			return;
+		
+		this.localPhotos.add(photo.getLocalId());
+		this.globalPhotos.add(photo.getId());
+		
+		photo.setLocalParentId(this.getLocalId());
 		this.photos.add(photo);
 	}
 	
@@ -146,6 +182,16 @@ public class Task extends UserData {
 	 * @param An audio file
 	 */
 	public void addAudio(MyAudio audio) {
+		if (this.localAudios.contains(audio.getLocalId()))
+			return;
+		
+		if (this.globalAudios.contains(audio.getId()))
+			return;
+		
+		this.localAudios.add(audio.getLocalId());
+		this.globalAudios.add(audio.getId());
+		
+		audio.setLocalParentId(this.getLocalId());
 		this.audios.add(audio);
 	}
 	
