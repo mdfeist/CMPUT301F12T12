@@ -151,15 +151,14 @@ public class ViewImageActivity extends Activity {
 		Bundle extras = intent.getExtras();
 		Bitmap newPhoto = (Bitmap) extras.get("data");
 		
-		
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		newPhoto.compress(CompressFormat.PNG, 25, out);
+		newPhoto.compress(CompressFormat.PNG, 50, out);
 		Bitmap bitmap = BitmapFactory.decodeStream(new ByteArrayInputStream(out.toByteArray()));
 		
 		int width, height;
 		double ratio;
 		
-		int size = 128;
+		int size = 320;
 		
 		if (bitmap.getWidth() > bitmap.getHeight()) {
 			width = size;
