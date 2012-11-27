@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
-import android.widget.ListAdapter;
+//import android.widget.ListAdapter;
 import android.widget.ListView;
 import ca.ualberta.cs.completemytask.R;
 import ca.ualberta.cs.completemytask.adapters.AudioAdapter;
@@ -33,7 +33,7 @@ public class ViewAudioActivity extends CustomActivity {
 	private static final int CAPTURE_AUDIO_REQUEST_CODE = 10;
 	//private static final String TAG = "ViewAudioActivity";
 	AudioAdapter adapter;
-	ListAdapter adapterList;
+	//ListAdapter adapterList;
 	ListView audioListEntries;
 	private Task task;
 	
