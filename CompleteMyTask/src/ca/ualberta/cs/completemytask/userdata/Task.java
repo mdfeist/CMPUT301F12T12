@@ -112,10 +112,10 @@ public class Task extends UserData {
 	 */
 	public void addComment(Comment comment) {
 		
-		if (this.localComments.contains(comment.getLocalId()))
+		if (this.localComments.contains(comment.getLocalId()) && comment.getLocalId() != 0)
 			return;
 		
-		if (this.globalComments.contains(comment.getId()))
+		if (this.globalComments.contains(comment.getId()) && comment.getId() != 0)
 			return;
 		
 		this.localComments.add(comment.getLocalId());
@@ -147,10 +147,10 @@ public class Task extends UserData {
 	 * @param A photo
 	 */
 	public void addPhoto(MyPhoto photo) {
-		if (this.localPhotos.contains(photo.getLocalId()))
+		if (this.localPhotos.contains(photo.getLocalId()) && photo.getLocalId() != 0)
 			return;
 		
-		if (this.globalPhotos.contains(photo.getId()))
+		if (this.globalPhotos.contains(photo.getId()) && photo.getId() != 0)
 			return;
 		
 		this.localPhotos.add(photo.getLocalId());
@@ -182,10 +182,10 @@ public class Task extends UserData {
 	 * @param An audio file
 	 */
 	public void addAudio(MyAudio audio) {
-		if (this.localAudios.contains(audio.getLocalId()))
+		if (this.localAudios.contains(audio.getLocalId()) && audio.getLocalId() != 0)
 			return;
 		
-		if (this.globalAudios.contains(audio.getId()))
+		if (this.globalAudios.contains(audio.getId()) && audio.getId() != 0)
 			return;
 		
 		this.localAudios.add(audio.getLocalId());
