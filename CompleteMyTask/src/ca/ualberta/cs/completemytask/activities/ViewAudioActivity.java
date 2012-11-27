@@ -184,7 +184,6 @@ public class ViewAudioActivity extends Activity {
 					//UNCOMMENT
 					//DatabaseManager.getInstance().syncAudio(audio);
 				}
-				task.addAudio(audio);
 				
 				if (task.isLocal()) {
 					saver.open();
