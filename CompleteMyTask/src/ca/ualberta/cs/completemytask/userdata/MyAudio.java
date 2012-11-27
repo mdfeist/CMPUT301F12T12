@@ -7,9 +7,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.util.Base64;
 import android.util.Log;
 
