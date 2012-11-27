@@ -3,22 +3,20 @@ package ca.ualberta.cs.completemytask.activities;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import ca.ualberta.cs.completemytask.R;
-import ca.ualberta.cs.completemytask.database.DatabaseManager;
-import ca.ualberta.cs.completemytask.settings.Settings;
-import ca.ualberta.cs.completemytask.userdata.User;
-
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import ca.ualberta.cs.completemytask.R;
+import ca.ualberta.cs.completemytask.database.DatabaseManager;
+import ca.ualberta.cs.completemytask.settings.Settings;
+import ca.ualberta.cs.completemytask.userdata.User;
 
 @SuppressLint("HandlerLeak")
 public class LoginActivity extends CustomActivity {

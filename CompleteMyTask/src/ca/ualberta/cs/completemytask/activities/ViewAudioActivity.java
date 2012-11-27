@@ -2,10 +2,15 @@ package ca.ualberta.cs.completemytask.activities;
 
 //import java.io.File;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.View;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import ca.ualberta.cs.completemytask.R;
 import ca.ualberta.cs.completemytask.background.BackgroundTask;
 import ca.ualberta.cs.completemytask.background.HandleInBackground;
-import ca.ualberta.cs.completemytask.database.DatabaseManager;
 import ca.ualberta.cs.completemytask.saving.LocalSaving;
 import ca.ualberta.cs.completemytask.settings.Settings;
 import ca.ualberta.cs.completemytask.userdata.AudioAdapter;
@@ -14,18 +19,6 @@ import ca.ualberta.cs.completemytask.userdata.Task;
 import ca.ualberta.cs.completemytask.userdata.TaskManager;
 import ca.ualberta.cs.completemytask.userdata.User;
 import ca.ualberta.cs.completemytask.views.LoadingView;
-
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.app.Activity;
-import android.content.Intent;
-import android.util.Log;
-import android.view.Menu;
-import android.view.View;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 
 /**
 * Handles the viewing and adding of Audio to each Task.

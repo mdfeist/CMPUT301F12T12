@@ -6,15 +6,14 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
-import ca.ualberta.cs.completemytask.R;
-import android.media.MediaRecorder;
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
-import android.util.Base64;
+import android.media.MediaRecorder;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import ca.ualberta.cs.completemytask.R;
 
 public class AudioCaptureActivity extends CustomActivity {
 	protected final String TAG = "AudioCaptureActivity";

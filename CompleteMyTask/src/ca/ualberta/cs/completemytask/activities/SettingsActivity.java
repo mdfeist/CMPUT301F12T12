@@ -1,16 +1,15 @@
 package ca.ualberta.cs.completemytask.activities;
 
-import ca.ualberta.cs.completemytask.R;
-import ca.ualberta.cs.completemytask.settings.SettingsItem;
-import ca.ualberta.cs.completemytask.settings.SettingsListAdapter;
-import android.os.Bundle;
-import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
+import ca.ualberta.cs.completemytask.R;
+import ca.ualberta.cs.completemytask.settings.SettingsItem;
+import ca.ualberta.cs.completemytask.settings.SettingsListAdapter;
 
 public class SettingsActivity extends CustomActivity {
 
