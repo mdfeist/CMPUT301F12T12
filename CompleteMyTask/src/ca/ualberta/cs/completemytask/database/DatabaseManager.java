@@ -241,6 +241,7 @@ public class DatabaseManager {
 							t.setDescription(description);
 							t.setComplete(completed);
 							t.setRequirements(comment, photo, audio);
+							t.setDate(date_created);
 							t.setPublic(true);
 							t.setLocal(false);
 
@@ -302,6 +303,7 @@ public class DatabaseManager {
 							c.setId(id);
 							c.setParentId(task.getId());
 							c.setContent(content);
+							c.setDate(date_created);
 
 							task.addComment(c);
 
@@ -361,6 +363,7 @@ public class DatabaseManager {
 							p.setId(id);
 							p.setParentId(task.getId());
 							p.setImageFromString(content);
+							p.setDate(date_created);
 
 							task.addPhoto(p);
 
@@ -404,7 +407,7 @@ public class DatabaseManager {
 		int photo = task.needsPhoto() ? 1 : 0;
 		int audio = task.needsAudio() ? 1 : 0;
 
-		String date_created = "";
+		String date_created = task.getDate();
 		String date_completed = "";
 
 		// Building Parameters
@@ -472,7 +475,7 @@ public class DatabaseManager {
 
 			String content = comment.getContent();
 
-			String date_created = "";
+			String date_created = comment.getDate();
 
 			// Building Parameters
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -535,7 +538,7 @@ public class DatabaseManager {
 
 			String content = photo.getImageAsString();
 
-			String date_created = "";
+			String date_created = photo.getDate();;
 
 			// Building Parameters
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
