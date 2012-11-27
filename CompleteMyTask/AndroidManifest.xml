@@ -85,7 +85,6 @@
         <receiver android:name="ca.ualberta.cs.completemytask.notification.NotificationAutoStart" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
-
                 <category android:name="android.intent.category.HOME" />
             </intent-filter>
         </receiver>
