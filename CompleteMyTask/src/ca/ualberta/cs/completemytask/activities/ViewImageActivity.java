@@ -96,11 +96,17 @@ public class ViewImageActivity extends Activity {
     		}
     	});
 	}
-
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.activity_view_image, menu);
 		return true;
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		adapter.notifyDataSetChanged();
 	}
 	
 	/**
@@ -140,6 +146,24 @@ public class ViewImageActivity extends Activity {
 	private Bitmap getBitmap(Intent intent) {
 		Bundle extras = intent.getExtras();
 		Bitmap newPhoto = (Bitmap) extras.get("data");
+		
+		int width, height;
+		double ratio;
+		
+		int size = 640;
+		
+		if (newPhoto.getWidth() > newPhoto.getHeight()) {
+			width = size;
+			ratio = width/newPhoto.getWidth();
+			height = (int)(newPhoto.getHeight()*ratio);
+		} else {
+			height = size;
+			ratio = height/newPhoto.getHeight();
+			width = (int)(newPhoto.getWidth()*ratio);
+		}
+		
+		newPhoto = Bitmap.createScaledBitmap(newPhoto, width, height, false);
+		
 		return newPhoto;
 	}
 
@@ -148,6 +172,7 @@ public class ViewImageActivity extends Activity {
 	 * @param b
 	 */
 	private void addImage(Bitmap b){
+		
 		MyPhoto image = new MyPhoto();
 		image.setContent(b);
 

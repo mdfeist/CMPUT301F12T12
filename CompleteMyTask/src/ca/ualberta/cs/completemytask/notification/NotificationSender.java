@@ -85,6 +85,7 @@ public class NotificationSender extends BroadcastReceiver {
     							}
     							
     							Intent intent = new Intent(context, MainMenuActivity.class);
+    							intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
     							showNotification(context, title, message, intent);
     							
     							//DatabaseManager.getInstance().deleteNotifications(id);

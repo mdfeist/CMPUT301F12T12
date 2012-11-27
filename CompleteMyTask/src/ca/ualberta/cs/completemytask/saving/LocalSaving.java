@@ -284,6 +284,8 @@ public class LocalSaving {
 		user.setEmail(cursor.getString(9));
 
 		task.setUser(user);
+		
+		task.setDate(cursor.getString(10));
 
 		return task;
 	}
@@ -303,6 +305,8 @@ public class LocalSaving {
 		user.setUserName(cursor.getString(5));
 
 		comment.setUser(user);
+		
+		comment.setDate(cursor.getString(6));
 
 		return comment;
 	}
@@ -322,6 +326,8 @@ public class LocalSaving {
 		user.setUserName(cursor.getString(5));
 
 		photo.setUser(user);
+		
+		photo.setDate(cursor.getString(6));
 
 		return photo;
 	}

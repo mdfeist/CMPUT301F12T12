@@ -349,8 +349,10 @@ public class DatabaseManager {
 						JSONObject photo = photosArray.getJSONObject(i);
 
 						int id = photo.getInt("id");
-
+						
+						Log.v(TAG, "Adding Photo with ID: " + id);
 						if (!this.photos.containsKey(Long.valueOf((long) id))) {
+							Log.v(TAG, "Creating Photo");
 							String username = photo.getString("username");
 							String content = photo.getString("photo");
 							String date_created = photo
@@ -364,8 +366,10 @@ public class DatabaseManager {
 							p.setParentId(task.getId());
 							p.setImageFromString(content);
 							p.setDate(date_created);
-
+							
+							Log.v(TAG, "Adding Photo");
 							task.addPhoto(p);
+							Log.v(TAG, "Task has " + task.getNumberOfPhotos() + " photos");
 
 							this.photos.put(Long.valueOf(p.getId()), p);
 						}
@@ -622,7 +626,7 @@ public class DatabaseManager {
 		for (int i = 0; i < task.getNumberOfPhotos(); i++) {
 			MyPhoto photo = task.getPhotoAt(i);
 			photo.setParentId(task.getId());
-
+			syncPhoto(photo);
 		}
 
 	}
