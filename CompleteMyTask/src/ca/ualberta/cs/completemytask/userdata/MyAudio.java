@@ -140,15 +140,14 @@ public class MyAudio extends ChildUserData implements UserContent<byte[]> {
 		return decodedByteArray;
 	}
 	
-	/*  This part of the code might be unnecessary
 	/**
 	 * Decodes a string into an audio file and then
 	 * sets "audio" in my MyAudio to the decoded bitmap.
 	 * @param audioString
-	 
+	 */
 	public void setAudioFromString(String audioString) {
-		this.audio = getAudioFromString(audioString);
+		this.audio = getByteFromString(audioString);
 	}
-	*/
+	
 }
 
