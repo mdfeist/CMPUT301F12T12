@@ -153,13 +153,13 @@ public class ViewImageActivity extends Activity {
 		
 		
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		newPhoto.compress(CompressFormat.PNG, 50, out);
+		newPhoto.compress(CompressFormat.PNG, 25, out);
 		Bitmap bitmap = BitmapFactory.decodeStream(new ByteArrayInputStream(out.toByteArray()));
 		
 		int width, height;
 		double ratio;
 		
-		int size = 320;
+		int size = 128;
 		
 		if (bitmap.getWidth() > bitmap.getHeight()) {
 			width = size;
