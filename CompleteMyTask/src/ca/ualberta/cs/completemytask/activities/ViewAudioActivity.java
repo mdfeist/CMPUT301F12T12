@@ -2,12 +2,25 @@ package ca.ualberta.cs.completemytask.activities;
 
 //import java.io.File;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+//import android.util.Base64;
+//import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 //import android.widget.ListAdapter;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+
 import ca.ualberta.cs.completemytask.R;
 import ca.ualberta.cs.completemytask.adapters.AudioAdapter;
 import ca.ualberta.cs.completemytask.background.BackgroundTask;
@@ -40,6 +53,9 @@ public class ViewAudioActivity extends CustomActivity {
 	private LoadingView loadingView;
 	public LocalSaving saver;
 	
+	private MediaPlayer   mPlayer = null;
+	
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -54,11 +70,8 @@ public class ViewAudioActivity extends CustomActivity {
 		task = TaskManager.getInstance().getTaskAt(position);
 		
 		audioListEntries = (ListView) findViewById(R.id.AudioList);
-		
-		//Pass the text along with the byte Array
+		 
 		adapter = new AudioAdapter(this, task);
-
-		////
 		
 		audioListEntries.setAdapter(adapter);
 		adapter.notifyDataSetChanged();
@@ -90,6 +103,70 @@ public class ViewAudioActivity extends CustomActivity {
 				return true;
     		}
     	});
+    	
+		//Following code block sets up a listener to select and delete log entries
+	    audioListEntries.setTextFilterEnabled(true);
+	    audioListEntries.setOnItemClickListener(new OnItemClickListener() {
+	    
+	    	public void onItemClick(AdapterView<?> arg0, View v, final int position, long id) {	    		
+	    		System.out.println("Item pressed!");
+	    		
+	    		System.out.println("At Position"+position);
+	    		
+	    		//private void startPlaying() {
+
+	    	        
+	    	    AlertDialog.Builder adb = new AlertDialog.Builder(ViewAudioActivity.this);
+	    	    adb.setTitle("Audio Playback");
+		    	adb.setMessage("Do you want play "+ task.getAudioAt(position).getAudioName());
+		    		
+		    	//Close/Stop button Might switch so it's on the right
+		    	adb.setNegativeButton("Close", new AlertDialog.OnClickListener(){
+	                public void onClick(DialogInterface dialog, int which) {
+	                	System.out.println("Future Stop button pressed!");
+	                	
+	                	if (mPlayer != null){
+	                		mPlayer.release();
+	                		mPlayer = null;
+	                	}
+	                }
+		    	});
+		    		
+		    	//Play button for audio
+		    	adb.setPositiveButton("Play", new AlertDialog.OnClickListener() {
+		    		public void onClick(DialogInterface dialog, int which) {
+		               System.out.println("STARTED THE AUDIO");
+		                
+		               //Reset the media player incase they were just playing a clip
+		               if (mPlayer != null){
+		            	   mPlayer.release();
+		            	   mPlayer = null;
+		               }
+		                	
+		               //Open a player for the audio
+			    	   mPlayer = new MediaPlayer();
+			    	   try {
+			    	        	
+			    		   //Make a file from the byte[]
+			    	       File tempFile = getFileFromByte(task.getAudioAt(position).getContent());
+			    	        	
+			    	       //Must convert the Audio to File (make a tempFile for this)
+			    	       mPlayer.setDataSource(tempFile.getAbsolutePath());
+			    	       mPlayer.prepare();
+			    	       mPlayer.start();
+			    	   } catch (IOException e) {
+			    	       e.printStackTrace();
+			    	   }
+		                	
+		                	
+		            }
+		                	
+		       });  		
+		       adb.show();                     
+	    		
+	    	}
+	    });
+    	
   }
   
   @Override
@@ -99,15 +176,50 @@ public class ViewAudioActivity extends CustomActivity {
   }
   
 	/**
+	 * Takes a string, decodes it and then writes it as
+	 * a file to the SD card
+	 * 
+	 * @param audioString
+	 * @return Audio File
+	 */
+	public File getFileFromByte(byte[] decodedByteArray) {
+		
+		//This will be split into a new part
+		File decodedAudio = new File(android.os.Environment.getExternalStorageDirectory()+"/Record/test.3gp");
+		try {
+			FileOutputStream fos = new FileOutputStream(decodedAudio);
+			fos.write(decodedByteArray);
+			fos.flush();
+			fos.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return decodedAudio;
+	}
+  
+  
+  
+	/**
 	 * Calls for the AudioCaptureActivity to return an audio file
 	 * Extra --> UserID and the Title EditText?
 	 * @param view
 	 */
-  public void takeAudio(View view) {	  
-		Intent intentAudio = new Intent(this, AudioCaptureActivity.class);
+	public void takeAudio(View view) {	
+	  	
+	  if (mPlayer != null){
+		mPlayer.release();
+     	mPlayer = null;
+	  }
+	  
+	  Intent intentAudio = new Intent(this, AudioCaptureActivity.class);
 		
-		startActivityForResult(intentAudio, CAPTURE_AUDIO_REQUEST_CODE);
-  }
+	  startActivityForResult(intentAudio, CAPTURE_AUDIO_REQUEST_CODE);
+	}
   
 	/**
 	 * Gets the byte[] out of an intent. 
@@ -184,7 +296,6 @@ public class ViewAudioActivity extends CustomActivity {
 				
 				if (task.isLocal()) {
 					saver.open();
-					//UNCOMMENT
 					saver.saveAudio(audio);
 					saver.close();
 				}
@@ -219,6 +330,12 @@ public class ViewAudioActivity extends CustomActivity {
 	 * @param view
 	 */
 	public void close(View view) {
+		
+		if (mPlayer != null){
+			mPlayer.release();
+		    mPlayer = null;
+		}
+		
 		this.finish();
 	}
 }
