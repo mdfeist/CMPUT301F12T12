@@ -104,13 +104,7 @@ public class ViewAudioActivity extends CustomActivity {
 	 * @param view
 	 */
   public void takeAudio(View view) {	  
-	    //Getting an error in eclipse when trying to add and activity for this...
 		Intent intentAudio = new Intent(this, AudioCaptureActivity.class);
-		//Intent intentAudio = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-		
-		//Do I want to pass something extra to the intent?
-		//Some sort of container?
-		//intent.putExtra(MediaStore.ACTION_IMAGE_CAPTURE, imageFileUri);
 		
 		startActivityForResult(intentAudio, CAPTURE_AUDIO_REQUEST_CODE);
   }
