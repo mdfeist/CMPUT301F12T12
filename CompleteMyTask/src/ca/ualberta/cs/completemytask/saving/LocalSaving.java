@@ -175,7 +175,7 @@ public class LocalSaving {
 		values.put(SQLiteHelper.COLUMN_AUDIO, audio.getStringFromAudio());
 		values.put(SQLiteHelper.COLUMN_USER, userName);
 
-		Log.v(TAG, "Saving photo: " + audio.getAudioName());
+		Log.v(TAG, "Saving audio: " + audio.getAudioName());
 
 		if (audio.getLocalId() == 0) {
 			// Insert
