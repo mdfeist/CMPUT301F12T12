@@ -30,6 +30,8 @@
     <string name="AudioStopButton">Stop</string>
 	<string name="AudioResetButton">Reset</string>
 	<string name="AudioSubmitButton">Submit</string>
+	<string name="AudioPreviewButton">Preview</string>
+	<string name="AudioPreviewStopButton">Stop Preview</string>
 	
     <!-- Main Menu -->
     <string name="title_activity_main_menu">Main Menu</string>

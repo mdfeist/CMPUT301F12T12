@@ -8,6 +8,7 @@ import java.io.InputStream;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,6 +35,7 @@ public class AudioCaptureActivity extends CustomActivity {
 	String captureAudioName;
 	File tempAudioFile = null;
 	private EditText audioNameTextView;
+	MediaPlayer Player = null;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,11 +83,19 @@ public class AudioCaptureActivity extends CustomActivity {
      */
     public void recordStart(View view) throws IOException {
     	try {
+    		
+            if (Player != null){
+            	Player.release();
+            	Player = null;
+            }
+    		
     		//Need some sort of check/Disable to stop this
     		recorder.prepare();
     		//System.out.println("Recorder prepared");
     		recorder.start(); 
 			//System.out.println("Recorder started");
+    		
+    		
     	} catch (IllegalStateException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Failed to start properly");
@@ -154,7 +164,37 @@ public class AudioCaptureActivity extends CustomActivity {
     	//	Play audio file with media player
     	//else
     	//	"Record an audio clip first"
+    	
+        //Reset the media player incase they were just playing a clip
+        if (Player != null){
+        	Player.release();
+        	Player = null;
+        }
+         	
+        if (tempAudioFile != null) {
+			//Open a player for the audio
+			Player = new MediaPlayer();
+			try {
+
+				//Must convert the Audio to File (make a tempFile for this)
+				Player.setDataSource(tempAudioFile.getAbsolutePath());
+				Player.prepare();
+				Player.start();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}	
     }
+    
+    public void stopAudio(View view){
+
+        if (Player != null){
+        	Player.release();
+        	Player = null;
+        }
+    	
+    }
+    
     
     //A delete function to clean up code
     //Save the file outside a directory so it is not left to be cleaned up
@@ -214,6 +254,11 @@ public class AudioCaptureActivity extends CustomActivity {
     	
     	recorder.release();
     	
+        if (Player != null){
+        	Player.release();
+        	Player = null;
+        }
+    	
     	//Should fix crash but a popup saying NO AUDIO TO SUBMIT would be better
     	//boolean fileExisits = tempAudioFile.exists();
     	//if (fileExisits){
@@ -257,6 +302,11 @@ public class AudioCaptureActivity extends CustomActivity {
 	public void close(View view) {
 		//release the recorder before exiting
 		recorder.release();
+		
+        if (Player != null){
+        	Player.release();
+        	Player = null;
+        }
 		
     	boolean exists = (new File(android.os.Environment.getExternalStorageDirectory() + "/Record/TaskAudio.3gp")).exists();
     	if (exists) {

@@ -3,8 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    
-    
     <EditText
 	    android:id="@+id/audioNameView"
 	    android:hint="@string/AudioHint"
@@ -46,8 +44,26 @@
         android:layout_marginTop="20dp"
         android:onClick="recordReset"
         android:text="@string/AudioResetButton" />
-	
-	
+		
+	<Button
+	    android:id="@+id/PlayButton"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentRight="true"
+	    android:layout_alignTop="@+id/RecordStartButton"
+	    android:layout_marginTop="28dp"
+	    android:onClick="playAudio"
+	    android:text="@string/AudioPreviewButton" />
+
+	<Button
+	    android:id="@+id/StopPlayButton"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentRight="true"
+	    android:layout_below="@+id/PlayButton"
+	    android:layout_marginTop="14dp"
+	    android:onClick="stopAudio"
+	    android:text="@string/AudioPreviewStopButton" />
 	
 	<LinearLayout
         android:id="@+id/Bar"
@@ -90,5 +106,6 @@
             android:textColor="#ffffffff" />
     
     </LinearLayout>
+
         
 </RelativeLayout>
