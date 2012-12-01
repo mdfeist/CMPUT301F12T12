@@ -11,7 +11,8 @@ import android.util.Base64;
 import android.util.Log;
 
 /**
- * A audio file.
+ * Class to contain an Audio file.  The audio is stored as a 
+ * byte[] along with a string for the file's title.
  * 
  * @author Michael Feist and Ian Watts
  *
@@ -42,11 +43,12 @@ public class MyAudio extends ChildUserData implements UserContent<byte[]> {
 		this.audioName = content;
 	}
 
+	//Might be redundant since the functionality is in View and Capture Audio now
+	/**
+	 * This functions converts audio file to a string which can be
+	 * JSONified.
+	 */
 	public String getStringFromFile(File audioFile) {
-		/*
-		 * This functions converts audio file to a string which can be
-		 * JSONified.
-		 */
 		byte []buffer = new byte[(int) audioFile.length()];
 		InputStream ios = null;
 
@@ -92,7 +94,6 @@ public class MyAudio extends ChildUserData implements UserContent<byte[]> {
 		return getStringFromByte(audio);
 	}
 
-	
 	/**
 	 * Takes a string, decodes it and then writes it as
 	 * a file to the SD card
@@ -101,10 +102,6 @@ public class MyAudio extends ChildUserData implements UserContent<byte[]> {
 	 * @return Audio File
 	 */
 	public File getAudioFromString(String audioString) {
-		/*
-		 * This Function converts the String back to Bitmap
-		 * */
-
 		byte[] decodedByteArray = Base64.decode(audioString, Base64.URL_SAFE);
 		
 		//This will be split into a new part
@@ -122,10 +119,6 @@ public class MyAudio extends ChildUserData implements UserContent<byte[]> {
 			e.printStackTrace();
 		}
 
-		/* 
-		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(decodedByteArray);
-		Bitmap decodedBitmap = BitmapFactory.decodeStream(byteArrayInputStream);
-		*/
 		return decodedAudio;
 	}
 
