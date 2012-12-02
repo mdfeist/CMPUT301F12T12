@@ -1,9 +1,10 @@
-package ca.ualberta.cs.completemytask.settings;
+package ca.ualberta.cs.completemytask.adapters;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import ca.ualberta.cs.completemytask.R;
+import ca.ualberta.cs.completemytask.settings.SettingsItem;
 
 import android.app.Activity;
 import android.content.Context;

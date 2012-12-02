@@ -8,8 +8,8 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import ca.ualberta.cs.completemytask.R;
+import ca.ualberta.cs.completemytask.adapters.SettingsListAdapter;
 import ca.ualberta.cs.completemytask.settings.SettingsItem;
-import ca.ualberta.cs.completemytask.settings.SettingsListAdapter;
 
 public class SettingsActivity extends CustomActivity {
 
