@@ -88,7 +88,7 @@ public class NotificationSender extends BroadcastReceiver {
     							intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
     							showNotification(context, title, message, intent);
     							
-    							//DatabaseManager.getInstance().deleteNotifications(id);
+    							DatabaseManager.getInstance().deleteNotifications(id);
     						}
     						
     					} else {
