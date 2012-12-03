@@ -3,89 +3,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <EditText
-	    android:id="@+id/audioNameView"
-	    android:hint="@string/AudioHint"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_alignParentTop="true"
-	    android:layout_centerHorizontal="true"
-	    android:layout_marginTop="40dp"
-	    android:ems="10" >
-
-	    <requestFocus />
-	</EditText>
-    
-    <Button
-        android:id="@+id/RecordStartButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="@string/AudioRecordButton"
-        android:onClick="recordStart" />
-
-	<Button
-        android:id="@+id/RecordStopButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/RecordStartButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:onClick="recordStop"
-        android:text="@string/AudioStopButton" />
-
-	<Button
-        android:id="@+id/RecordResetButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/RecordStopButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:onClick="recordReset"
-        android:text="@string/AudioResetButton" />
-		
-	<Button
-	    android:id="@+id/PlayButton"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_alignParentRight="true"
-	    android:layout_alignTop="@+id/RecordStartButton"
-	    android:layout_marginTop="28dp"
-	    android:onClick="playAudio"
-	    android:text="@string/AudioPreviewButton" />
-
-	<Button
-	    android:id="@+id/StopPlayButton"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_alignParentRight="true"
-	    android:layout_below="@+id/PlayButton"
-	    android:layout_marginTop="14dp"
-	    android:onClick="stopAudio"
-	    android:text="@string/AudioPreviewStopButton" />
-	
-	<LinearLayout
+    <LinearLayout
         android:id="@+id/Bar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_alignParentBottom="true"	
         android:background="@drawable/tab_bar_background"
         android:weightSum="1.0" >
-	
-	
-    	<Button
-        	android:id="@+id/SubmitAudioButton"
-        	android:layout_width="0dp"
-        	android:layout_height="wrap_content"
-        	android:layout_marginRight="5dp"
-        	android:layout_weight=".33"
-        	android:background="@drawable/button_selector"
-        	android:onClick="submitAudio"
-        	android:paddingLeft="5dp"
-        	android:paddingRight="5dp"
-       		android:text="@string/AudioSubmitButton"
-        	android:textColor="#ffffffff" />
+
+        <Button
+            android:id="@+id/SubmitAudioButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_weight=".33"
+            android:background="@drawable/button_selector"
+            android:onClick="submitAudio"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="@string/AudioSubmitButton"
+            android:textColor="#ffffffff" />
 
         <Space
             android:layout_width="0dp"
@@ -104,8 +41,71 @@
             android:paddingRight="5dp"
             android:text="@string/CloseButtonLabel"
             android:textColor="#ffffffff" />
-    
     </LinearLayout>
 
-        
+    <EditText
+        android:id="@+id/audioNameView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:ems="10"
+        android:hint="@string/AudioHint" />
+
+    <Button
+        android:id="@+id/RecordStartButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/audioNameView"
+        android:layout_below="@+id/audioNameView"
+        android:layout_marginTop="10dp"
+        android:onClick="recordStart"
+        android:text="@string/AudioRecordButton" />
+
+    <Button
+        android:id="@+id/RecordStopButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/RecordStartButton"
+        android:layout_alignBottom="@+id/RecordStartButton"
+        android:layout_alignRight="@+id/audioNameView"
+        android:onClick="recordStop"
+        android:text="@string/AudioStopButton" />
+
+    <Button
+        android:id="@+id/StopPlayButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:onClick="stopAudio"
+        android:text="@string/AudioPreviewStopButton" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/StopPlayButton"
+        android:layout_centerHorizontal="true"
+        android:text="@string/AudioSampleInfo" />
+
+    <Button
+        android:id="@+id/PlayButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/StopPlayButton"
+        android:onClick="playAudio"
+        android:text="@string/AudioPreviewButton" />
+
+    <Button
+        android:id="@+id/RecordResetButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/StopPlayButton"
+        android:onClick="recordReset"
+        android:text="@string/AudioResetButton" />
+
 </RelativeLayout>

@@ -95,5 +95,8 @@
 
     <!-- Capture Audio View -->
     <string name="AudioHint">title of Audio Clip</string>
+    <string name="AudioSampleInfo">Preview recorded audio or reset the recorder.</string>
+	<string name="PlayPicDescription">Play incon embedded in thumbnail</string>
+    
     
 </resources>

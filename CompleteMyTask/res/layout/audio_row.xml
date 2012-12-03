@@ -14,17 +14,14 @@
         android:layout_marginRight="5dip">
  
 		<!-- Play icon -->
+		<ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:contentDescription="@string/PlayPicDescription"
+        android:src="@android:drawable/ic_media_play" />
             
 		<!-- Change to image view of a "Play button" -->
-        <TextView
-       		android:id="@+id/shared"
-            android:layout_width="50dip"
-            android:layout_height="50dip"
-            android:textColor="#10bcc9"
-        	android:typeface="sans"
-        	android:textSize="10dip"
-        	android:textStyle="bold"
-        	android:gravity="center"/>
  
    	</LinearLayout>
     
@@ -36,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/thumbnail"
         android:layout_toRightOf="@+id/thumbnail"
-        android:textColor="#040404"
+        android:textColor="#ffffffff"
         android:typeface="sans"
         android:textSize="15dip"
         android:textStyle="bold"/>
@@ -51,6 +48,7 @@
         android:textSize="10dip"
         android:layout_marginTop="1dip"
         android:layout_toRightOf="@+id/thumbnail"/>
-    
+
+
 
 </RelativeLayout>
