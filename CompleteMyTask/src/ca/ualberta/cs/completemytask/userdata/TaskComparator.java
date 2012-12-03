@@ -28,11 +28,11 @@ public class TaskComparator implements Comparator<Task>{
         	String date1 = task1.getDate();
             String date2 = task2.getDate();
             
-            //int date = 0;
+            int date = 0;
             
-            //if (date1 != null && date2 != null){
-            	int date = date1.compareTo(date2);
-            //}
+            if (date1 != null && date2 != null){
+            	date = date1.compareTo(date2);
+            }
             	
         	if (date != 0) {
                 return date;
