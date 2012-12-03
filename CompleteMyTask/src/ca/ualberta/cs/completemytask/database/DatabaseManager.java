@@ -37,19 +37,19 @@ public class DatabaseManager {
 	public static final String URL = "http://cmput301t12.net78.net/";
 	private static DatabaseManager instance = null;
 
-	private static String login_tag = "login";
-	private static String register_tag = "register";
-	private static String update_email_tag = "update_email";
-	private static String list_tasks_attachments_tag = "list_tasks_attachments";
-	private static String list_tasks_tag = "list_tasks";
-	private static String sync_task_tag = "sync_task";
-	private static String list_comments_tag = "list_comments";
-	private static String sync_comment_tag = "sync_comment";
-	private static String list_photos_tag = "list_photos";
-	private static String sync_photo_tag = "sync_photo";
-	private static String complete_task_tag = "complete_task";
-	private static String list_notifications_tag = "list_notifications";
-	private static String delete_notification_tag = "delete_notification";
+	public static final String login_tag = "login";
+	public static final String register_tag = "register";
+	public static final String update_email_tag = "update_email";
+	public static final String list_tasks_attachments_tag = "list_tasks_attachments";
+	public static final String list_tasks_tag = "list_tasks";
+	public static final String sync_task_tag = "sync_task";
+	public static final String list_comments_tag = "list_comments";
+	public static final String sync_comment_tag = "sync_comment";
+	public static final String list_photos_tag = "list_photos";
+	public static final String sync_photo_tag = "sync_photo";
+	public static final String complete_task_tag = "complete_task";
+	public static final String list_notifications_tag = "list_notifications";
+	public static final String delete_notification_tag = "delete_notification";
 
 	public static final String KEY_SUCCESS = "success";
 	public static final String KEY_ERROR = "error";
