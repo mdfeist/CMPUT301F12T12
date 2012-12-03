@@ -36,7 +36,6 @@ public class AudioCaptureActivity extends CustomActivity {
 	File tempAudioFile = null;
 	private EditText audioNameTextView;
 	MediaPlayer Player = null;
-	//private boolean isRecording = false;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,10 +47,10 @@ public class AudioCaptureActivity extends CustomActivity {
     	audioNameTextView = (EditText) findViewById(R.id.audioNameView);
     	
     	//I think this is taking a long time if the directory does not exist
-    	boolean exists = (new File(android.os.Environment.getExternalStorageDirectory() + "/Record/")).exists();
-    	if (!exists) {
-    	    new File(android.os.Environment.getExternalStorageDirectory() + "/Record/").mkdirs();
-    	}
+//    	boolean exists = (new File(android.os.Environment.getExternalStorageDirectory() + "/Record/")).exists();
+//    	if (!exists) {
+//    	    new File(android.os.Environment.getExternalStorageDirectory() + "/Record/").mkdirs();
+//    	}
     	
     	recordInitialize();
         
@@ -71,7 +70,7 @@ public class AudioCaptureActivity extends CustomActivity {
     	//Initialize the recorder
         recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        recorder.setOutputFile(android.os.Environment.getExternalStorageDirectory()+"/Record/TaskAudio.3gp");
+        recorder.setOutputFile(android.os.Environment.getExternalStorageDirectory()+"/TaskAudio.3gp");
         recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
     }
     
@@ -162,8 +161,11 @@ public class AudioCaptureActivity extends CustomActivity {
 				//Set our audio file
 				tempAudioFile = new File(
 						android.os.Environment.getExternalStorageDirectory()
-								+ "/Record/TaskAudio.3gp");
+								+ "/TaskAudio.3gp");
 				//Re-initialize the recorder
+				
+				
+				//Delete the SD file here?
 				
 				//recorder = null;
 				
@@ -195,8 +197,10 @@ public class AudioCaptureActivity extends CustomActivity {
     	
     	//If no tempAudioFile
     	//Pop up --> "No Audio to Preview!"
-    		
-        if (tempAudioFile != null) {
+    	boolean sdExisits = (new File(android.os.Environment.getExternalStorageDirectory() + "/TaskAudio.3gp")).exists();
+        
+    	//TESTING SDEXISTS
+    	if (tempAudioFile != null & sdExisits) {
 			//Open a player for the audio
 			Player = new MediaPlayer();
 			try {
@@ -229,10 +233,10 @@ public class AudioCaptureActivity extends CustomActivity {
      * @param view
      */
     public void deleteTempFile(){
-    	boolean exists = (new File(android.os.Environment.getExternalStorageDirectory() + "/Record/TaskAudio.3gp")).exists();
+    	boolean exists = (new File(android.os.Environment.getExternalStorageDirectory() + "/TaskAudio.3gp")).exists();
     	if (exists) {
     		//delete the outstanding file?
-    		File file = new File(android.os.Environment.getExternalStorageDirectory() + "/Record/TaskAudio.3gp");
+    		File file = new File(android.os.Environment.getExternalStorageDirectory() + "/TaskAudio.3gp");
     		//boolean deleted = file.delete();
     		file.delete();
     	}
@@ -282,7 +286,7 @@ public class AudioCaptureActivity extends CustomActivity {
     	
     	//release the recorder and close mediaPlayer before submitting
     	recorder.release();
-    	//closePlayer();
+    	closePlayer();
     	
     	
     	if (tempAudioFile != null){
@@ -322,7 +326,7 @@ public class AudioCaptureActivity extends CustomActivity {
 		//isRecording = false;
 		
 		recorder.release();
-		//closePlayer();
+		closePlayer();
 		
 		//Get rid of the temp file before exiting
 		deleteTempFile();

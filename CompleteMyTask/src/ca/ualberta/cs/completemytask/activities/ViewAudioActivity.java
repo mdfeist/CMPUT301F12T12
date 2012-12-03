@@ -176,7 +176,7 @@ public class ViewAudioActivity extends CustomActivity {
 	 */
 	public File getFileFromByte(byte[] decodedByteArray) {
 		//Write to the SD card (no directory)
-		File decodedAudio = new File(android.os.Environment.getExternalStorageDirectory()+"/Record/test.3gp");
+		File decodedAudio = new File(android.os.Environment.getExternalStorageDirectory()+"/test.3gp");
 		try {	
 			FileOutputStream fos = new FileOutputStream(decodedAudio);
 			fos.write(decodedByteArray);
@@ -201,6 +201,13 @@ public class ViewAudioActivity extends CustomActivity {
 	public void takeAudio(View view) {	
 	 
         //Add Delete File
+    	boolean exists = (new File(android.os.Environment.getExternalStorageDirectory() + "/test.3gp")).exists();
+    	if (exists) {
+    		//delete the outstanding file?
+    		File file = new File(android.os.Environment.getExternalStorageDirectory() + "/test.3gp");
+    		//boolean deleted = file.delete();
+    		file.delete();
+    	}
 		
 	    if (mPlayer != null){
 		    mPlayer.release();
@@ -320,6 +327,13 @@ public class ViewAudioActivity extends CustomActivity {
 	public void close(View view) {
 		
 		//Add File Deletion
+    	boolean exists = (new File(android.os.Environment.getExternalStorageDirectory() + "/test.3gp")).exists();
+    	if (exists) {
+    		//delete the outstanding file?
+    		File file = new File(android.os.Environment.getExternalStorageDirectory() + "/test.3gp");
+    		//boolean deleted = file.delete();
+    		file.delete();
+    	}
 		
 		if (mPlayer != null){
 			mPlayer.release();
