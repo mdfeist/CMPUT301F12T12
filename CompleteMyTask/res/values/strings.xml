@@ -71,9 +71,9 @@
     <string name="RePasswordHeaderLabel">Confirm Password:</string>
     <string name="UserNameHint">Username</string>
     <string name="EditUserNameHint">What name do you want displayed?</string>
-    <string name="EditUserEmailHint">Your Email address</string>
+    <string name="EditUserEmailHint">Your email address</string>
     <string name="EditPasswordHint">Password</string>
-    <string name="EditRePasswordHint">Re-Type Password</string>
+    <string name="EditRePasswordHint">Re-type password</string>
     <string name="UserInfoDetials">Details: \n\n \
         To use this app you will need to have a user account setup. \
         This will allow other users to know who you are when you post. \
@@ -94,9 +94,9 @@
     <string name="title_activity_audio_capture">AudioCaptureActivity</string>
 
     <!-- Capture Audio View -->
-    <string name="AudioHint">title of Audio Clip</string>
+    <string name="AudioHint">Title of audio clip</string>
     <string name="AudioSampleInfo">Preview recorded audio or reset the recorder.</string>
-	<string name="PlayPicDescription">Play incon embedded in thumbnail</string>
+	<string name="PlayPicDescription">Play icon embedded in thumbnail</string>
     
     
 </resources>
