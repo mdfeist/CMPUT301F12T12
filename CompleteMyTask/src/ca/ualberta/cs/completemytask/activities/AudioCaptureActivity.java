@@ -41,17 +41,11 @@ public class AudioCaptureActivity extends CustomActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_audio_capture);
-        
-    	super.onStart();
     	
+        //Edit Text for titling the Audio Recording 
     	audioNameTextView = (EditText) findViewById(R.id.audioNameView);
     	
-    	//I think this is taking a long time if the directory does not exist
-//    	boolean exists = (new File(android.os.Environment.getExternalStorageDirectory() + "/Record/")).exists();
-//    	if (!exists) {
-//    	    new File(android.os.Environment.getExternalStorageDirectory() + "/Record/").mkdirs();
-//    	}
-    	
+    	//Prepare the MediaRecorder for Audio Capture
     	recordInitialize();
         
     }
@@ -67,7 +61,6 @@ public class AudioCaptureActivity extends CustomActivity {
      * occurs on startup and after stopping and resetting.
      */
     public void recordInitialize(){
-    	//Initialize the recorder
         recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
         recorder.setOutputFile(android.os.Environment.getExternalStorageDirectory()+"/TaskAudio.3gp");
@@ -75,7 +68,9 @@ public class AudioCaptureActivity extends CustomActivity {
     }
     
     /**
-     * Closes the mediaPlayer currently in use and sets it back to null
+     * Closes the mediaPlayer currently in use and sets it back to null.
+     * Used to make sure the Player is never in the incorrect state
+     * when certain buttons are pressed.
      */
     public void closePlayer(){
         if (Player != null){
@@ -90,32 +85,22 @@ public class AudioCaptureActivity extends CustomActivity {
      */
     public void recordStart(View view) throws IOException {
     	try {
-    		
+    		//Make sure Recorder and Player are in correct State
     		closePlayer();
-    		
-    		
-    		
-    		//TESTING THIS LINE
         	recorder.reset();
-    		
-        	//TESTING THIS LINE
         	recordInitialize();
         	
-    		//if (isRecording == false) {
-				//Need some sort of check/Disable to stop this
-				recorder.prepare();
-				System.out.println("Recorder prepared");
-				recorder.start();
-				System.out.println("Recorder started");
-			//}
+        	//Start Recording!
+			recorder.prepare();
+			//System.out.println("Recorder prepared");
+			recorder.start();
+			//System.out.println("Recorder started");
 
     	} catch (IllegalStateException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Failed to start properly");
 			e.printStackTrace();
 		}
-    	
-    	//isRecording = true;
     }
 
     /**
@@ -124,55 +109,34 @@ public class AudioCaptureActivity extends CustomActivity {
      * Sets the temp file back to null to prevent Start>Stop>Start>Submit from working
      */
     public void recordReset(View view){
-    	//reset the recorder and mediaPlayer to record new audio
-    	
-    	//TESTING STOP
-    	//recorder.stop();
+    	//Make sure Recorder is in correct State(recorder.stop caused errors when not recording)
     	recorder.reset();
-    	//closePlayer();
     	
+    	//Delete our temp files and reset Recorder
     	tempAudioFile = null;
-    	
-    	//MIGHT BE THE PROBLEM!!!!!!!
-    	//delete the old audio file PROBABLY REDUNDANT HERE --> is deleted on exit
-    	//Tempfile or the SD file?
     	deleteTempFile();
     	
     	recordInitialize();
     }
     
     /**
-     * Stops the recording of audio and preps it for submission
+     * Stops the recording of audio and prepares it for submission
      * @param view
      */
     public void recordStop(View view) {
     	try {
     		closePlayer();
 
-			//recorder is released on one of the two exit
-			//recorder.release();
-			//System.out.println("Recorder released");
+    		//Using stop causes errors, reset has same functionality
+			//recorder.stop();
+			recorder.reset();
 			
-			//if (isRecording) {
-				System.out.println("About to stop...");
-				//recorder.stop();
-				System.out.println("It worked After stop");
-				recorder.reset();
-				//Set our audio file
-				tempAudioFile = new File(
+			//Set our audio file
+			tempAudioFile = new File(
 						android.os.Environment.getExternalStorageDirectory()
 								+ "/TaskAudio.3gp");
-				//Re-initialize the recorder
-				
-				
-				//Delete the SD file here?
-				
-				//recorder = null;
-				
-				recordInitialize();
-				
-				//isRecording = false;
-			//}
+			//Reset recorder
+			recordInitialize();
 			
 		} catch (IllegalStateException e) {
 			// TODO Auto-generated catch block
@@ -181,30 +145,23 @@ public class AudioCaptureActivity extends CustomActivity {
 		}
     }
     
-    //Let the user sample the audio they are going to submit
     /**
      * Opens a MediaPlayer and plays the current audio clip.
+     * Lets the user sample the audio they are going to submit.
      * @param view
      */
     public void playAudio(View view){
         //Reset the media player in case they were just playing a clip
     	closePlayer();
-    	
-    	//TESTING the stop before reset
-    	//recorder.stop();
     	recorder.reset();
     	
-    	
-    	//If no tempAudioFile
-    	//Pop up --> "No Audio to Preview!"
+    	//Make sure our source has data
     	boolean sdExisits = (new File(android.os.Environment.getExternalStorageDirectory() + "/TaskAudio.3gp")).exists();
         
-    	//TESTING SDEXISTS
     	if (tempAudioFile != null & sdExisits) {
 			//Open a player for the audio
 			Player = new MediaPlayer();
 			try {
-
 				//Must convert the Audio to File (make a tempFile for this)
 				Player.setDataSource(tempAudioFile.getAbsolutePath());
 				Player.prepare();
@@ -214,8 +171,7 @@ public class AudioCaptureActivity extends CustomActivity {
 			}
 		}	
         
-        
-        //TESTING 
+        //Get recorder ready again
         recordInitialize();
     }
     
@@ -229,15 +185,13 @@ public class AudioCaptureActivity extends CustomActivity {
     }
     
     /**
-     * Deletes the audio file on the SD card to cleanup
+     * Deletes the leftover audio file on the SD card if it exists
      * @param view
      */
     public void deleteTempFile(){
     	boolean exists = (new File(android.os.Environment.getExternalStorageDirectory() + "/TaskAudio.3gp")).exists();
     	if (exists) {
-    		//delete the outstanding file?
     		File file = new File(android.os.Environment.getExternalStorageDirectory() + "/TaskAudio.3gp");
-    		//boolean deleted = file.delete();
     		file.delete();
     	}
     }
@@ -281,14 +235,11 @@ public class AudioCaptureActivity extends CustomActivity {
 	 * @param view
 	 */
     public void submitAudio(View view){
-    	
-    	//isRecording = false;
-    	
     	//release the recorder and close mediaPlayer before submitting
     	recorder.release();
     	closePlayer();
     	
-    	
+    	//Check if the source exists
     	if (tempAudioFile != null){
     		//Converts File into byte[] form
         	returnAudio = getByteFromFile(tempAudioFile);
@@ -323,8 +274,6 @@ public class AudioCaptureActivity extends CustomActivity {
 	 */
 	public void close(View view) {
 		//release the recorder and close mediaPlayer before exiting
-		//isRecording = false;
-		
 		recorder.release();
 		closePlayer();
 		

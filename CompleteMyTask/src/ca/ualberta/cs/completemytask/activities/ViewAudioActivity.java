@@ -59,6 +59,7 @@ public class ViewAudioActivity extends CustomActivity {
 		this.loadingView = new LoadingView(this, R.id.ViewAudioMain,
 				"Getting Audio ...");
 		
+		//Get the Data for this Task
 		int position = TaskManager.getInstance().getCurrentTaskPosition();
 		task = TaskManager.getInstance().getTaskAt(position);
 		
@@ -76,18 +77,8 @@ public class ViewAudioActivity extends CustomActivity {
     		}
     		
     		public void onPostExecute(int response) {
-    			if (task.getNumberOfAudios() > 0) {
-    				//This needs to be changed
-    				
-    				//Does the adapter populate the listview at once?
-    				
-    				
-    				//imagePreview.setImageBitmap(task.getPhotoAt(0).getContent());
-    			}
-    			
-    			//THESE MUST STAY
+    			//Populate the ListView
     			adapter.notifyDataSetChanged();
-    			
     			loadingView.showLoadView(false);
     		}
     		
@@ -200,15 +191,14 @@ public class ViewAudioActivity extends CustomActivity {
 	 */
 	public void takeAudio(View view) {	
 	 
-        //Add Delete File
+        //Delete leftover file when leaving View.
     	boolean exists = (new File(android.os.Environment.getExternalStorageDirectory() + "/test.3gp")).exists();
     	if (exists) {
-    		//delete the outstanding file?
     		File file = new File(android.os.Environment.getExternalStorageDirectory() + "/test.3gp");
-    		//boolean deleted = file.delete();
     		file.delete();
     	}
 		
+    	//Close MediaPlayer if it is running.
 	    if (mPlayer != null){
 		    mPlayer.release();
      	    mPlayer = null;
@@ -326,15 +316,14 @@ public class ViewAudioActivity extends CustomActivity {
 	 */
 	public void close(View view) {
 		
-		//Add File Deletion
+		//Delete leftover file
     	boolean exists = (new File(android.os.Environment.getExternalStorageDirectory() + "/test.3gp")).exists();
     	if (exists) {
-    		//delete the outstanding file?
     		File file = new File(android.os.Environment.getExternalStorageDirectory() + "/test.3gp");
-    		//boolean deleted = file.delete();
     		file.delete();
     	}
 		
+    	//Exit the mediaPlayer if it is running
 		if (mPlayer != null){
 			mPlayer.release();
 		    mPlayer = null;
