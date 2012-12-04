@@ -1,0 +1,62 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+    <TextView
+        android:id="@+id/Details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/UserInfoDetials" />
+    
+    <LinearLayout
+         android:id="@+id/Bar"
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:layout_alignParentBottom="true"
+         android:background="@drawable/tab_bar_background"
+         android:weightSum="1.0" >
+        
+         <Button
+            android:id="@+id/CreateButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".33"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/button_selector"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:onClick="createUser"
+            android:text="@string/CreateButtonLabel"
+            android:textColor="#ffffffff" />
+
+        <Button
+            android:id="@+id/LoginButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".33"
+            android:background="@drawable/button_selector"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:onClick="login"
+            android:text="@string/LoginButtonLabel"
+            android:textColor="#ffffffff" />
+
+        <Button
+            android:id="@+id/BackButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_weight=".33"
+            android:background="@drawable/button_selector"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:onClick="cancel"
+            android:text="@string/CancelButtonLabel"
+            android:textColor="#ffffffff" />
+    </LinearLayout>
+
+</RelativeLayout>

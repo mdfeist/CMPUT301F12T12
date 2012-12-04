@@ -3,10 +3,11 @@ package ca.ualberta.cs.completemytask.test;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import ca.ualberta.cs.completemytask.AddTaskActivity;
 import ca.ualberta.cs.completemytask.R;
-import ca.ualberta.cs.completemytask.Task;
-import ca.ualberta.cs.completemytask.TaskManager;
+import ca.ualberta.cs.completemytask.activities.AddTaskActivity;
+import ca.ualberta.cs.completemytask.saving.LocalSaving;
+import ca.ualberta.cs.completemytask.userdata.Task;
+import ca.ualberta.cs.completemytask.userdata.TaskManager;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;
 import android.widget.Button;
@@ -71,13 +72,18 @@ public class CreateTaskTest extends ActivityInstrumentationTestCase2<AddTaskActi
 			if(task.getName().equals(taskName)) {
 				foundTask = true;
 				assertTrue("Wrong Description", task.getDescription().endsWith(taskDescription));
-				assertTrue("No ID", task.getId() == null);
+				assertTrue("No local ID", task.getLocalId() != 0);
 				
 				assertTrue("Failed isComplete", task.isComplete() == false);
 				
 				assertTrue("Failed needs Comment", task.needsComment() == testNeedsComment);
 				assertTrue("Failed needs Photo", task.needsPhoto() == testNeedsPhoto);
 				assertTrue("Failed needs Comment", task.needsAudio() == testNeedsAudio);
+				
+				LocalSaving saver = new LocalSaving();
+				saver.open();
+				saver.deleteTask(task);
+				saver.close();
 			}
 		}
 		

@@ -77,9 +77,6 @@ public class MicrophoneActivity extends Activity {
 			e.printStackTrace();
 		}
     	
-    	
-    	
-    	
     }
     
     public void RecordStop(View view) {

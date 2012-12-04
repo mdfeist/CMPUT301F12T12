@@ -44,6 +44,7 @@
             android:layout_weight=".33"
             android:background="@drawable/button_selector"
             android:contentDescription="@string/AudioButtonDescription"
+            android:onClick="viewAudio"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:src="@drawable/device_access_mic" />
@@ -125,19 +126,30 @@
         android:background="@drawable/tab_bar_background"
         android:weightSum="1.0" >
 
-        <Space
-            android:id="@+id/EditTaskSpacer"
+        <Button
+            android:id="@+id/CompleteButton"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
+            android:layout_height="wrap_content"
             android:layout_weight=".33"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/button_selector"
+            android:onClick="complete"
             android:paddingLeft="5dp"
-            android:paddingRight="5dp" />
-
-        <Space
+            android:paddingRight="5dp"
+            android:text="@string/CompleteButtonLabel"
+            android:textColor="#ffffffff" />
+        
+        <Button
+            android:id="@+id/EditTaskButton"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight=".33" />
+            android:layout_height="wrap_content"
+            android:layout_weight=".33"
+            android:background="@drawable/button_selector"
+            android:onClick="editTask"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="@string/EditTaskButtonLabel"
+            android:textColor="#ffffffff" />
 
         <Button
             android:id="@+id/CloseButton"

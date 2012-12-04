@@ -2,52 +2,45 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
-
-    <TextView
-        android:id="@+id/UserInfoViewDetials"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_marginRight="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="50dp"
-        android:text="@string/UserInfoDetials"/>
-    
-    <TextView
-        android:id="@+id/UserNameErrorMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/UserInfoViewDetials"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:textColor="#ffff0000"
-     	/>
     
     <TextView
         android:id="@+id/UserNameHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/UserNameErrorMessage"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="20dp"
         android:text="@string/UserNameHeaderLabel" />
 
-    <EditText
-        android:id="@+id/EditUserName"
+    <TextView
+        android:id="@+id/UserName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/UserNameHeader"
         android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"/>
+    
+    <TextView
+        android:id="@+id/UserEmailHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/UserName"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/UserEmailHeaderLabel" />
+    
+    <EditText
+        android:id="@+id/EditEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/UserEmailHeader"
+        android:layout_marginLeft="4dp"
         android:layout_marginRight="4dp"
-        android:hint="@string/EditUserNameHint"
+        android:hint="@string/EditUserEmailHint"
         android:inputType="text"
-        android:maxLines="1" >
-
-        <requestFocus />
-    </EditText>
+        android:maxLines="1" />
+  
     
     <LinearLayout
          android:id="@+id/Bar"
@@ -58,16 +51,16 @@
          android:weightSum="1.0" >
         
         <Button
-            android:id="@+id/ClearDataButton"
+            android:id="@+id/SaveButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_weight=".33"
             android:background="@drawable/button_selector"
-            android:onClick="deleteLocalData"
+            android:onClick="save"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:text="@string/ClearDataButtonLabel"
+            android:text="@string/SaveButtonLabel"
             android:textColor="#ffffffff" />
 
         <Space
@@ -76,16 +69,16 @@
             android:layout_weight=".33" />
 
         <Button
-            android:id="@+id/SubmitButton"
+            android:id="@+id/CancelButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             android:layout_weight=".33"
             android:background="@drawable/button_selector"
-            android:onClick="newUser"
+            android:onClick="cancel"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:text="@string/NextButtonLabel"
+            android:text="@string/CancelButtonLabel"
             android:textColor="#ffffffff" />
     </LinearLayout>
 

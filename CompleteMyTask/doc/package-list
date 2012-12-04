@@ -1,1 +1,11 @@
 ca.ualberta.cs.completemytask
+ca.ualberta.cs.completemytask.activities
+ca.ualberta.cs.completemytask.adapters
+ca.ualberta.cs.completemytask.background
+ca.ualberta.cs.completemytask.database
+ca.ualberta.cs.completemytask.notification
+ca.ualberta.cs.completemytask.saving
+ca.ualberta.cs.completemytask.settings
+ca.ualberta.cs.completemytask.test
+ca.ualberta.cs.completemytask.userdata
+ca.ualberta.cs.completemytask.views

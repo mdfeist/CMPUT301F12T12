@@ -16,7 +16,7 @@
     <Gallery
         android:id="@+id/ImageGallery"
         android:layout_width="fill_parent"
-        android:layout_height="128dp"
+        android:layout_height="158dp"
         android:layout_above="@+id/Bar"
         android:layout_centerHorizontal="true" />
 

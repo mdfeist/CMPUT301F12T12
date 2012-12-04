@@ -7,17 +7,32 @@
 
     <!-- Buttons -->
     <string name="AddTaskButtonLabel">Add Task</string>
+    <string name="EditTaskButtonLabel">Edit Task</string>
+    <string name="NewUserButtonLabel">New User</string>
     <string name="ShareTaskButtonLabel">Share</string>
     <string name="NextButtonLabel">Next</string>
     <string name="CancelButtonLabel">Cancel</string>
+    <string name="BackButtonLabel">Back</string>
+    <string name="SaveButtonLabel">Save</string>
     <string name="CloseButtonLabel">Close</string>
+    <string name="CompleteButtonLabel">Complete</string>
+    <string name="CreateButtonLabel">Create</string>
+    <string name="LoginButtonLabel">Login</string>
     <string name="SendButtonLabel">Send</string>
     <string name="SyncTaskButtonLabel">Sync</string>
+    <string name="SettingsButtonLabel">Settings</string>
     <string name="ClearDataButtonLabel">Clear Data</string>
     <string name="EditUserButtonLabel">Edit User</string>
     <string name="ViewCommentsButtonLabel">View Comments</string>
     <string name="TakePictureButtonLabel">Add Photo</string>
-
+    <string name="TakeAudioButtonLabel">Add Audio</string>
+	<string name="AudioRecordButton">Record</string>
+    <string name="AudioStopButton">Stop</string>
+	<string name="AudioResetButton">Reset</string>
+	<string name="AudioSubmitButton">Submit</string>
+	<string name="AudioPreviewButton">Preview</string>
+	<string name="AudioPreviewStopButton">Stop Preview</string>
+	
     <!-- Main Menu -->
     <string name="title_activity_main_menu">Main Menu</string>
     <string name="MyTasksHeader">My Tasks</string>
@@ -40,25 +55,48 @@
     <string name="PhotoGalleryHeaderLabel">Photos:</string>
     <string name="AudioGalleryHeaderLabel">Audio:</string>
     <string name="TextHeaderLabel">Text:</string>
-    
+
     <!-- View Image -->
     <string name="TaskImageDescription">Task Image</string>
-	<string name="CommentButtonDescription">Comment Button</string>
-	<string name="PhotoButtonDescription">Photo Button</string>
-	<string name="AudioButtonDescription">Audio Button</string>
-	<string name="GalleryImageViewDescription">Selected Gallery Image</string>
+    <string name="CommentButtonDescription">Comment Button</string>
+    <string name="PhotoButtonDescription">Photo Button</string>
+    <string name="AudioButtonDescription">Audio Button</string>
+    <string name="GalleryImageViewDescription">Selected Gallery Image</string>
 
     <!-- User Info -->
     <string name="title_activity_user_info">User Info</string>
     <string name="UserNameHeaderLabel">User Name:</string>
+    <string name="UserEmailHeaderLabel">Email:</string>
+    <string name="PasswordHeaderLabel">Password:</string>
+    <string name="RePasswordHeaderLabel">Confirm Password:</string>
+    <string name="UserNameHint">Username</string>
     <string name="EditUserNameHint">What name do you want displayed?</string>
-    <string name="UserInfoDetials">        Details: \n\nTo use this app you will need to have a user name.
-        This will allow other users to know who you are when
-        you post.</string>
+    <string name="EditUserEmailHint">Your email address</string>
+    <string name="EditPasswordHint">Password</string>
+    <string name="EditRePasswordHint">Re-type password</string>
+    <string name="UserInfoDetials">Details: \n\n \
+        To use this app you will need to have a user account setup. \
+        This will allow other users to know who you are when you post. \
+        If you already have a user setup then you can click the \
+        \"Login\" button. If you don\'t have an account setup then \
+        you can create a new account by clicking the \"Create\" \
+        button.</string>
 
     <!-- Comment View -->
     <string name="title_activity_comment">Comments</string>
     <string name="CommentHint">Comment</string>
     <string name="title_activity_view_image">View Image</string>
+    <string name="title_activity_view_audio">ViewAudioActivity</string>
+    <string name="title_activity_create_user">Create New User</string>
+    <string name="title_activity_new_user">New User</string>
+    <string name="title_activity_login">Login</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_audio_capture">AudioCaptureActivity</string>
 
+    <!-- Capture Audio View -->
+    <string name="AudioHint">Title of audio clip</string>
+    <string name="AudioSampleInfo">Preview recorded audio or reset the recorder.</string>
+	<string name="PlayPicDescription">Play icon embedded in thumbnail</string>
+    
+    
 </resources>

@@ -36,15 +36,15 @@
             android:textColor="#ffffffff" />
 
         <Button
-            android:id="@+id/EditUserButton"
+            android:id="@+id/SettingsButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".33"
             android:background="@drawable/button_selector"
-            android:onClick="editUser"
+            android:onClick="settings"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:text="@string/EditUserButtonLabel"
+            android:text="@string/SettingsButtonLabel"
             android:textColor="#ffffffff" />
         
         <Button
